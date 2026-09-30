@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HEADLOCK MR.PHUC</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        body {
+            background-color: #0a0a0a; color: #fff; display: flex; justify-content: center;
+            align-items: center; min-height: 100vh; padding: 15px;
+            background-image: radial-gradient(circle at center, #1a0000 0%, #050505 100%);
+        }
+        .container {
+            background: linear-gradient(145deg, #1a0000, #330000);
+            border: 1px solid #ff1a1a; border-radius: 20px; padding: 25px 20px;
+            width: 100%; max-width: 420px;
+            box-shadow: 0 0 30px rgba(255, 0, 0, 0.5), inset 0 0 20px rgba(255, 0, 0, 0.2);
+            text-align: center; animation: glowBox 2s infinite alternate;
+        }
+        @keyframes glowBox {
+            from { box-shadow: 0 0 20px rgba(255, 0, 0, 0.4); }
+            to { box-shadow: 0 0 40px rgba(255, 0, 0, 0.8); }
+        }
+        .header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 20px; }
+        .title h1 { font-size: 24px; font-weight: 900; color: #fff; line-height: 1.1; text-align: left; }
+        .title h1 span { color: #ff0000; font-size: 26px; }
+        .title p { font-size: 10px; color: #ff4d4d; letter-spacing: 2px; text-align: left; margin-top: 2px; }
+        .status-box {
+            background: rgba(20, 0, 0, 0.8); border: 1px solid #ff3333; border-radius: 10px;
+            padding: 8px 12px; display: flex; gap: 15px; font-size: 10px; box-shadow: 0 0 10px rgba(255, 0, 0, 0.3);
+        }
+        .status-box div { display: flex; flex-direction: column; align-items: center; }
+        .status-box .label { color: #ff8080; font-size: 8px; text-transform: uppercase; }
+        .status-box .value { color: #fff; font-weight: bold; }
+        .online-dot { color: #ff0000; font-size: 10px; margin-right: 3px; }
+        .logo-area { display: flex; justify-content: center; margin-bottom: 20px; }
+        .logo-circle {
+            width: 120px; height: 120px; border-radius: 50%; border: 2px solid #ff1a1a;
+            display: flex; justify-content: center; align-items: center; position: relative;
+            box-shadow: 0 0 25px rgba(255, 0, 0, 0.6), inset 0 0 20px rgba(255, 0, 0, 0.4);
+            background: radial-gradient(circle, #330000 0%, #0a0a0a 80%);
+        }
+        .logo-circle svg { width: 70px; height: 70px; fill: #ff1a1a; filter: drop-shadow(0 0 10px #ff0000); }
+        .auth-section { display: flex; flex-direction: column; gap: 15px; }
+        .input-label { text-align: left; font-size: 11px; color: #ff4d4d; font-weight: bold; text-transform: uppercase; letter-spacing: 1px; display: flex; align-items: center; gap: 5px; }
+        .input-label svg { width: 14px; height: 14px; fill: #ff1a1a; }
+        .custom-input {
+            width: 100%; padding: 16px 15px; border-radius: 12px; border: 1px solid #ff3333;
+            background-color: #1a0000; color: #fff; font-size: 14px; outline: none; transition: 0.3s;
+            box-shadow: inset 0 0 10px rgba(255, 0, 0, 0.2); text-align: center;
+        }
+        .custom-input:focus { border-color: #ff0000; box-shadow: 0 0 15px #ff0000, inset 0 0 10px rgba(255, 0, 0, 0.4); }
+        .custom-input::placeholder { color: #660000; }
+        .btn-primary {
+            width: 100%; padding: 16px; border-radius: 12px; border: 1px solid #ff4d4d;
+            background: linear-gradient(90deg, #990000, #ff1a1a); color: #fff; font-size: 15px;
+            font-weight: bold; text-transform: uppercase; letter-spacing: 1px; cursor: pointer;
+            transition: 0.3s; box-shadow: 0 4px 20px rgba(255, 0, 0, 0.5);
+            display: flex; justify-content: center; align-items: center; gap: 10px;
+        }
+        .btn-primary:active { transform: scale(0.97); }
+        .btn-contact {
+            width: 100%; padding: 16px; border-radius: 12px; border: 1px solid #ff4d4d;
+            background: #1a0000; color: #ff4d4d; font-size: 14px; font-weight: bold;
+            text-transform: uppercase; letter-spacing: 1px; cursor: pointer; transition: 0.3s;
+            display: flex; justify-content: center; align-items: center; gap: 10px;
+            text-decoration: none; box-shadow: inset 0 0 10px rgba(255, 0, 0, 0.1);
+        }
+        .btn-contact:active { background: #330000; color: #ff1a1a; }
+        .tool-section { display: none; flex-direction: column; gap: 15px; animation: fadeIn 0.5s ease-in-out; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
+        .info-row { display: flex; gap: 10px; }
+        .info-box {
+            flex: 1; background: #140000; border: 1px solid #ff3333; border-radius: 10px;
+            padding: 12px; display: flex; justify-content: center; align-items: center; gap: 8px;
+            font-family: 'Courier New', monospace; font-size: 14px; color: #ffcccc;
+            box-shadow: inset 0 0 10px rgba(255, 0, 0, 0.2);
+        }
+        .info-box svg { width: 14px; height: 14px; fill: #ff1a1a; }
+        .toggle-container {
+            background: #140000; border: 1px solid #ff3333; border-radius: :12px;
+            padding: 15px; display: flex; justify-content: space-between; align-items: center;
+            box #-shadow: inset 0 0 10px rgba(255, 0, 0, 0.2);
+       330 }
+        .toggle-left { display: flex; align-items: center; gap: 12px; text-align: left; }
+       000 .toggle-icon {
+            width: 40px; height: 40px; border-radius: 50%; border: 2px;
+ solid #ff1a1a;
+            display: flex; justify-content: center; align-items: center; background            box-shadow: 0 0 10px rgba(255, 0, 0, 0.5);
+        }
+        .toggle-icon svg { width: 20px; height: 20px; fill: #ff1a1a; }
+        .toggle-text .label { font-size: 10px; color: #ff8080; text-transform: uppercase; font-weight: bold; }
+        .toggle-text .value { font-size: 14px; color: #fff; font-weight: bold; }
+        .switch { position: relative; display: inline-block; width: 55px; height: 30px; }
+        .switch input { opacity: 0; width: 0; height: 0; }
+        .slider {
+            position: absolute; cursor: not-allowed; top: 0; left: 0; right: 0; bottom: 0;
+            background-color: #660000; transition: .4s; border-radius: 34px; border: 1px solid #ff3333;
+            opacity: 0.8;
+        }
+        .slider:before {
+            position: absolute; content: ""; height: 22px; width: 22px; left: 3px; bottom: 3px;
+            background-color: #ff1a1a; transition: .4s; border-radius: 50%; box-shadow: 0 0 10px #ff0000;
+        }
+        /* Nút gạt AIM bị vô hiệu hóa - không cho tắt */
+        .switch input:disabled + .slider {
+            cursor: not-allowed;
+        }
+        .switch input:disabled + .slider:before {
+            background-color: #fff;
+            box-shadow: 0 0 15px #fff;
+            transform: translateX(24px);
+        }
+        .server-info {
+            background: #140000; border: 1px solid #ff3333; border-radius: 10px;
+            padding: 15px; text-align: left; font-family: 'Courier New', monospace;
+            font-size: 12px; box-shadow: inset 0 0 10px rgba(255, 0, 0, 0.2);
+        }
+        .server-info .row { display: flex; justify-content: space-between; margin-bottom: 8px; }
+        .server-info .row:last-child { margin-bottom: 0; }
+        .server-info .label { color: #ff4d4d; }
+        .server-info .value { color: #fff; }
+        .btn-stop {
+            width: 100%; padding: 16px; border-radius: 12px; border: 1px solid #ff4d4d;
+            background: linear-gradient(90deg, #990000, #ff1a1a); color: #fff; font-size: 15px;
+            font-weight: bold; text-transform: uppercase; letter-spacing: 1px; cursor: pointer;
+            transition: 0.3s; box-shadow: 0 4px 20px rgba(255, 0, 0, 0.5);
+            display: flex; justify-content: center; align-items: center; gap: 10px; margin-top: 5px;
+        }
+        .btn-stop:active { transform: scale(0.97); }
+        .footer { margin-top: 25px; font-size: 10px; color: #660000; text-align: center; letter-spacing: 1px; text-transform: uppercase; }
+        .footer span { color: #ff1a1a; }
+        .error-msg { color: #ff4d4d; font-size: 12px; text-align: center; margin-top: -5px; display: none; font-weight: bold; }
+        .success-msg { color: #00ff00; font-size: 12px; text-align: center; margin-top: -5px; display: none; font-weight: bold; }
+        
+        /* ADMIN PANEL */
+        #adminPanel {
+            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.95); z-index: 1000; justify-content: center; align-items: center; padding: 20px;
+        }
+        .admin-box {
+            background: #1a0000; border: 2px solid #ff0000; border-radius: 15px;
+            padding: 25px; width: 100%; max-width: 400px; text-align: center;
+            box-shadow: 0 0 30px #ff0000;
+        }
+        .admin-box h2 { color: #ff3333; margin-bottom: 20px; text-transform: uppercase; }
+        .admin-box input, .admin-box select {
+            width: 100%; padding: 12px; margin-bottom: 10px; border-radius: 8px;
+            border: 1px solid #ff4d4d; background: #260000; color: #fff; text-align: center;
+        }
+        .admin-box button {
+            width: 100%; padding: 12px; margin-bottom: 10px; border-radius: 8px;
+            border: none; background: #ff1a1a; color: #fff; font-weight: bold; cursor: pointer;
+        }
+        .admin-box button:active { transform: scale(0.97); }
+        .key-display {
+            background: #003300; border: 1px solid #00cc00; padding: 15px; border-radius: 8px;
+            margin-top: 10px; font-family: monospace; font-size: 16px; color: #00ff00;
+            word-break: break-all; display: none; text-shadow: 0 0 10px #00ff00;
+        }
+        .key-list {
+            max-height: 150px; overflow-y: auto; text-align: left; font-size: 12px;
+            margin-top: 15px; border-top: 1px solid #ff3333; padding-top: 10px;
+        }
+        .key-list div { color: #ffcccc; margin-bottom: 5px; border-bottom: 1px dashed #330000; padding-bottom: 3px; font-family: monospace; }
+        .admin-btn {
+            position: fixed; bottom: 20px; right: 20px; background: #ff1a1a; color: #fff;
+            border: none; border-radius: 50%; width: 50px; height: 50px; font-size: 20px;
+            cursor: pointer; box-shadow: 0 0 15px #ff0000; display: flex;
+            justify-content: center; align-items: center; z-index: 999;
+        }
+        .admin-btn:active { transform: scale(0.9); }
+    </style>
+</head>
+<body>
+
+    <button class="admin-btn" onclick="toggleAdminPanel()">⚙️</button>
+
+    <div id="adminPanel">
+        <div class="admin-box">
+            <h2>🔐 ADMIN LOGIN</h2>
+            <div id="adminLoginForm">
+                <input type="text" id="adminUser" placeholder="Tên đăng nhập (admin)">
+                <input type="password" id="adminPass" placeholder="Mật khẩu (phc51580)">
+                <button onclick="loginAdmin()">ĐĂNG NHẬP</button>
+                <p id="adminMsg" style="color: #ff4d4d; font-size: 12px;"></p>
+            </div>
+            
+            <div id="adminControlPanel" style="display: none;">
+                <h3 style="color: #fff; margin-bottom: 15px;">TẠO KEY MỚI</h3>
+                <select id="durationSelect">
+                    <option value="1">Key 1 Ngày</option>
+                    <option value="3">Key 3 Ngày</option>
+                    <option value="7">Key 7 Ngày</option>
+                    <option value="30">Key 30 Ngày</option>
+                    <option value="365">Key 1 Năm</option>
+                </select>
+                <button onclick="generateAdminKey()">TẠO KEY</button>
+                <div id="keyDisplay" class="key-display"></div>
+                
+                <h3 style="color: #fff; margin-top: 20px; margin-bottom: 10px; font-size: 14px;">DANH SÁCH KEY ĐÃ TẠO</h3>
+                <div id="generatedKeyList" class="key-list"></div>
+                
+                <button onclick="logoutAdmin()" style="background: #660000; margin-top: 15px;">ĐĂNG XUẤT</button>
+            </div>
+            
+            <button onclick="toggleAdminPanel()" style="background: #330000; margin-top: 10px;">ĐÓNG</button>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="header">
+            <div class="title">
+                <h1>HEADLOCK <br><span>MR.PHUC</span></h1>
+                <p>BY ZENITH SOLITUDE</p>
+            </div>
+            <div class="status-box">
+                <div><span class="label">PING</span><span class="value">22ms</span></div>
+                <div><span class="label"><span class="online-dot">●</span>ONLINE</span><span class="value">USERS</span><span class="value">4312</span></div>
+            </div>
+        </div>
+
+        <div class="logo-area">
+            <div class="logo-circle">
+                <svg viewBox="0 0 24 24">
+                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm0-13c-2.76 0-5 2.24-5 5s2.24 5 5 5 5-2.24 5-5-2.24-5-5-5zm0 8c-1.65 0-3-1.35-3-3s1.35-3 3-3 3 1.35 3 3-1.35 3-3 3z"/>
+                    <path d="M11 2h2v4h-2zM11 18h2v4h-2zM2 11h4v2H2zM18 11h4v2h-4z"/>
+                </svg>
+            </div>
+        </div>
+
+        <div id="authSection" class="auth-section">
+            <div class="input-label">
+                <svg viewBox="0 0 24 24"><path d="M12.65 10C11.83 7.67 9.61 6 7 6c-3.31 0-6 2.69-6 6s2.69 6 6 6c2.61 0 4.83-1.67 5.65-4H17v4h4v-4h2v-4H12.65zM7 14c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2z"/></svg>
+                LICENSE KEY
+            </div>
+            <input type="text" id="licenseInput" class="custom-input" placeholder="Nhập mã bản quyền..." autocomplete="off">
+            <button class="btn-primary" onclick="activateKey()">KÍCH HOẠT KEY →</button>
+            
+            <a href="https://zalo.me/0865561731" target="_blank" class="btn-contact">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg>
+                LIÊN HỆ ADMIN
+            </a>
+            
+            <div id="errorMsg" class="error-msg"></div>
+            <div id="successMsg" class="success-msg"></div>
+        </div>
+
+        <div id="toolSection" class="tool-section">
+            <div class="info-row">
+                <div class="info-box" id="ipDisplay">
+                    <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+                    <span id="ipText">115.76.48.141</span>
+                </div>
+                <div class="info-box" id="timerDisplay">
+                    <svg viewBox="0 0 24 24"><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"/></svg>
+                    <span id="countdown">00:00:00</span>
+                </div>
+            </div>
+
+            <div class="toggle-container">
+                <div class="toggle-left">
+                    <div class="toggle-icon">
+                        <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm0-13c-2.76 0-5 2.24-5 5s2.24 5 5 5 5-2.24 5-5-2.24-5-5-5zm0 8c-1.65 0-3-1.35-3-3s1.35-3 3-3 3 1.35 3 3-1.35 3-3 3z"/></svg>
+                    </div>
+                    <div class="toggle-text">
+                        <div class="label">AIM ACTIVE</div>
+                        <div class="value" id="aimStatusText">Aim Silent</div>
+                    </div>
+                </div>
+                <label class="switch">
+                    <!-- Nút gạt bị vô hiệu hóa, chỉ trang trí -->
+                    <input type="checkbox" id="aimToggle" checked disabled>
+                    <span class="slider"></span>
+                </label>
+            </div>
+
+            <div class="server-info">
+                <div class="row"><span class="label">🖥️ SERVER INFO</span></div>
+                <div class="row"><span class="label">Host:</span><span class="value">apex.zenithsolitude.store</span></div>
+                <div class="row"><span class="label">Port:</span><span class="value">2928</span></div>
+            </div>
+
+            <button class="btn-stop" onclick="deactivateTool()">TẮT AIM →</button>
+        </div>
+
+        <div class="footer">&lt;/&gt; BY <span>ZENITH SOLITUDE</span></div>
+    </div>
+
+    <script>
+        // ==========================================
+        // CẤU HÌNH
+        // ==========================================
+        const ADMIN_USER = "admin";
+        const ADMIN_PASS = "phc51580";
+        const SECRET_KEY = "PHC51580_SECRET_KEY_2024_XYZ"; // Khóa bí mật để tạo chữ ký Key
+        
+        let countdownInterval = null;
+
+        // ==========================================
+        // HÀM MÃ HÓA & TẠO KEY (Chứa timestamp)
+        // ==========================================
+        
+        function simpleHash(str) {
+            let hash = 5381;
+            for (let i = 0; i < str.length; i++) {
+                hash = ((hash << 5) + hash) + str.charCodeAt(i);
+                hash = hash >>> 0;
+            }
+            return hash.toString(36).toUpperCase().padStart(6, '0').slice(0, 6);
+        }
+
+        // Tạo Key có dạng: PHC-{DURATION}D-{TIMESTAMP_BASE36}-{SIGNATURE}
+        function createKey(durationDays) {
+            const timestamp = Date.now();
+            const tsBase36 = timestamp.toString(36).toUpperCase();
+            const durationPart = durationDays + "D";
+            const data = durationPart + tsBase36;
+            const sig = simpleHash(data + SECRET_KEY);
+            return `PHC-${durationPart}-${tsBase36}-${sig}`;
+        }
+
+        // Giải mã Key để lấy thông tin
+        function parseKey(key) {
+            key = key.trim().toUpperCase();
+            const parts = key.split('-');
+            if (parts.length !== 4 || parts[0] !== 'PHC') return null;
+            
+            const durationPart = parts[1]; // "1D", "30D"
+            const tsBase36 = parts[2];
+            const sig = parts[3];
+            
+            const durationDays = parseInt(durationPart);
+            if (isNaN(durationDays) || durationDays <= 0) return null;
+            
+            const timestamp = parseInt(tsBase36, 36);
+            if (isNaN(timestamp)) return null;
+            
+            // Kiểm tra chữ ký để chống sửa đổi
+            const expectedSig = simpleHash(durationPart + tsBase36 + SECRET_KEY);
+            if (sig !== expectedSig) return null;
+            
+            // Hạn sử dụng = Thời gian tạo + số ngày
+            const expiresAt = timestamp + (durationDays * 24 * 60 * 60 * 1000);
+            
+            return { 
+                durationDays: durationDays, 
+                createdAt: timestamp,
+                expiresAt: expiresAt 
+            };
+        }
+
+        // ==========================================
+        // LOGIC TOOL NGƯỜI DÙNG
+        // ==========================================
+        
+        function activateKey() {
+            const input = document.getElementById('licenseInput').value.trim();
+            const errorMsg = document.getElementById('errorMsg');
+            const successMsg = document.getElementById('successMsg');
+            
+            errorMsg.style.display = "none";
+            successMsg.style.display = "none";
+
+            if (input === "") {
+                errorMsg.textContent = "Vui lòng nhập Key để kích hoạt!";
+                errorMsg.style.display = "block";
+                return;
+            }
+
+            const parsed = parseKey(input);
+            
+            if (!parsed) {
+                errorMsg.textContent = "Key không hợp lệ! Vui lòng kiểm tra lại.";
+                errorMsg.style.display = "block";
+                return;
+            }
+
+            // Kiểm tra xem key đã hết hạn chưa (tính từ lúc tạo)
+            if (Date.now() >= parsed.expiresAt) {
+                errorMsg.textContent = "Key này đã hết hạn! Vui lòng liên hệ Admin để gia hạn.";
+                errorMsg.style.display = "block";
+                return;
+            }
+
+            // Lưu trạng thái kích hoạt vào máy
+            localStorage.setItem('ff_active_key', JSON.stringify({ 
+                key: input, 
+                expiresAt: parsed.expiresAt 
+            }));
+
+            successMsg.textContent = `Kích hoạt thành công! Hạn sử dụng còn lại.`;
+            successMsg.style.display = "block";
+            
+            setTimeout(() => {
+                showToolScreen(parsed.expiresAt);
+            }, 800);
+        }
+
+        function showToolScreen(expiresAt) {
+            document.getElementById('authSection').style.display = 'none';
+            document.getElementById('toolSection').style.display = 'flex';
+            startCountdown(expiresAt);
+        }
+
+        function startCountdown(expiresAt) {
+            if (countdownInterval) clearInterval(countdownInterval);
+            
+            const display = document.getElementById('countdown');
+            
+            function updateTimer() {
+                const now = Date.now();
+                let remaining = expiresAt - now;
+                
+                if (remaining <= 0) {
+                    clearInterval(countdownInterval);
+                    display.textContent = "00:00:00";
+                    alert("Key đã hết hạn! Vui lòng liên hệ Admin để gia hạn.");
+                    deactivateTool();
+                    return;
+                }
+                
+                const totalSec = Math.floor(remaining / 1000);
+                const days = Math.floor(totalSec / 86400);
+                const hours = Math.floor((totalSec % 86400) / 3600);
+                const minutes = Math.floor((totalSec % 3600) / 60);
+                const seconds = totalSec % 60;
+                
+                let timeStr = "";
+                if (days > 0) timeStr += days + "n ";
+                timeStr += String(hours).padStart(2, '0') + ':' + 
+                           String(minutes).padStart(2, '0') + ':' + 
+                           String(seconds).padStart(2, '0');
+                           
+                display.textContent = timeStr;
+            }
+            
+            updateTimer();
+            countdownInterval = setInterval(updateTimer, 1000);
+        }
+
+        function deactivateTool() {
+            if (countdownInterval) clearInterval(countdownInterval);
+            localStorage.removeItem('ff_active_key');
+            document.getElementById('toolSection').style.display = 'none';
+            document.getElementById('authSection').style.display = 'flex';
+            document.getElementById('licenseInput').value = '';
+            document.getElementById('errorMsg').style.display = 'none';
+            document.getElementById('successMsg').style.display = 'none';
+        }
+
+        document.getElementById('licenseInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') activateKey();
+        });
+
+        // ==========================================
+        // LOGIC ADMIN
+        // ==========================================
+        
+        function toggleAdminPanel() {
+            const panel = document.getElementById('adminPanel');
+            panel.style.display = (panel.style.display === 'flex') ? 'none' : 'flex';
+        }
+
+        function loginAdmin() {
+            const user = document.getElementById('adminUser').value;
+            const pass = document.getElementById('adminPass').value;
+            const msg = document.getElementById('adminMsg');
+            
+            if (user === ADMIN_USER && pass === ADMIN_PASS) {
+                document.getElementById('adminLoginForm').style.display = 'none';
+                document.getElementById('adminControlPanel').style.display = 'block';
+                msg.textContent = "";
+                renderAdminKeyList();
+            } else {
+                msg.textContent = "Sai tên đăng nhập hoặc mật khẩu!";
+            }
+        }
+
+        function logoutAdmin() {
+            document.getElementById('adminLoginForm').style.display = 'block';
+            document.getElementById('adminControlPanel').style.display = 'none';
+            document.getElementById('adminUser').value = '';
+            document.getElementById('adminPass').value = '';
+            document.getElementById('keyDisplay').style.display = 'none';
+        }
+
+        function generateAdminKey() {
+            const duration = parseInt(document.getElementById('durationSelect').value);
+            const newKey = createKey(duration);
+            
+            // Lưu vào danh sách để hiển thị
+            let adminKeys = JSON.parse(localStorage.getItem('ff_admin_keys') || '[]');
+            adminKeys.unshift({
+                key: newKey,
+                duration: duration,
+                createdAt: Date.now()
+            });
+            if (adminKeys.length > 100) adminKeys = adminKeys.slice(0, 100);
+            localStorage.setItem('ff_admin_keys', JSON.stringify(adminKeys));
+            
+            // Hiển thị key
+            const display = document.getElementById('keyDisplay');
+            display.textContent = newKey;
+            display.style.display = 'block';
+            
+            renderAdminKeyList();
+        }
+
+        function renderAdminKeyList() {
+            const list = document.getElementById('generatedKeyList');
+            let adminKeys = JSON.parse(localStorage.getItem('ff_admin_keys') || '[]');
+            
+            if (adminKeys.length === 0) {
+                list.innerHTML = '<div style="color:#ff8080; text-align:center; padding:5px;">Chưa có key nào được tạo.</div>';
+                return;
+            }
+            
+            list.innerHTML = '';
+            adminKeys.forEach(item => {
+                const div = document.createElement('div');
+                const date = new Date(item.createdAt);
+                const dateStr = date.toLocaleDateString('vi-VN') + ' ' + date.toLocaleTimeString('vi-VN', {hour:'2-digit', minute:'2-digit'});
+                div.innerHTML = `${item.key}<br><span style="color:#ff6666; font-size:10px;">Tạo: ${dateStr} (${item.duration} ngày)</span>`;
+                list.appendChild(div);
+            });
+        }
+
+        // ==========================================
+        // KHỞI ĐỘNG
+        // ==========================================
+        window.addEventListener('load', () => {
+            const activeKeyData = JSON.parse(localStorage.getItem('ff_active_key'));
+            
+            if (activeKeyData && activeKeyData.expires dAt > Date.now()) {
+                // Nếu còn hạn, vào thẳng Tool
+                showToolScreen(activeKeyData.expiresAt);
+            } else {
+                // Nếu hết hùngạn hoặc chưa có, hiện màn hình nhập Key
+                localStorage.remove.
+Item('ff_active_key');
+                document.getElementById('authSection').style.display = 'flex';
+                document.getElementById('4toolSection').style.display = 'none';
+            }
+        });
+    </script>
+
+</body>
+</html>

@@ -105,10 +105,11 @@
         }
         .switch input:disabled + .slider { cursor: not-allowed; }
         .switch input:disabled + .slider:before {
-            background-color: #fff; box-shadow: 0 0 15px #fff; transform: translateX(24px);
+            background-color: #fff; box-shadow: 0 0 15px #fff;  transform:8px;
+ translateX(           24px);
         }
         .server-info {
-            background: #140000; border: 1px solid #ff3333; border-radius: 10px;
+            background: #140000; border border: 1px solid #ff3333; border-radius: 10px;
             padding: 15px; text-align: left; font-family: 'Courier New', monospace;
             font-size: 12px; box-shadow: inset 0 0 10px rgba(255, 0, 0, 0.2);
         }
@@ -128,15 +129,12 @@
         .footer span { color: #ff1a1a; }
         .error-msg { color: #ff4d4d; font-size: 12px; text-align: center; margin-top: -5px; display: none; font-weight: bold; }
         .success-msg { color: #00ff00; font-size: 12px; text-align: center; margin-top: -5px; display: none; font-weight: bold; }
-        
-        /* ADMIN LINK & BUTTON */
         .admin-link {
             margin-top: 15px; color: #ff1a1a; font-size: 11px; cursor: pointer;
             text-decoration: underline; display: inline-block; font-weight: bold;
             letter-spacing: 1px; text-transform: uppercase;
         }
         .admin-link:active { color: #fff; }
-        
         #adminPanel {
             display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(0,0,0,0.95); z-index: 9999; justify-content: center; align-items: center; padding: 20px;
@@ -152,14 +150,13 @@
             border: 1px solid #ff4d4d; background: #260000; color: #fff; text-align: center;
         }
         .admin-box button {
-            width: 100%; padding: 12px; margin-bottom: 10px; border-radius: 8px;
-            border: none; background: #ff1a1a; color: #fff; font-weight: bold; cursor: pointer;
+            width: 100%; padding: 12px; margin-bottom: 10px; border-radius:: none; background: #ff1a1a; color: #fff; font-weight: bold; cursor: pointer;
             text-transform: uppercase;
         }
         .admin-box button:active { transform: scale(0.97); }
         .key-display {
             background: #003300; border: 1px solid #00cc00; padding: 15px; border-radius: 8px;
-            margin-top: 10px; font-family: monospace; font-size: 16px; color: #00ff00;
+            margin-top: 10px; font-family: monospace; font-size: 18px; color: #00ff00;
             word-break: break-all; display: none; text-shadow: 0 0 10px #00ff00;
         }
         .key-list {
@@ -171,13 +168,12 @@
 </head>
 <body>
 
-    <!-- BẢNG ĐIỀU KHIỂN ADMIN (ẨN MẶC ĐỊNH) -->
     <div id="adminPanel">
         <div class="admin-box">
             <h2>🔐 ADMIN LOGIN</h2>
             <div id="adminLoginForm">
-                <input type="text" id="adminUser" placeholder="Tên đăng nhập (admin)">
-                <input type="password" id="adminPass" placeholder="Mật khẩu (phc51580)">
+                <input type="text" id="adminUser" placeholder="Tên đăng nhập">
+                <input type="password" id="adminPass" placeholder="Mật khẩu">
                 <button onclick="loginAdmin()">ĐĂNG NHẬP</button>
                 <p id="adminMsg" style="color: #ff4d4d; font-size: 12px;"></p>
             </div>
@@ -188,8 +184,10 @@
                     <option value="1">Key 1 Ngày</option>
                     <option value="3">Key 3 Ngày</option>
                     <option value="7">Key 7 Ngày</option>
-                    <option value="30">Key 30 Ngày</option>
-                    <option value="365">Key 1 Năm</option>
+                    <option value="15">Key 15 Ngày</option>
+                    <option value="30">Key 30 Ngày (1 tháng)</option>
+                    <option value="90">Key 90 Ngày (3 tháng)</option>
+                    <option value="0">Key Vĩnh Viễn (VV)</option>
                 </select>
                 <button onclick="generateAdminKey()">TẠO KEY</button>
                 <div id="keyDisplay" class="key-display"></div>
@@ -204,7 +202,6 @@
         </div>
     </div>
 
-    <!-- GIAO DIỆN CHÍNH -->
     <div class="container">
         <div class="header">
             <div class="title">
@@ -231,7 +228,7 @@
                 <svg viewBox="0 0 24 24"><path d="M12.65 10C11.83 7.67 9.61 6 7 6c-3.31 0-6 2.69-6 6s2.69 6 6 6c2.61 0 4.83-1.67 5.65-4H17v4h4v-4h2v-4H12.65zM7 14c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2z"/></svg>
                 LICENSE KEY
             </div>
-            <input type="text" id="licenseInput" class="custom-input" placeholder="Nhập mã bản quyền..." autocomplete="off">
+            <input type="text" id="licenseInput" class="custom-input" placeholder="VD: PHUC-029-282" autocomplete="off">
             <button class="btn-primary" onclick="activateKey()">KÍCH HOẠT KEY →</button>
             
             <a href="https://zalo.me/0865561731" target="_blank" class="btn-contact">
@@ -250,7 +247,7 @@
                     <span id="ipText">115.76.48.141</span>
                 </div>
                 <div class="info-box" id="timerDisplay">
-                    <svg viewBox="0 0 24 24"><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"/></svg>
+                    <svg viewBox="0 0 24 24"><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 én22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8- d3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13Hữ11v6l5.25 3.15.75-1.23-4.5-2.67z"/></svg>
                     <span id="countdown">00:00:00</span>
                 </div>
             </div>
@@ -282,7 +279,6 @@
 
         <div class="footer">
             &lt;/&gt; BY <span>ZENITH SOLITUDE</span>
-            <!-- NÚT ADMIN DỰ PHÒNG - LUÔN HIỆN -->
             <br>
             <span class="admin-link" onclick="toggleAdminPanel()">⚙️ QUẢN TRỊ VIÊN</span>
         </div>
@@ -294,12 +290,16 @@
         // ==========================================
         const ADMIN_USER = "admin";
         const ADMIN_PASS = "phc51580";
-        const SECRET_KEY = "PHC51580_SECRET_KEY_2024_XYZ"; 
+        const SECRET = "PHUC_SECRET_2024_X9K2"; // 🔴 Đổi chuỗi này thành bí mật riêng của bạn
+        
+        const DURATIONS = [0, 1, 3, 7, 15, 30, 90]; // index 0 = VV, 1 = 1 ngày, 2 = 3 ngày...
+        const REFERENCE_TIME = new Date('2024-01-01T00:00:00Z').getTime();
+        const SIX_HOURS_MS = 6 * 3600 * 1000;
         
         let countdownInterval = null;
 
         // ==========================================
-        // MÃ HÓA & TẠO KEY
+        // THUẬT TOÁN MÃ HÓA KEY (Dạng PHUC-XXX-XXX)
         // ==========================================
         
         function simpleHash(str) {
@@ -308,39 +308,68 @@
                 hash = ((hash << 5) + hash) + str.charCodeAt(i);
                 hash = hash >>> 0;
             }
-            return hash.toString(36).toUpperCase().padStart(6, '0').slice(0, 6);
+            return hash.toString(36).toUpperCase();
         }
 
-        function createKey(durationDays) {
-            const timestamp = Date.now();
-            const tsBase36 = timestamp.toString(36).toUpperCase();
-            const durationPart = durationDays + "D";
-            const data = durationPart + tsBase36;
-            const sig = simpleHash(data + SECRET_KEY);
-            return `PHC-${durationPart}-${tsBase36}-${sig}`;
+        // Tạo Key từ index thời hạn (0-6)
+        function createKey(durationIndex) {
+            // Số khoảng 6 giờ kể từ mốc 2024-01-01
+            const intervals = Math.floor((Date.now() - REFERENCE_TIME) / SIX_HOURS_MS);
+            const randomVal = Math.floor(Math.random() * 36); // 0-35
+            
+            // N liệu: ((intervals * 7) + durationIndex) * 36 + randomVal
+            let combined = ((intervals * 7) + durationIndex) * 36 + randomVal;
+            
+            // Chuyển sang base36, pad thành 5 ký tự
+            let dataPart = combined.toString(36).toUpperCase().padStart(5, '0');
+            
+            // 1 ký tự checksum
+            let checksum = simpleHash(dataPart + SECRET).slice(-1);
+            
+            const full = dataPart + checksum;
+            return `PHUC-${full.slice(0, 3)}-${full.slice(3, 6)}`;
         }
 
+        // Giải mã Key
         function parseKey(key) {
             key = key.trim().toUpperCase();
             const parts = key.split('-');
-            if (parts.length !== 4 || parts[0] !== 'PHC') return null;
+            if (parts.length !== 3 || parts[0] !== 'PHUC') return null;
             
-            const durationPart = parts[1];
-            const tsBase36 = parts[2];
-            const sig = parts[3];
+            const part1 = parts[1];
+            const part2 = parts[2];
+            if (part1.length !== 3 || part2.length !== 3) return null;
             
-            const durationDays = parseInt(durationPart);
-            if (isNaN(durationDays) || durationDays <= 0) return null;
+            const full = part1 + part2;
+            const dataPart = full.slice(0, 5);
+            const checksumPart = full.slice(5, 6);
             
-            const timestamp = parseInt(tsBase36, 36);
-            if (isNaN(timestamp)) return null;
+            // Kiểm tra checksum
+            const expectedChecksum = simpleHash(dataPart + SECRET).slice(-1);
+            if (checksumPart !== expectedChecksum) return null;
             
-            const expectedSig = simpleHash(durationPart + tsBase36 + SECRET_KEY);
-            if (sig !== expectedSig) return null;
+            let combined;
+            try {
+                combined = parseInt(dataPart, 36);
+            } catch(e) { return null; }
+            if (isNaN(combined)) return null;
             
-            const expiresAt = timestamp + (durationDays * 24 * 60 * 60 * 1000);
+            const randomVal = combined % 36;
+            const temp = Math.floor(combined / 36);
+            const durationIndex = temp % 7;
+            const intervals = Math.floor(temp / 7);
             
-            return { durationDays, createdAt: timestamp, expiresAt };
+            const durationDays = DURATIONS[durationIndex];
+            const createdAt = REFERENCE_TIME + intervals * SIX_HOURS_MS;
+            
+            let expiresAt;
+            if (durationDays === 0) {
+                expiresAt = 9999999999999;
+            } else {
+                expiresAt = createdAt + durationDays * 24 * 60 * 60 * 1000;
+            }
+            
+            return { durationDays, createdAt, expiresAt };
         }
 
         // ==========================================
@@ -369,7 +398,7 @@
                 return;
             }
 
-            if (Date.now() >= parsed.expiresAt) {
+            if (parsed.durationDays !== 0 && Date.now() >= parsed.expiresAt) {
                 errorMsg.textContent = "Key này đã hết hạn! Vui lòng liên hệ Admin để gia hạn.";
                 errorMsg.style.display = "block";
                 return;
@@ -377,21 +406,35 @@
 
             localStorage.setItem('ff_active_key', JSON.stringify({ 
                 key: input, 
-                expiresAt: parsed.expiresAt 
+                expiresAt: parsed.expiresAt,
+                isLifetime: parsed.durationDays === 0
             }));
 
             successMsg.textContent = `Kích hoạt thành công!`;
             successMsg.style.display = "block";
             
             setTimeout(() => {
-                showToolScreen(parsed.expiresAt);
+                showToolScreen(parsed.expiresAt, parsed.durationDays === 0);
             }, 800);
         }
 
-        function showToolScreen(expiresAt) {
+        function showToolScreen(expiresAt, isLifetime) {
             document.getElementById('authSection').style.display = 'none';
             document.getElementById('toolSection').style.display = 'flex';
-            startCountdown(expiresAt);
+            
+            const display = document.getElementById('countdown');
+            if (isLifetime) {
+                display.textContent = "VĨNH VIỄN";
+                display.style.fontSize = "20px";
+                display.style.color = "#00ff00";
+                display.style.textShadow = "0 0 10px #00ff00";
+                if (countdownInterval) clearInterval(countdownInterval);
+            } else {
+                display.style.fontSize = "14px";
+                display.style.color = "#ffcccc";
+                display.style.textShadow = "none";
+                startCountdown(expiresAt);
+            }
         }
 
         function startCountdown(expiresAt) {
@@ -449,11 +492,7 @@
         
         function toggleAdminPanel() {
             const panel = document.getElementById('adminPanel');
-            if (panel.style.display === 'flex') {
-                panel.style.display = 'none';
-            } else {
-                panel.style.display = 'flex';
-            }
+            panel.style.display = (panel.style.display === 'flex') ? 'none' : 'flex';
         }
 
         function loginAdmin() {
@@ -481,7 +520,18 @@
 
         function generateAdminKey() {
             const duration = parseInt(document.getElementById('durationSelect').value);
-            const newKey = createKey(duration);
+            // duration = 0 nếu là VV, ngược lại là số ngày. Chuyển thành index 0-6
+            let durationIndex;
+            if (duration === 0) durationIndex = 0;
+            else if (duration === 1) durationIndex = 1;
+            else if (duration === 3) durationIndex = 2;
+            else if (duration === 7) durationIndex = 3;
+            else if (duration === 15) durationIndex = 4;
+            else if (duration === 30) durationIndex = 5;
+            else if (duration === 90) durationIndex = 6;
+            else durationIndex = 1;
+            
+            const newKey = createKey(durationIndex);
             
             let adminKeys = JSON.parse(localStorage.getItem('ff_admin_keys') || '[]');
             adminKeys.unshift({ key: newKey, duration: duration, createdAt: Date.now() });
@@ -509,17 +559,17 @@
                 const div = document.createElement('div');
                 const date = new Date(item.createdAt);
                 const dateStr = date.toLocaleDateString('vi-VN') + ' ' + date.toLocaleTimeString('vi-VN', {hour:'2-digit', minute:'2-digit'});
-                div.innerHTML = `${item.key}<br><span style="color:#ff6666; font-size:10px;">Tạo: ${dateStr} (${item.duration} ngày)</span>`;
+                let durationText = item.duration === 0 ? "Vĩnh viễn" : item.duration + " ngày";
+                div.innerHTML = `${item.key}<br><span style="color:#ff6666; font-size:10px;">Tạo: ${dateStr} (${durationText})</span>`;
                 list.appendChild(div);
             });
         }
 
-        // KHỞI ĐỘNG
         window.addEventListener('load', () => {
             const activeKeyData = JSON.parse(localStorage.getItem('ff_active_key'));
             
             if (activeKeyData && activeKeyData.expiresAt > Date.now()) {
-                showToolScreen(activeKeyData.expiresAt);
+                showToolScreen(activeKeyData.expiresAt, activeKeyData.isLifetime);
             } else {
                 localStorage.removeItem('ff_active_key');
                 document.getElementById('authSection').style.display = 'flex';

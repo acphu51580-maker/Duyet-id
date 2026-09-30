@@ -79,15 +79,15 @@
         }
         .info-box svg { width: 14px; height: 14px; fill: #ff1a1a; }
         .toggle-container {
-            background: #140000; border: 1px solid #ff3333; border-radius: :12px;
+            background: #140000; border: 1px solid #ff3333; border-radius: 12px;
             padding: 15px; display: flex; justify-content: space-between; align-items: center;
-            box #-shadow: inset 0 0 10px rgba(255, 0, 0, 0.2);
-       330 }
+            box-shadow: inset 0 0 10px rgba(255, 0, 0, 0.2);
+        }
         .toggle-left { display: flex; align-items: center; gap: 12px; text-align: left; }
-       000 .toggle-icon {
-            width: 40px; height: 40px; border-radius: 50%; border: 2px;
- solid #ff1a1a;
-            display: flex; justify-content: center; align-items: center; background            box-shadow: 0 0 10px rgba(255, 0, 0, 0.5);
+        .toggle-icon {
+            width: 40px; height: 40px; border-radius: 50%; border: 2px solid #ff1a1a;
+            display: flex; justify-content: center; align-items: center; background: #330000;
+            box-shadow: 0 0 10px rgba(255, 0, 0, 0.5);
         }
         .toggle-icon svg { width: 20px; height: 20px; fill: #ff1a1a; }
         .toggle-text .label { font-size: 10px; color: #ff8080; text-transform: uppercase; font-weight: bold; }
@@ -103,14 +103,9 @@
             position: absolute; content: ""; height: 22px; width: 22px; left: 3px; bottom: 3px;
             background-color: #ff1a1a; transition: .4s; border-radius: 50%; box-shadow: 0 0 10px #ff0000;
         }
-        /* Nút gạt AIM bị vô hiệu hóa - không cho tắt */
-        .switch input:disabled + .slider {
-            cursor: not-allowed;
-        }
+        .switch input:disabled + .slider { cursor: not-allowed; }
         .switch input:disabled + .slider:before {
-            background-color: #fff;
-            box-shadow: 0 0 15px #fff;
-            transform: translateX(24px);
+            background-color: #fff; box-shadow: 0 0 15px #fff; transform: translateX(24px);
         }
         .server-info {
             background: #140000; border: 1px solid #ff3333; border-radius: 10px;
@@ -134,17 +129,24 @@
         .error-msg { color: #ff4d4d; font-size: 12px; text-align: center; margin-top: -5px; display: none; font-weight: bold; }
         .success-msg { color: #00ff00; font-size: 12px; text-align: center; margin-top: -5px; display: none; font-weight: bold; }
         
-        /* ADMIN PANEL */
+        /* ADMIN LINK & BUTTON */
+        .admin-link {
+            margin-top: 15px; color: #ff1a1a; font-size: 11px; cursor: pointer;
+            text-decoration: underline; display: inline-block; font-weight: bold;
+            letter-spacing: 1px; text-transform: uppercase;
+        }
+        .admin-link:active { color: #fff; }
+        
         #adminPanel {
             display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.95); z-index: 1000; justify-content: center; align-items: center; padding: 20px;
+            background: rgba(0,0,0,0.95); z-index: 9999; justify-content: center; align-items: center; padding: 20px;
         }
         .admin-box {
             background: #1a0000; border: 2px solid #ff0000; border-radius: 15px;
             padding: 25px; width: 100%; max-width: 400px; text-align: center;
             box-shadow: 0 0 30px #ff0000;
         }
-        .admin-box h2 { color: #ff3333; margin-bottom: 20px; text-transform: uppercase; }
+        .admin-box h2 { color: #ff3333; margin-bottom: 20px; text-transform: uppercase; font-size: 18px; }
         .admin-box input, .admin-box select {
             width: 100%; padding: 12px; margin-bottom: 10px; border-radius: 8px;
             border: 1px solid #ff4d4d; background: #260000; color: #fff; text-align: center;
@@ -152,6 +154,7 @@
         .admin-box button {
             width: 100%; padding: 12px; margin-bottom: 10px; border-radius: 8px;
             border: none; background: #ff1a1a; color: #fff; font-weight: bold; cursor: pointer;
+            text-transform: uppercase;
         }
         .admin-box button:active { transform: scale(0.97); }
         .key-display {
@@ -160,23 +163,15 @@
             word-break: break-all; display: none; text-shadow: 0 0 10px #00ff00;
         }
         .key-list {
-            max-height: 150px; overflow-y: auto; text-align: left; font-size: 12px;
+            max-height: 150px; overflow-y: auto; text-align: left; font-size: 11px;
             margin-top: 15px; border-top: 1px solid #ff3333; padding-top: 10px;
         }
         .key-list div { color: #ffcccc; margin-bottom: 5px; border-bottom: 1px dashed #330000; padding-bottom: 3px; font-family: monospace; }
-        .admin-btn {
-            position: fixed; bottom: 20px; right: 20px; background: #ff1a1a; color: #fff;
-            border: none; border-radius: 50%; width: 50px; height: 50px; font-size: 20px;
-            cursor: pointer; box-shadow: 0 0 15px #ff0000; display: flex;
-            justify-content: center; align-items: center; z-index: 999;
-        }
-        .admin-btn:active { transform: scale(0.9); }
     </style>
 </head>
 <body>
 
-    <button class="admin-btn" onclick="toggleAdminPanel()">⚙️</button>
-
+    <!-- BẢNG ĐIỀU KHIỂN ADMIN (ẨN MẶC ĐỊNH) -->
     <div id="adminPanel">
         <div class="admin-box">
             <h2>🔐 ADMIN LOGIN</h2>
@@ -188,7 +183,7 @@
             </div>
             
             <div id="adminControlPanel" style="display: none;">
-                <h3 style="color: #fff; margin-bottom: 15px;">TẠO KEY MỚI</h3>
+                <h3 style="color: #fff; margin-bottom: 15px; font-size: 14px;">TẠO KEY MỚI</h3>
                 <select id="durationSelect">
                     <option value="1">Key 1 Ngày</option>
                     <option value="3">Key 3 Ngày</option>
@@ -209,6 +204,7 @@
         </div>
     </div>
 
+    <!-- GIAO DIỆN CHÍNH -->
     <div class="container">
         <div class="header">
             <div class="title">
@@ -270,7 +266,6 @@
                     </div>
                 </div>
                 <label class="switch">
-                    <!-- Nút gạt bị vô hiệu hóa, chỉ trang trí -->
                     <input type="checkbox" id="aimToggle" checked disabled>
                     <span class="slider"></span>
                 </label>
@@ -285,7 +280,12 @@
             <button class="btn-stop" onclick="deactivateTool()">TẮT AIM →</button>
         </div>
 
-        <div class="footer">&lt;/&gt; BY <span>ZENITH SOLITUDE</span></div>
+        <div class="footer">
+            &lt;/&gt; BY <span>ZENITH SOLITUDE</span>
+            <!-- NÚT ADMIN DỰ PHÒNG - LUÔN HIỆN -->
+            <br>
+            <span class="admin-link" onclick="toggleAdminPanel()">⚙️ QUẢN TRỊ VIÊN</span>
+        </div>
     </div>
 
     <script>
@@ -294,12 +294,12 @@
         // ==========================================
         const ADMIN_USER = "admin";
         const ADMIN_PASS = "phc51580";
-        const SECRET_KEY = "PHC51580_SECRET_KEY_2024_XYZ"; // Khóa bí mật để tạo chữ ký Key
+        const SECRET_KEY = "PHC51580_SECRET_KEY_2024_XYZ"; 
         
         let countdownInterval = null;
 
         // ==========================================
-        // HÀM MÃ HÓA & TẠO KEY (Chứa timestamp)
+        // MÃ HÓA & TẠO KEY
         // ==========================================
         
         function simpleHash(str) {
@@ -311,7 +311,6 @@
             return hash.toString(36).toUpperCase().padStart(6, '0').slice(0, 6);
         }
 
-        // Tạo Key có dạng: PHC-{DURATION}D-{TIMESTAMP_BASE36}-{SIGNATURE}
         function createKey(durationDays) {
             const timestamp = Date.now();
             const tsBase36 = timestamp.toString(36).toUpperCase();
@@ -321,13 +320,12 @@
             return `PHC-${durationPart}-${tsBase36}-${sig}`;
         }
 
-        // Giải mã Key để lấy thông tin
         function parseKey(key) {
             key = key.trim().toUpperCase();
             const parts = key.split('-');
             if (parts.length !== 4 || parts[0] !== 'PHC') return null;
             
-            const durationPart = parts[1]; // "1D", "30D"
+            const durationPart = parts[1];
             const tsBase36 = parts[2];
             const sig = parts[3];
             
@@ -337,22 +335,16 @@
             const timestamp = parseInt(tsBase36, 36);
             if (isNaN(timestamp)) return null;
             
-            // Kiểm tra chữ ký để chống sửa đổi
             const expectedSig = simpleHash(durationPart + tsBase36 + SECRET_KEY);
             if (sig !== expectedSig) return null;
             
-            // Hạn sử dụng = Thời gian tạo + số ngày
             const expiresAt = timestamp + (durationDays * 24 * 60 * 60 * 1000);
             
-            return { 
-                durationDays: durationDays, 
-                createdAt: timestamp,
-                expiresAt: expiresAt 
-            };
+            return { durationDays, createdAt: timestamp, expiresAt };
         }
 
         // ==========================================
-        // LOGIC TOOL NGƯỜI DÙNG
+        // LOGIC NGƯỜI DÙNG
         // ==========================================
         
         function activateKey() {
@@ -377,20 +369,18 @@
                 return;
             }
 
-            // Kiểm tra xem key đã hết hạn chưa (tính từ lúc tạo)
             if (Date.now() >= parsed.expiresAt) {
                 errorMsg.textContent = "Key này đã hết hạn! Vui lòng liên hệ Admin để gia hạn.";
                 errorMsg.style.display = "block";
                 return;
             }
 
-            // Lưu trạng thái kích hoạt vào máy
             localStorage.setItem('ff_active_key', JSON.stringify({ 
                 key: input, 
                 expiresAt: parsed.expiresAt 
             }));
 
-            successMsg.textContent = `Kích hoạt thành công! Hạn sử dụng còn lại.`;
+            successMsg.textContent = `Kích hoạt thành công!`;
             successMsg.style.display = "block";
             
             setTimeout(() => {
@@ -406,7 +396,6 @@
 
         function startCountdown(expiresAt) {
             if (countdownInterval) clearInterval(countdownInterval);
-            
             const display = document.getElementById('countdown');
             
             function updateTimer() {
@@ -460,7 +449,11 @@
         
         function toggleAdminPanel() {
             const panel = document.getElementById('adminPanel');
-            panel.style.display = (panel.style.display === 'flex') ? 'none' : 'flex';
+            if (panel.style.display === 'flex') {
+                panel.style.display = 'none';
+            } else {
+                panel.style.display = 'flex';
+            }
         }
 
         function loginAdmin() {
@@ -490,17 +483,11 @@
             const duration = parseInt(document.getElementById('durationSelect').value);
             const newKey = createKey(duration);
             
-            // Lưu vào danh sách để hiển thị
             let adminKeys = JSON.parse(localStorage.getItem('ff_admin_keys') || '[]');
-            adminKeys.unshift({
-                key: newKey,
-                duration: duration,
-                createdAt: Date.now()
-            });
+            adminKeys.unshift({ key: newKey, duration: duration, createdAt: Date.now() });
             if (adminKeys.length > 100) adminKeys = adminKeys.slice(0, 100);
             localStorage.setItem('ff_admin_keys', JSON.stringify(adminKeys));
             
-            // Hiển thị key
             const display = document.getElementById('keyDisplay');
             display.textContent = newKey;
             display.style.display = 'block';
@@ -527,21 +514,16 @@
             });
         }
 
-        // ==========================================
         // KHỞI ĐỘNG
-        // ==========================================
         window.addEventListener('load', () => {
             const activeKeyData = JSON.parse(localStorage.getItem('ff_active_key'));
             
-            if (activeKeyData && activeKeyData.expires dAt > Date.now()) {
-                // Nếu còn hạn, vào thẳng Tool
+            if (activeKeyData && activeKeyData.expiresAt > Date.now()) {
                 showToolScreen(activeKeyData.expiresAt);
             } else {
-                // Nếu hết hùngạn hoặc chưa có, hiện màn hình nhập Key
-                localStorage.remove.
-Item('ff_active_key');
+                localStorage.removeItem('ff_active_key');
                 document.getElementById('authSection').style.display = 'flex';
-                document.getElementById('4toolSection').style.display = 'none';
+                document.getElementById('toolSection').style.display = 'none';
             }
         });
     </script>

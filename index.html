@@ -45,13 +45,29 @@
         .auth-section { display: flex; flex-direction: column; gap: 15px; }
         .input-label { text-align: left; font-size: 11px; color: #ff4d4d; font-weight: bold; text-transform: uppercase; letter-spacing: 1px; display: flex; align-items: center; gap: 5px; }
         .input-label svg { width: 14px; height: 14px; fill: #ff1a1a; }
+        
+        /* Hàng nhập key + nút DÁN */
+        .input-row { display: flex; gap: 8px; }
         .custom-input {
-            width: 100%; padding: 16px 15px; border-radius: 12px; border: 1px solid #ff3333;
+            flex: 1; padding: 16px 15px; border-radius: 12px; border: 1px solid #ff3333;
             background-color: #1a0000; color: #fff; font-size: 14px; outline: none; transition: 0.3s;
             box-shadow: inset 0 0 10px rgba(255, 0, 0, 0.2); text-align: center;
         }
         .custom-input:focus { border-color: #ff0000; box-shadow: 0 0 15px #ff0000, inset 0 0 10px rgba(255, 0, 0, 0.4); }
         .custom-input::placeholder { color: #660000; }
+        
+        /* Nút DÁN */
+        .btn-paste {
+            padding: 0 18px; border-radius: 12px; border: 1px solid #ff4d4d;
+            background: linear-gradient(90deg, #660000, #cc0000); color: #fff;
+            font-size: 11px; font-weight: bold; cursor: pointer;
+            text-transform: uppercase; letter-spacing: 1px;
+            display: flex; align-items: center; justify-content: center; gap: 5px;
+            box-shadow: 0 4px 15px rgba(255, 0, 0, 0.4); transition: 0.3s; white-space: nowrap;
+        }
+        .btn-paste:active { transform: scale(0.95); }
+        .btn-paste svg { width: 14px; height: 14px; fill: #fff; }
+        
         .btn-primary {
             width: 100%; padding: 16px; border-radius: 12px; border: 1px solid #ff4d4d;
             background: linear-gradient(90deg, #990000, #ff1a1a); color: #fff; font-size: 15px;
@@ -128,6 +144,7 @@
         .footer span { color: #ff1a1a; }
         .error-msg { color: #ff4d4d; font-size: 12px; text-align: center; margin-top: -5px; display: none; font-weight: bold; }
         .success-msg { color: #00ff00; font-size: 12px; text-align: center; margin-top: -5px; display: none; font-weight: bold; }
+        .info-msg { color: #ffcc00; font-size: 12px; text-align: center; margin-top: -5px; display: none; font-weight: bold; }
         .admin-link {
             margin-top: 15px; color: #ff1a1a; font-size: 11px; cursor: pointer;
             text-decoration: underline; display: inline-block; font-weight: bold;
@@ -158,6 +175,14 @@
             background: #003300; border: 1px solid #00cc00; padding: 15px; border-radius: 8px;
             margin-top: 10px; font-family: monospace; font-size: 18px; color: #00ff00;
             word-break: break-all; display: none; text-shadow: 0 0 10px #00ff00;
+            position: relative; cursor: pointer;
+        }
+        .key-display.copied {
+            background: #006600; border-color: #00ff00;
+            box-shadow: 0 0 20px #00ff00;
+        }
+        .key-display .hint {
+            font-size: 10px; color: #99ff99; display: block; margin-top: 5px; font-family: 'Segoe UI';
         }
         .key-list {
             max-height: 150px; overflow-y: auto; text-align: left; font-size: 11px;
@@ -190,7 +215,9 @@
                     <option value="0">Key Vĩnh Viễn (PHUC-VVD-XXXXXX)</option>
                 </select>
                 <button onclick="generateAdminKey()">TẠO KEY</button>
-                <div id="keyDisplay" class="key-display"></div>
+                
+                <!-- Hiển thị Key vừa tạo - Click vào để copy -->
+                <div id="keyDisplay" class="key-display" onclick="copyDisplayedKey()"></div>
                 
                 <h3 style="color: #fff; margin-top: 20px; margin-bottom: 10px; font-size: 14px;">DANH SÁCH KEY ĐÃ TẠO</h3>
                 <div id="generatedKeyList" class="key-list"></div>
@@ -228,7 +255,16 @@
                 <svg viewBox="0 0 24 24"><path d="M12.65 10C11.83 7.67 9.61 6 7 6c-3.31 0-6 2.69-6 6s2.69 6 6 6c2.61 0 4.83-1.67 5.65-4H17v4h4v-4h2v-4H12.65zM7 14c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2z"/></svg>
                 LICENSE KEY
             </div>
-            <input type="text" id="licenseInput" class="custom-input" placeholder="VD: PHUC-01D-A1B2C3" autocomplete="off">
+            
+            <!-- Ô nhập + nút DÁN -->
+            <div class="input-row">
+                <input type="text" id="licenseInput" class="custom-input" placeholder="VD: PHUC-01D-A1B2C3" autocomplete="off">
+                <button class="btn-paste" onclick="pasteKey()">
+                    <svg viewBox="0 0 24 24"><path d="M19 2h-4.18C14.4.84 13.3 0 12 0c-1.3 0-2.4.84-2.82 2H5c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-7 0c.55 0 1 .45 1 1s-.45 1-1 1-1-.45-1-1 .45-1 1-1zm7 18H5V4h2v3h10V4h2v16z"/></svg>
+                    DÁN
+                </button>
+            </div>
+            
             <button class="btn-primary" onclick="activateKey()">KÍCH HOẠT KEY →</button>
             
             <a href="https://zalo.me/0865561731" target="_blank" class="btn-contact">
@@ -238,6 +274,7 @@
             
             <div id="errorMsg" class="error-msg"></div>
             <div id="successMsg" class="success-msg"></div>
+            <div id="infoMsg" class="info-msg"></div>
         </div>
 
         <div id="toolSection" class="tool-section">
@@ -327,6 +364,8 @@
 
         function parseKey(key) {
             key = key.trim().toUpperCase();
+            key = key.replace(/[–—−]/g, '-');
+            
             const parts = key.split('-');
             if (parts.length !== 3 || parts[0] !== 'PHUC') return null;
             
@@ -367,6 +406,53 @@
         }
 
         // ==========================================
+        // TÍNH NĂNG DÁN KEY TỰ ĐỘNG
+        // ==========================================
+        
+        function pasteKey() {
+            const inputField = document.getElementById('licenseInput');
+            const infoMsg = document.getElementById('infoMsg');
+            const errorMsg = document.getElementById('errorMsg');
+            const successMsg = document.getElementById('successMsg');
+            
+            errorMsg.style.display = 'none';
+            successMsg.style.display = 'none';
+            infoMsg.style.display = 'none';
+            
+            // Kiểm tra hỗ trợ clipboard API
+            if (navigator.clipboard && navigator.clipboard.readText) {
+                navigator.clipboard.readText().then(text => {
+                    if (text && text.trim() !== '') {
+                        // Tự động chuyển dấu gạch ngang về chuẩn
+                        let cleaned = text.trim().replace(/[–—−]/g, '-');
+                        inputField.value = cleaned.toUpperCase();
+                        infoMsg.textContent = "✅ Đã dán Key từ bộ nhớ tạm!";
+                        infoMsg.style.display = 'block';
+                        setTimeout(() => { infoMsg.style.display = 'none'; }, 2000);
+                    } else {
+                        infoMsg.textContent = "⚠️ Bộ nhớ tạm trống, hãy copy Key trước!";
+                        infoMsg.style.display = 'block';
+                        setTimeout(() => { infoMsg.style.display = 'none'; }, 2500);
+                    }
+                }).catch(err => {
+                    // Fallback: yêu cầu user dán thủ công
+                    fallbackPaste(inputField, infoMsg);
+                });
+            } else {
+                // Trình duyệt cũ không hỗ trợ -> fallback
+                fallbackPaste(inputField, infoMsg);
+            }
+        }
+        
+        function fallbackPaste(inputField, infoMsg) {
+            // Hiển thị gợi ý dán thủ công
+            infoMsg.textContent = "👉 Hãy nhấn giữ vào ô nhập liệu và chọn 'Dán' (Paste)";
+            infoMsg.style.display = 'block';
+            setTimeout(() => { infoMsg.style.display = 'none'; }, 3000);
+            inputField.focus();
+        }
+
+        // ==========================================
         // LOGIC NGƯỜI DÙNG
         // ==========================================
         
@@ -374,9 +460,11 @@
             const input = document.getElementById('licenseInput').value.trim();
             const errorMsg = document.getElementById('errorMsg');
             const successMsg = document.getElementById('successMsg');
+            const infoMsg = document.getElementById('infoMsg');
             
             errorMsg.style.display = "none";
             successMsg.style.display = "none";
+            infoMsg.style.display = "none";
 
             if (input === "") {
                 errorMsg.textContent = "Vui lòng nhập Key để kích hoạt!";
@@ -474,6 +562,7 @@
             document.getElementById('licenseInput').value = '';
             document.getElementById('errorMsg').style.display = 'none';
             document.getElementById('successMsg').style.display = 'none';
+            document.getElementById('infoMsg').style.display = 'none';
         }
 
         document.getElementById('licenseInput').addEventListener('keypress', function(e) {
@@ -516,20 +605,57 @@
             document.getElementById('keyDisplay').style.display = 'none';
         }
 
+        // Tạo Key và TỰ ĐỘNG COPY vào clipboard
         function generateAdminKey() {
             const duration = parseInt(document.getElementById('durationSelect').value);
             const newKey = createKey(duration);
             
+            // Lưu lịch sử
             let adminKeys = JSON.parse(localStorage.getItem('ff_admin_keys') || '[]');
             adminKeys.unshift({ key: newKey, duration: duration, createdAt: Date.now() });
             if (adminKeys.length > 100) adminKeys = adminKeys.slice(0, 100);
             localStorage.setItem('ff_admin_keys', JSON.stringify(adminKeys));
             
+            // Hiển thị Key
             const display = document.getElementById('keyDisplay');
             display.textContent = newKey;
+            display.innerHTML = newKey + '<span class="hint">👆 Bấm vào đây để copy lại</span>';
             display.style.display = 'block';
             
+            // TỰ ĐỘNG COPY vào clipboard
+            autoCopy(newKey, display);
+            
             renderAdminKeyList();
+        }
+        
+        // Tự động copy
+        function autoCopy(text, displayEl) {
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(text).then(() => {
+                    displayEl.classList.add('copied');
+                    setTimeout(() => { displayEl.classList.remove('copied'); }, 1500);
+                }).catch(() => {
+                    // Silent fail
+                });
+            } else {
+                // Fallback dùng textarea tạm
+                const ta = document.createElement('textarea');
+                ta.value = text;
+                ta.style.position = 'fixed';
+                ta.style.opacity = '0';
+                document.body.appendChild(ta);
+                ta.select();
+                try { document.execCommand('copy'); } catch(e) {}
+                document.body.removeChild(ta);
+            }
+        }
+        
+        // Copy lại khi click vào ô hiển thị Key
+        function copyDisplayedKey() {
+            const text = document.getElementById('keyDisplay').innerText;
+            if (!text) return;
+            const cleanText = text.split('\n')[0].trim();
+            autoCopy(cleanText, document.getElementById('keyDisplay'));
         }
 
         function renderAdminKeyList() {

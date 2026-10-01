@@ -17,14 +17,13 @@
             width: 100%; max-width: 420px;
             box-shadow: 0 0 30px rgba(255, 0, 0, 0.5), inset 0 0 20px rgba(255, 0, 0, 0.2);
             text-align: center; animation: glowBox 2s infinite alternate;
-            position: relative; overflow: hidden;
+            position: relative;
         }
         @keyframes glowBox {
             from { box-shadow: 0 0 20px rgba(255, 0, 0, 0.4); }
             to { box-shadow: 0 0 40px rgba(255, 0, 0, 0.8); }
         }
         
-        /* HEADER */
         .header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 15px; }
         .title h1 { font-size: 20px; font-weight: 900; color: #fff; line-height: 1.1; text-align: left; }
         .title h1 span { color: #ff0000; font-size: 22px; }
@@ -38,7 +37,6 @@
         .status-box .value { color: #fff; font-weight: bold; }
         .online-dot { color: #ff0000; font-size: 9px; margin-right: 2px; }
         
-        /* NOTIFICATION BAR */
         .notification-bar {
             display: none; background: #1a0000; border: 1px solid #00cc00; border-radius: 10px;
             padding: 10px; margin-bottom: 15px; text-align: left; font-size: 12px; font-weight: bold;
@@ -47,7 +45,6 @@
         @keyframes slideDown { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
         .notification-bar svg { width: 16px; height: 16px; fill: #00ff00; vertical-align: middle; margin-right: 5px; }
         
-        /* LOGO */
         .logo-area { display: flex; justify-content: center; margin-bottom: 15px; }
         .logo-circle {
             width: 100px; height: 100px; border-radius: 50%; border: 3px solid #ff1a1a;
@@ -57,7 +54,6 @@
         }
         .logo-circle img { width: 100%; height: 100%; object-fit: cover; }
         
-        /* AUTH SECTION */
         .auth-section { display: flex; flex-direction: column; gap: 12px; }
         .input-label { text-align: left; font-size: 11px; color: #ff4d4d; font-weight: bold; text-transform: uppercase; letter-spacing: 1px; display: flex; align-items: center; gap: 5px; }
         .input-row { display: flex; gap: 8px; }
@@ -74,7 +70,6 @@
         }
         .btn-paste svg { width: 14px; height: 14px; fill: #fff; }
         
-        /* BUTTONS */
         .btn-primary {
             width: 100%; padding: 15px; border-radius: 12px; border: 1px solid #ff4d4d;
             background: linear-gradient(90deg, #990000, #ff1a1a); color: #fff; font-size: 14px;
@@ -82,28 +77,33 @@
             display: flex; justify-content: center; align-items: center; gap: 10px;
         }
         .btn-primary:active { transform: scale(0.97); }
+        .btn-primary:disabled {
+            opacity: 0.5; cursor: not-allowed;
+            background: linear-gradient(90deg, #333, #555);
+            border-color: #666;
+        }
         
         .btn-outline {
-            width: 100%; padding: 12px; border-radius: 12px; border: 1px solid #ff3333;
-            background: #140000; color: #ffcccc; font-size: 12px; font-weight: bold;
+            padding: 10px 5px; border-radius: 10px; border: 1px solid #ff3333;
+            background: #140000; color: #ffcccc; font-size: 10px; font-weight: bold;
             text-transform: uppercase; cursor: pointer; transition: 0.3s;
-            display: flex; justify-content: center; align-items: center; gap: 10px;
+            display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 4px;
+            text-decoration: none; text-align: center; line-height: 1.2;
         }
         .btn-outline:active { background: #330000; color: #fff; }
+        .btn-outline svg { width: 16px; height: 16px; fill: currentColor; }
         
-        .bottom-buttons { display: flex; gap: 10px; margin-top: 5px; }
-        .bottom-buttons .btn-outline { flex: 1; }
+        .bottom-buttons {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+            margin-top: 10px;
+        }
         
-        /* AIM SELECT SECTION */
         .aim-select-section { display: none; flex-direction: column; gap: 10px; animation: fadeIn 0.5s; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
         
-        .aim-list-container {
-            max-height: 320px; overflow-y: auto; display: flex; flex-direction: column; gap: 8px;
-            padding-right: 5px;
-        }
-        .aim-list-container::-webkit-scrollbar { width: 4px; }
-        .aim-list-container::-webkit-scrollbar-thumb { background: #ff0000; border-radius: 2px; }
+        .aim-list-container { display: flex; flex-direction: column; gap: 8px; }
         
         .aim-item {
             display: flex; align-items: center; justify-content: space-between;
@@ -114,6 +114,10 @@
         .aim-item.selected {
             border-color: #ff1a1a; background: linear-gradient(90deg, #330000, #1a0000);
             box-shadow: 0 0 10px rgba(255,0,0,0.5);
+        }
+        .aim-item.disabled {
+            opacity: 0.4; cursor: not-allowed; pointer-events: none;
+            filter: grayscale(0.7);
         }
         .aim-item-left { display: flex; align-items: center; gap: 10px; }
         .aim-item-icon {
@@ -132,7 +136,21 @@
             content: ''; width: 8px; height: 8px; border-radius: 50%; background: #fff;
         }
         
-        /* TOOL SECTION */
+        .cooldown-banner {
+            display: none; background: #332200; border: 1px solid #ffcc00;
+            border-radius: 10px; padding: 12px; text-align: center;
+            font-size: 13px; font-weight: bold; color: #ffdd66;
+            animation: pulse 1s infinite alternate;
+        }
+        @keyframes pulse {
+            from { box-shadow: 0 0 5px rgba(255, 204, 0, 0.3); }
+            to { box-shadow: 0 0 20px rgba(255, 204, 0, 0.8); }
+        }
+        .cooldown-banner .timer {
+            font-size: 20px; color: #fff; margin-top: 5px;
+            font-family: 'Courier New', monospace; text-shadow: 0 0 10px #ffcc00;
+        }
+        
         .tool-section { display: none; flex-direction: column; gap: 12px; animation: fadeIn 0.5s; }
         
         .info-row { display: flex; gap: 10px; }
@@ -183,7 +201,6 @@
         }
         .btn-stop:active { transform: scale(0.97); }
         
-        /* ADMIN PANEL */
         #adminPanel { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); z-index: 9999; justify-content: center; align-items: center; padding: 20px; }
         .admin-box { background: #1a0000; border: 2px solid #ff0000; border-radius: 15px; padding: 25px; width: 100%; max-width: 400px; text-align: center; box-shadow: 0 0 30px #ff0000; }
         .admin-box h2 { color: #ff3333; margin-bottom: 20px; text-transform: uppercase; font-size: 18px; }
@@ -196,11 +213,11 @@
         .admin-link { margin-top: 15px; color: #ff1a1a; font-size: 11px; cursor: pointer; text-decoration: underline; display: inline-block; font-weight: bold; text-transform: uppercase; }
         .error-msg { color: #ff4d4d; font-size: 12px; text-align: center; display: none; font-weight: bold; margin-top: 5px; }
         .success-msg { color: #00ff00; font-size: 12px; text-align: center; display: none; font-weight: bold; margin-top: 5px; }
+        .hint { font-size: 10px; color: #99ff99; display: block; margin-top: 5px; font-family: 'Segoe UI'; }
     </style>
 </head>
 <body>
 
-    <!-- BẢNG ĐIỀU KHIỂN ADMIN -->
     <div id="adminPanel">
         <div class="admin-box">
             <h2>🔐 ADMIN LOGIN</h2>
@@ -232,9 +249,7 @@
         </div>
     </div>
 
-    <!-- GIAO DIỆN CHÍNH -->
     <div class="container">
-        <!-- HEADER -->
         <div class="header">
             <div class="title">
                 <h1>HEADLOCK <br><span>MR.PHUC</span></h1>
@@ -246,20 +261,17 @@
             </div>
         </div>
 
-        <!-- THÔNG BÁO (Ảnh 5) -->
         <div id="notificationBar" class="notification-bar">
             <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
             <span id="notificationText"></span>
         </div>
 
-        <!-- LOGO -->
         <div class="logo-area">
             <a href="https://zalo.me/g/z0e5pd8bdzcbqnaiyxsn" target="_blank" class="logo-circle">
                 <img src="https://i.postimg.cc/KvNx6wtS/temp-image-AAD8DD6B-B6DB-4392-BF99-DD200DE57B00.webp" alt="Logo" onerror="this.style.display='none'; this.parentElement.innerHTML='<svg viewBox=\'0 0 24 24\' style=\'width:70px; height:70px; fill:#ff1a1a;\'><path d=\'M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm0-13c-2.76 0-5 2.24-5 5s2.24 5 5 5 5-2.24 5-5-2.24-5-5-5zm0 8c-1.65 0-3-1.35-3-3s1.35-3 3-3 3 1.35 3 3-1.35 3-3 3z\'/></svg>';">
             </a>
         </div>
 
-        <!-- SECTION 1: NHẬP KEY -->
         <div id="authSection" class="auth-section">
             <div class="input-label">
                 <svg viewBox="0 0 24 24"><path d="M12.65 10C11.83 7.67 9.61 6 7 6c-3.31 0-6 2.69-6 6s2.69 6 6 6c2.61 0 4.83-1.67 5.65-4H17v4h4v-4h2v-4H12.65zM7 14c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2z"/></svg>
@@ -275,40 +287,60 @@
             <button class="btn-primary" onclick="activateKey()">KÍCH HOẠT KEY →</button>
             
             <div class="bottom-buttons">
-                <a href="https://zalo.me/0865561731" target="_blank" class="btn-outline" style="text-decoration: none;">
-                    <svg viewBox="0 0 24 24" style="width: 16px; height: 16px; fill: currentColor;"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg>
+                <a href="https://zalo.me/0865561731" target="_blank" class="btn-outline">
+                    <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg>
                     LIÊN HỆ ADMIN
                 </a>
-                <a href="https://zalo.me/g/z0e5pd8bdzcbqnaiyxsn" target="_blank" class="btn-outline" style="text-decoration: none;">
-                    <svg viewBox="0 0 24 24" style="width: 16px; height: 16px; fill: currentColor;"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>
+                <a href="https://zalo.me/g/z0e5pd8bdzcbqnaiyxsn" target="_blank" class="btn-outline">
+                    <svg viewBox="0 0 24 24"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>
                     THAM GIA NHÓM
                 </a>
+                <button class="btn-outline" onclick="showGetKey()">
+                    <svg viewBox="0 0 24 24"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z"/></svg>
+                    GET KEY
+                </button>
+                <button class="btn-outline" onclick="showCert()">
+                    <svg viewBox="0 0 24 24"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm0 10.99h7c-.53 4.12-3.28 7.79-7 8.94V12H5V6.3l7-3.11v8.8z"/></svg>
+                    CERT
+                </button>
             </div>
             <div id="errorMsg" class="error-msg"></div>
             <div id="successMsg" class="success-msg"></div>
         </div>
 
-        <!-- SECTION 2: CHỌN AIM (Ảnh 1) -->
         <div id="aimSelectSection" class="aim-select-section">
             <div class="input-label">CHỌN AIM</div>
-            <div class="aim-list-container" id="aimListContainer">
-                <!-- Danh sách aim sẽ được render bằng JS -->
+            
+            <!-- BANNER ĐẾM NGƯỢC 5s -->
+            <div id="cooldownBanner" class="cooldown-banner">
+                ⏳ Vui lòng đợi <span id="cooldownTimer" class="timer">5</span>s để chọn Aim khác
             </div>
-            <button class="btn-primary" onclick="activateSelectedAim()">CHỌN AIM RỒI KÍCH HOẠT →</button>
+            
+            <div class="aim-list-container" id="aimListContainer">
+                <!-- Danh sách 3 aim sẽ được render bằng JS -->
+            </div>
+            <button id="activateAimBtn" class="btn-primary" onclick="activateSelectedAim()">CHỌN AIM RỒI KÍCH HOẠT →</button>
             
             <div class="bottom-buttons">
+                <a href="https://zalo.me/0865561731" target="_blank" class="btn-outline">
+                    <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg>
+                    LIÊN HỆ ADMIN
+                </a>
+                <a href="https://zalo.me/g/z0e5pd8bdzcbqnaiyxsn" target="_blank" class="btn-outline">
+                    <svg viewBox="0 0 24 24"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>
+                    THAM GIA NHÓM
+                </a>
                 <button class="btn-outline" onclick="showGetKey()">
-                    <svg viewBox="0 0 24 24" style="width: 16px; height: 16px; fill: currentColor;"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z"/></svg>
+                    <svg viewBox="0 0 24 24"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z"/></svg>
                     GET KEY
                 </button>
                 <button class="btn-outline" onclick="showCert()">
-                    <svg viewBox="0 0 24 24" style="width: 16px; height: 16px; fill: currentColor;"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm0 10.99h7c-.53 4.12-3.28 7.79-7 8.94V12H5V6.3l7-3.11v8.8z"/></svg>
+                    <svg viewBox="0 0 24 24"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm0 10.99h7c-.53 4.12-3.28 7.79-7 8.94V12H5V6.3l7-3.11v8.8z"/></svg>
                     CERT
                 </button>
             </div>
         </div>
 
-        <!-- SECTION 3: TOOL ĐANG HOẠT ĐỘNG (Ảnh 2, 3, 4) -->
         <div id="toolSection" class="tool-section">
             <div class="info-row">
                 <div class="info-box"><svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg><span>115.76.48.141</span></div>
@@ -332,12 +364,20 @@
             <button class="btn-stop" onclick="deactivateAim()">TẮT AIM →</button>
             
             <div class="bottom-buttons">
+                <a href="https://zalo.me/0865561731" target="_blank" class="btn-outline">
+                    <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg>
+                    LIÊN HỆ ADMIN
+                </a>
+                <a href="https://zalo.me/g/z0e5pd8bdzcbqnaiyxsn" target="_blank" class="btn-outline">
+                    <svg viewBox="0 0 24 24"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>
+                    THAM GIA NHÓM
+                </a>
                 <button class="btn-outline" onclick="showGetKey()">
-                    <svg viewBox="0 0 24 24" style="width: 16px; height: 16px; fill: currentColor;"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z"/></svg>
+                    <svg viewBox="0 0 24 24"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z"/></svg>
                     GET KEY
                 </button>
                 <button class="btn-outline" onclick="showCert()">
-                    <svg viewBox="0 0 24 24" style="width: 16px; height: 16px; fill: currentColor;"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm0 10.99h7c-.53 4.12-3.28 7.79-7 8.94V12H5V6.3l7-3.11v8.8z"/></svg>
+                    <svg viewBox="0 0 24 24"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm0 10.99h7c-.53 4.12-3.28 7.79-7 8.94V12H5V6.3l7-3.11v8.8z"/></svg>
                     CERT
                 </button>
             </div>
@@ -354,22 +394,18 @@
         const SECRET = "PHUC_SECRET_2024_X9K2"; 
         const REF_TIME = new Date('2024-01-01T00:00:00Z').getTime();
         const HOUR_MS = 3600 * 1000; const TOTAL_HOURS = 46656;
+        const COOLDOWN_SECONDS = 5; // Thời gian chờ sau khi tắt Aim
         let countdownInterval = null;
+        let cooldownInterval = null;
+        let isCooldown = false;
         let currentAim = null;
         let currentPort = "2928";
         let currentAimName = "";
 
-        // DANH SÁCH AIM (Ảnh 1 + 2 loại mới)
         const aims = [
             { id: "silent", name: "Aim Silent", desc: "Log thẳng no dns", port: "2928" },
             { id: "body70", name: "Aim Body 70%", desc: "Aim Body 70%", port: "2081" },
-            { id: "body70_ant", name: "Aim Body 70% Antenna", desc: "Aim Body 70% Antenna", port: "2081" },
-            { id: "head_only", name: "Aim Head Only", desc: "Log thẳng no dns", port: "2928" },
-            { id: "head_esp", name: "Aim Head Esp Only", desc: "Log thẳng no dns", port: "2928" },
-            { id: "neck", name: "Aim Neck", desc: "Log thẳng no dns", port: "2928" },
-            { id: "magic_bullet", name: "Aim MagicBullet Antenna", desc: "Aim MagicBullet Antenna", port: "2928" },
-            { id: "headshot", name: "Aim Headshot", desc: "Tự động bắn đầu", port: "2928" }, // Mới thêm
-            { id: "dragon", name: "Aim Dragon", desc: "Log thẳng no dns", port: "2081" } // Mới thêm
+            { id: "neck", name: "Aim Neck", desc: "Log thẳng no dns", port: "2928" }
         ];
 
         function simpleHash(str) {
@@ -457,13 +493,12 @@
             }, 800);
         }
 
-        // HÀM RENDER DANH SÁCH AIM
         function renderAimList() {
             const container = document.getElementById('aimListContainer');
             container.innerHTML = '';
             aims.forEach((aim, index) => {
                 const div = document.createElement('div');
-                div.className = 'aim-item' + (currentAim === aim.id ? ' selected' : '');
+                div.className = 'aim-item' + (currentAim === aim.id ? ' selected' : '') + (isCooldown ? ' disabled' : '');
                 div.onclick = () => selectAim(aim.id);
                 div.innerHTML = `
                     <div class="aim-item-left">
@@ -477,9 +512,20 @@
                 `;
                 container.appendChild(div);
             });
+            
+            // Cập nhật trạng thái nút kích hoạt
+            const activateBtn = document.getElementById('activateAimBtn');
+            if (isCooldown) {
+                activateBtn.disabled = true;
+                activateBtn.textContent = 'ĐANG CHỜ...';
+            } else {
+                activateBtn.disabled = false;
+                activateBtn.textContent = 'CHỌN AIM RỒI KÍCH HOẠT →';
+            }
         }
 
         function selectAim(id) {
+            if (isCooldown) return;
             currentAim = id;
             const aimData = aims.find(a => a.id === id);
             currentAimName = aimData.name;
@@ -487,8 +533,11 @@
             renderAimList();
         }
 
-        // HÀM KÍCH HOẠT AIM ĐÃ CHỌN (Ảnh 2, 3, 4)
         function activateSelectedAim() {
+            if (isCooldown) {
+                showNotification("Vui lòng đợi hết thời gian chờ!");
+                return;
+            }
             if (!currentAim) {
                 showNotification("Vui lòng chọn 1 Aim trước!");
                 return;
@@ -501,20 +550,53 @@
             
             showNotification(`Kích hoạt ${currentAimName} thành công!`);
             
-            // Lấy thời gian còn lại từ localStorage
             const activeKeyData = JSON.parse(localStorage.getItem('ff_active_key'));
             if (activeKeyData) {
                 startCountdown(activeKeyData.expiresAt);
             }
         }
 
-        // HÀM TẮT AIM (Ảnh 5)
+        // KHI TẮT AIM -> BẮT ĐẦU ĐẾM NGƯỢC 5 GIÂY
         function deactivateAim() {
             if (countdownInterval) clearInterval(countdownInterval);
             document.getElementById('toolSection').style.display = 'none';
             document.getElementById('aimSelectSection').style.display = 'flex';
             
+            // Reset lựa chọn aim
+            currentAim = null;
+            
+            // Bắt đầu cooldown 5s
+            startCooldown();
+        }
+        
+        function startCooldown() {
+            isCooldown = true;
+            let timeLeft = COOLDOWN_SECONDS;
+            
+            const banner = document.getElementById('cooldownBanner');
+            const timerEl = document.getElementById('cooldownTimer');
+            
+            banner.style.display = 'block';
+            timerEl.textContent = timeLeft;
+            
+            // Render lại danh sách aim ở trạng thái disabled
+            renderAimList();
+            
             showNotification("Đã tắt aim. Chờ 5s để kích hoạt aim khác.");
+            
+            if (cooldownInterval) clearInterval(cooldownInterval);
+            cooldownInterval = setInterval(() => {
+                timeLeft--;
+                timerEl.textContent = timeLeft;
+                
+                if (timeLeft <= 0) {
+                    clearInterval(cooldownInterval);
+                    isCooldown = false;
+                    banner.style.display = 'none';
+                    renderAimList();
+                    showNotification("✅ Đã hết thời gian chờ. Bạn có thể chọn Aim mới!");
+                }
+            }, 1000);
         }
 
         function startCountdown(expiresAt) {
@@ -530,9 +612,7 @@
             updateTimer(); countdownInterval = setInterval(updateTimer, 1000);
         }
 
-        // NÚT CERT (Ảnh 5)
         function showCert() {
-            // Thay link này bằng link cert thực tế của bạn
             window.location.href = "https://solitudepremium.click";
         }
 

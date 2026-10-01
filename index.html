@@ -21,12 +21,31 @@
         .notification-bar { display: none; background: #1a0000; border: 1px solid #00cc00; border-radius: 10px; padding: 10px; margin-bottom: 15px; text-align: left; font-size: 12px; font-weight: bold; color: #66ff66; animation: slideDown 0.3s ease-out; box-shadow: 0 0 15px rgba(0,255,0,0.3); }
         @keyframes slideDown { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
         .notification-bar svg { width: 16px; height: 16px; fill: #00ff00; vertical-align: middle; margin-right: 5px; }
+        
+        /* LOGO AREA - ĐÃ FIX CỨNG KÍCH THƯỚC ẢNH */
         .logo-area { display: flex; justify-content: center; margin-bottom: 15px; }
-        .logo-circle { width: 100px; height: 100px; border-radius: 50%; border: 3px solid #ff1a1a; display: flex; justify-content: center; align-items: center; box-shadow: 0 0 25px rgba(255, 0, 0, 0.6), inset 0 0 }
- 20px rgba(255, 0, 0, 0.4); background: radial-gradient       (circle, #330000 0%, #0a0a .0a 80%); overflow: hidden; }
-        .logo-circle img { width:server 100%; height: 100%; object-fit: cover; }
-        .auth-section { display: flex; flex-direction-info: column; gap: 12px; }
-        .input-label { text-align: left; font-size: 11px; color: #ff4d4d; . font-weight: bold; text-transform: uppercase; letter-spacing: 1px; display: flex; align-items: center; gap: 5px; }
+        .logo-circle { 
+            width: 100px !important; 
+            height: 100px !important; 
+            border-radius: 50%; 
+            border: 3px solid #ff1a1a; 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            box-shadow: 0 0 25px rgba(255, 0, 0, 0.6), inset 0 0 20px rgba(255, 0, 0, 0.4); 
+            background: radial-gradient(circle, #330000 0%, #0a0a0a 80%); 
+            overflow: hidden; 
+            position: relative;
+        }
+        .logo-circle img { 
+            width: 100px !important; 
+            height: 100px !important; 
+            object-fit: cover; 
+            display: block;
+        }
+        
+        .auth-section { display: flex; flex-direction: column; gap: 12px; }
+        .input-label { text-align: left; font-size: 11px; color: #ff4d4d; font-weight: bold; text-transform: uppercase; letter-spacing: 1px; display: flex; align-items: center; gap: 5px; }
         .input-row { display: flex; gap: 8px; }
         .custom-input { flex: 1; padding: 14px 10px; border-radius: 12px; border: 1px solid #ff3333; background-color: #1a0000; color: #fff; font-size: 13px; outline: none; text-align: center; }
         .custom-input::placeholder { color: #660000; }
@@ -41,7 +60,7 @@
         .bottom-buttons { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; margin-top: 10px; }
         .aim-select-section { display: none; flex-direction: column; gap: 10px; animation: fadeIn 0.5s; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-        .aim-list-container { display: flex; flex-direction: column; gap: 8px; }
+        .aim-list-container { display: flex; flex-direction: column; gap: 8px; width: 100%; min-height: 50px; }
         .aim-item { display: flex; align-items: center; justify-content: space-between; background: #140000; border: 1px solid #ff3333; border-radius: 10px; padding: 12px 15px; cursor: pointer; transition: 0.3s; text-align: left; }
         .aim-item:active { background: #330000; }
         .aim-item.selected { border-color: #ff1a1a; background: linear-gradient(90deg, #330000, #1a0000); box-shadow: 0 0 10px rgba(255,0,0,0.5); }
@@ -72,33 +91,34 @@
         .slider { position: absolute; cursor: not-allowed; top: 0; left: 0; right: 0; bottom: 0; background-color: #660000; transition: .4s; border-radius: 34px; border: 1px solid #ff3333; }
         .slider:before { position: absolute; content: ""; height: 20px; width: 20px; left: 3px; bottom: 3px; background-color: #ff1a1a; transition: .4s; border-radius: 50%; }
         .switch input:disabled + .slider:before { background-color: #fff; transform: translateX(22px); }
-        .server-info { background: #140000; border: 1px solid #ff3333; border-radius: 10px; padding: 12px; text-align: left; font-family: 'Courier New', monospace; font-size: 12px;row { display: flex; justify-content: space-between; margin-bottom: 6px; }
+        .server-info { background: #140000; border: 1px solid #ff3333; border-radius: 10px; padding: 12px; text-align: left; font-family: 'Courier New', monospace; font-size: 12px; }
+        .server-info .row { display: flex; justify-content: space-between; margin-bottom: 6px; }
         .server-info .row:last-child { margin-bottom: 0; }
         .server-info .label { color: #ff4d4d; }
         .server-info .value { color: #fff; }
         .btn-stop { width: 100%; padding: 14px; border-radius: 12px; border: 1px solid #ff4d4d; background: linear-gradient(90deg, #990000, #ff1a1a); color: #fff; font-size: 14px; font-weight: bold; text-transform: uppercase; cursor: pointer; margin-top: 5px; }
         .btn-stop:active { transform: scale(0.97); }
-        #adminPanel { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); z15-index: 9999; justify-content: center; align-items: center; padding: 20px; overflow-y: auto; }
+        #adminPanel { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); z-index: 9999; justify-content: center; align-items: center; padding: 20px; overflow-y: auto; }
         .admin-box { background: #1a0000; border: 2px solid #ff0000; border-radius: 15px; padding: 25px; width: 100%; max-width: 420px; text-align: center; box-shadow: 0 0 30px #ff0000; max-height: 90vh; overflow-y: auto; }
         .admin-box h2 { color: #ff3333; margin-bottom: 20px; text-transform: uppercase; font-size: 18px; }
         .admin-box h3 { color: #fff; margin-bottom: 10px; font-size: 14px; text-transform: uppercase; }
         .admin-box input, .admin-box select { width: 100%; padding: 12px; margin-bottom: 10px; border-radius: 8px; border: 1px solid #ff4d4d; background: #260000; color: #fff; text-align: center; }
         .admin-box button { width: 100%; padding: 12px; margin-bottom: 10px; border-radius: 8px; border: none; background: #ff1a1a; color: #fff; font-weight: bold; cursor: pointer; text-transform: uppercase; }
         .admin-box button:active { transform: scale(0.97); }
-        .key-display { background: #003300; border: 1px solid #00cc00; padding: 15px; border-radius: 8px; margin-top: 10px; font-family: monospace; font-size: 16px; color: #00ff00; word-break: break-all; display: none; cursor: pointer; }
-        .key-list { max-height: 150px; overflow-y: auto; text-align: left; font-size: 11px; margin-top: 15px; border-top: 1px solid #ff3333; padding-top: 10px; }
-        .key-list div { color: #ffcccc; margin-bottom: 5px; border-bottom: 1px dashed #330000; padding-bottom: 3px; font-family: monospace; }
+        .key-display { background: #003300; border: 1px solid #00cc00; padding: 15px; border-radius: 8px; margin-top: 10px; font <-family: monospace; font-size: 16px; color: #00ff00; word-break: break-all; display:div none; cursor: pointer; }
+        .key-list { max-height: 150px; overflow-y: auto; text-align id: left; font-size: 11px; margin-top: 15px; border-top: 1px solid #ff="3333; padding-top: 10px; }
+        .key-list div { color: #ffcccc; margin-bottom: 5adminpx; border-bottom: 1px dashed #330000; padding-bottom: 3px; font-familyPanel: monospace; }
         .admin-link { margin-top: 15px; color: #ff1a1a; font-size: 11px; cursor: pointer; text-decoration: underline; display: inline-block; font-weight: bold; text-transform: uppercase; }
         .error-msg { color: #ff4d4d; font-size: 12px; text-align: center; display: none; font-weight: bold; margin-top: 5px; }
         .success-msg { color: #00ff00; font-size: 12px; text-align: center; display: none; font-weight: bold; margin-top: 5px; }
         .hint { font-size: 10px; color: #99ff99; display: block; margin-top: 5px; font-family: 'Segoe UI'; }
         .divider { border-top: 1px solid #ff3333; margin: 20px 0 15px 0; }
-        .custom-section { background: #260000; border: 1px solid #ff4d4d; border-radius: 10px; padding: px; margin-bottom: 15px; }
+        .custom-section { background: #260000; border: 1px solid #ff4d4d; border-radius: 10px; padding: 15px; margin-bottom: 15px; }
     </style>
 </head>
 <body>
 
-    <div id="adminPanel">
+   ">
         <div class="admin-box">
             <h2>🔐 ADMIN LOGIN</h2>
             <div id="adminLoginForm">
@@ -108,8 +128,6 @@
                 <p id="adminMsg" style="color: #ff4d4d; font-size: 12px;"></p>
             </div>
             <div id="adminControlPanel" style="display: none;">
-                
-                <!-- PHẦN 1: TẠO KEY THEO MẪU CÓ SẴN -->
                 <h3>📋 TẠO KEY THEO MẪU</h3>
                 <select id="durationSelect">
                     <option value="0.5">Key 12 Giờ</option>
@@ -122,19 +140,14 @@
                     <option value="0">Key Vĩnh Viễn</option>
                 </select>
                 <button onclick="generateAdminKey()">TẠO KEY</button>
-                
                 <div class="divider"></div>
-                
-                <!-- PHẦN 2: TẠO KEY TÙY CHỈNH (MỚI THÊM) -->
                 <h3>✏️ TẠO KEY TÙY CHỈNH</h3>
                 <div class="custom-section">
                     <input type="text" id="customKeyName" placeholder="Tên Key (VD: mn, vip, pro...)" maxlength="12">
                     <input type="number" id="customKeyHours" placeholder="Thời hạn (giờ). VD: 57182972" min="1">
                     <button onclick="generateCustomKey()" style="background: linear-gradient(90deg, #006600, #00cc00);">TẠO KEY TÙY CHỈNH</button>
                 </div>
-                
                 <div id="keyDisplay" class="key-display" onclick="copyDisplayedKey()"></div>
-                
                 <h3 style="margin-top: 20px;">📜 DANH SÁCH KEY ĐÃ TẠO</h3>
                 <div id="generatedKeyList" class="key-list"></div>
                 <button onclick="logoutAdmin()" style="background: #660000; margin-top: 15px;">ĐĂNG XUẤT</button>
@@ -201,9 +214,9 @@
         <div id="aimSelectSection" class="aim-select-section">
             <div class="input-label">CHỌN AIM</div>
             <div id="cooldownBanner" class="cooldown-banner">
-5                ⏳ Vui lòng đợi <span id="cooldownTimer" class="timer">5-</span>s để chọn Aim khác
+                ⏳ Vui lòng đợi <span id="cooldownTimer" class="timer">5</span>s để chọn Aim khác
             </div>
-            <div class="aim-list-container" id="7aimListContainer"></div>
+            <div class="aim-list-container" id="aimListContainer"></div>
             <button id="activateAimBtn" class="btn-primary" onclick="activateSelectedAim()">CHỌN AIM RỒI KÍCH HOẠT →</button>
             
             <div class="bottom-buttons">
@@ -212,7 +225,7 @@
                     LIÊN HỆ ADMIN
                 </a>
                 <a href="https://zalo.me/g/z0e5pd8bdzcbqnaiyxsn" target="_blank" class="btn-outline">
-                    <svg viewBox="0 0 24 24"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.-3.5z"/></svg>
+                    <svg viewBox="0 0 24 24"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>
                     THAM GIA NHÓM
                 </a>
                 <button class="btn-outline" onclick="showGetKey()">
@@ -292,9 +305,6 @@
         const CHARS = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
         function randomChar() { return CHARS[Math.floor(Math.random() * CHARS.length)]; }
 
-        // ==========================================
-        // TẠO KEY TIÊU CHUẨN (12H, 1D, 3D...)
-        // ==========================================
         function createStandardKey(durationDays) {
             let label = (durationDays === 0) ? "VVD" : (durationDays === 0.5) ? "12H" : String(durationDays).padStart(2, '0') + "D";
             const hours = Math.floor((Date.now() - REF_TIME) / HOUR_MS) % TOTAL_HOURS;
@@ -304,38 +314,18 @@
             return { key: `PHUC-${label}-${hoursPart}${randomPart}${checksum}`, label, durationDays, isCustom: false };
         }
 
-        // ==========================================
-        // TẠO KEY TÙY CHỈNH (Tên + Số giờ tùy ý)
-        // ==========================================
         function createCustomKey(customName, customHours) {
-            // Làm sạch tên: chỉ giữ chữ và số, viết hoa, tối đa 12 ký tự
             const nameClean = customName.trim().toUpperCase().replace(/[^A-Z0-9]/g, '').slice(0, 12);
             if (!nameClean || nameClean.length === 0) return null;
-            
             const hours = parseInt(customHours);
             if (isNaN(hours) || hours <= 0) return null;
-            
-            // Encode giờ trong base36
             const hoursB36 = hours.toString(36).toUpperCase();
-            
-            // 2 ký tự random
             const randomPart = randomChar() + randomChar();
-            
-            // Checksum 1 ký tự
             const data = nameClean + '-' + hoursB36 + '-' + randomPart;
             const checksum = simpleHash(data + SECRET).slice(-1);
-            
-            return { 
-                key: `PHUC-${nameClean}-${hoursB36}-${randomPart}${checksum}`, 
-                name: nameClean, 
-                hours: hours, 
-                isCustom: true 
-            };
+            return { key: `PHUC-${nameClean}-${hoursB36}-${randomPart}${checksum}`, name: nameClean, hours: hours, isCustom: true };
         }
 
-        // ==========================================
-        // GIẢI MÃ KEY TIÊU CHUẨN
-        // ==========================================
         function parseStandardKey(key) {
             key = key.trim().toUpperCase().replace(/[–—−]/g, '-');
             const parts = key.split('-');
@@ -360,30 +350,18 @@
             return { durationDays, createdAt, expiresAt, isCustom: false };
         }
 
-        // ==========================================
-        // GIẢI MÃ KEY TÙY CHỈNH
-        // ==========================================
         function parseCustomKey(key) {
             key = key.trim().toUpperCase().replace(/[–—−]/g, '-');
             const parts = key.split('-');
             if (parts.length !== 4 || parts[0] !== 'PHUC') return null;
-            
-            const name = parts[1];
-            const hoursB36 = parts[2];
-            const code = parts[3];
-            
+            const name = parts[1], hoursB36 = parts[2], code = parts[3];
             if (name.length < 1 || name.length > 12) return null;
             if (code.length !== 3) return null;
-            
-            const randomPart = code.slice(0, 2);
-            const givenChecksum = code.slice(2, 3);
-            
+            const randomPart = code.slice(0, 2), givenChecksum = code.slice(2, 3);
             const expectedChecksum = simpleHash(name + '-' + hoursB36 + '-' + randomPart + SECRET).slice(-1);
             if (givenChecksum !== expectedChecksum) return null;
-            
             const hours = parseInt(hoursB36, 36);
             if (isNaN(hours) || hours <= 0) return null;
-            
             return { name: name, hours: hours, isCustom: true };
         }
 
@@ -414,29 +392,24 @@
 
             if (input === "") { errorMsg.textContent = "Vui lòng nhập Key!"; errorMsg.style.display = "block"; return; }
             
-            // Thử giải mã key tiêu chuẩn trước
             let parsed = parseStandardKey(input);
             let expiresAt, isLifetime = false;
             
             if (parsed) {
-                // Key tiêu chuẩn
-                if (parsed.durationDays !== 0 && Date.now() >= parsed.expiresAt) { 
-                    errorMsg.textContent = "Key đã hết hạn!"; errorMsg.style.display = "block"; return; 
-                }
+                if (parsed.durationDays !== 0 && Date.now() >= parsed.expiresAt) { errorMsg.textContent = "Key đã hết hạn!"; errorMsg.style.display = "block"; return; }
                 expiresAt = parsed.expiresAt;
                 isLifetime = parsed.durationDays === 0;
             } else {
-                // Thử key tùy chỉnh
                 parsed = parseCustomKey(input);
-                if (!parsed) { 
-                    errorMsg.textContent = "Key không hợp lệ!"; errorMsg.style.display = "block"; return; 
-                }
-                // Key tùy chỉnh: thời gian bắt đầu từ lúc nhập
+                if (!parsed) { errorMsg.textContent = "Key không hợp lệ!"; errorMsg.style.display = "block"; return; }
                 expiresAt = Date.now() + parsed.hours * 3600 * 1000;
                 isLifetime = false;
             }
 
-            localStorage.setItem('ff_active_key', JSON.stringify({ key: input, expiresAt: expiresAt, isLifetime: isLifetime }));
+            try {
+                localStorage.setItem('ff_active_key', JSON.stringify({ key: input, expiresAt: expiresAt, isLifetime: isLifetime }));
+            } catch(e) { console.log("Lỗi lưu key"); }
+
             successMsg.textContent = `Kích hoạt thành công!`; successMsg.style.display = "block";
             
             setTimeout(() => {
@@ -448,7 +421,14 @@
 
         function renderAimList() {
             const container = document.getElementById('aimListContainer');
+            if (!container) return;
             container.innerHTML = '';
+            
+            if (!aims || aims.length === 0) {
+                container.innerHTML = '<div style="color:#ff8080; text-align:center;">Không có Aim nào.</div>';
+                return;
+            }
+            
             aims.forEach((aim, index) => {
                 const div = document.createElement('div');
                 div.className = 'aim-item' + (currentAim === aim.id ? ' selected' : '') + (isCooldown ? ' disabled' : '');
@@ -490,18 +470,20 @@
             
             showNotification(`Kích hoạt ${currentAimName} thành công!`);
             
-            const activeKeyData = JSON.parse(localStorage.getItem('ff_active_key'));
-            if (activeKeyData) {
-                if (activeKeyData.isLifetime) {
-                    document.getElementById('countdown').textContent = "VĨNH VIỄN";
-                    document.getElementById('countdown').style.color = "#00ff00";
-                    document.getElementById('countdown').style.fontSize = "18px";
-                } else {
-                    document.getElementById('countdown').style.color = "#ffcccc";
-                    document.getElementById('countdown').style.fontSize = "13px";
-                    startCountdown(activeKeyData.expiresAt);
+            try {
+                const activeKeyData = JSON.parse(localStorage.getItem('ff_active_key'));
+                if (activeKeyData) {
+                    if (activeKeyData.isLifetime) {
+                        document.getElementById('countdown').textContent = "VĨNH VIỄN";
+                        document.getElementById('countdown').style.color = "#00ff00";
+                        document.getElementById('countdown').style.fontSize = "18px";
+                    } else {
+                        document.getElementById('countdown').style.color = "#ffcccc";
+                        document.getElementById('countdown').style.fontSize = "13px";
+                        startCountdown(activeKeyData.expiresAt);
+                    }
                 }
-            }
+            } catch(e) { console.log("Lỗi đọc key"); }
         }
 
         function deactivateAim() {
@@ -557,7 +539,6 @@
             window.location.href = "https://zalo.me/0865561731";
         }
 
-        // ADMIN LOGIC
         function toggleAdminPanel() { const panel = document.getElementById('adminPanel'); panel.style.display = (panel.style.display === 'flex') ? 'none' : 'flex'; }
         function loginAdmin() {
             const user = document.getElementById('adminUser').value, pass = document.getElementById('adminPass').value, msg = document.getElementById('adminMsg');
@@ -567,16 +548,13 @@
         }
         function logoutAdmin() { document.getElementById('adminLoginForm').style.display = 'block'; document.getElementById('adminControlPanel').style.display = 'none'; document.getElementById('adminUser').value = ''; document.getElementById('adminPass').value = ''; document.getElementById('keyDisplay').style.display = 'none'; }
         
-        // Tạo key theo mẫu có sẵn
         function generateAdminKey() {
             const duration = parseFloat(document.getElementById('durationSelect').value);
             const result = createStandardKey(duration);
-            
             saveKeyToHistory(result.key, duration === 0 ? "Vĩnh viễn" : (duration === 0.5 ? "12 giờ" : duration + " ngày"));
             showGeneratedKey(result.key);
         }
         
-        // Tạo key tùy chỉnh
         function generateCustomKey() {
             const name = document.getElementById('customKeyName').value.trim();
             const hours = document.getElementById('customKeyHours').value.trim();
@@ -587,30 +565,26 @@
             const result = createCustomKey(name, hours);
             if (!result) { alert("Có lỗi xảy ra, vui lòng thử lại!"); return; }
             
-            // Format hiển thị thời gian
             const hoursNum = parseInt(hours);
             let durationText;
-            if (hoursNum >= 8760) {
-                durationText = `${hoursNum} giờ (${Math.round(hoursNum/8760)} năm)`;
-            } else if (hoursNum >= 24) {
-                durationText = `${hoursNum} giờ (${Math.round(hoursNum/24)} ngày)`;
-            } else {
-                durationText = `${hoursNum} giờ`;
-            }
+            if (hoursNum >= 8760) durationText = `${hoursNum} giờ (${Math.round(hoursNum/8760)} năm)`;
+            else if (hoursNum >= 24) durationText = `${hoursNum} giờ (${Math.round(hoursNum/24)} ngày)`;
+            else durationText = `${hoursNum} giờ`;
             
             saveKeyToHistory(result.key, `Tên: ${result.name} - ${durationText}`);
             showGeneratedKey(result.key);
             
-            // Xóa input
             document.getElementById('customKeyName').value = '';
             document.getElementById('customKeyHours').value = '';
         }
         
         function saveKeyToHistory(key, durationText) {
-            let adminKeys = JSON.parse(localStorage.getItem('ff_admin_keys') || '[]');
-            adminKeys.unshift({ key: key, durationText: durationText, createdAt: Date.now() });
-            if (adminKeys.length > 100) adminKeys = adminKeys.slice(0, 100);
-            localStorage.setItem('ff_admin_keys', JSON.stringify(adminKeys));
+            try {
+                let adminKeys = JSON.parse(localStorage.getItem('ff_admin_keys') || '[]');
+                adminKeys.unshift({ key: key, durationText: durationText, createdAt: Date.now() });
+                if (adminKeys.length > 100) adminKeys = adminKeys.slice(0, 100);
+                localStorage.setItem('ff_admin_keys', JSON.stringify(adminKeys));
+            } catch(e) { console.log("Lỗi lưu lịch sử"); }
             renderAdminKeyList();
         }
         
@@ -631,7 +605,9 @@
         
         function renderAdminKeyList() {
             const list = document.getElementById('generatedKeyList'); 
-            let adminKeys = JSON.parse(localStorage.getItem('ff_admin_keys') || '[]');
+            let adminKeys = [];
+            try { adminKeys = JSON.parse(localStorage.getItem('ff_admin_keys') || '[]'); } catch(e) { adminKeys = []; }
+            
             if (adminKeys.length === 0) { list.innerHTML = '<div style="color:#ff8080; text-align:center; padding:5px;">Chưa có key nào được tạo.</div>'; return; }
             list.innerHTML = '';
             adminKeys.forEach(item => {
@@ -644,12 +620,20 @@
         }
 
         window.addEventListener('load', () => {
-            const activeKeyData = JSON.parse(localStorage.getItem('ff_active_key'));
-            if (activeKeyData && activeKeyData.expiresAt > Date.now()) {
-                document.getElementById('authSection').style.display = 'none';
-                document.getElementById('aimSelectSection').style.display = 'flex';
-                renderAimList();
-            } else {
+            try {
+                const activeKeyData = JSON.parse(localStorage.getItem('ff_active_key'));
+                if (activeKeyData && activeKeyData.expiresAt > Date.now()) {
+                    document.getElementById('authSection').style.display = 'none';
+                    document.getElementById('aimSelectSection').style.display = 'flex';
+                    renderAimList();
+                } else {
+                    localStorage.removeItem('ff_active_key');
+                    document.getElementById('authSection').style.display = 'flex';
+                    document.getElementById('aimSelectSection').style.display = 'none';
+                    document.getElementById('toolSection').style.display = 'none';
+                }
+            } catch(e) {
+                console.log("Lỗi tải key cũ, chuyển về màn hình nhập key");
                 localStorage.removeItem('ff_active_key');
                 document.getElementById('authSection').style.display = 'flex';
                 document.getElementById('aimSelectSection').style.display = 'none';

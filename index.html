@@ -17,46 +17,56 @@
             width: 100%; max-width: 420px;
             box-shadow: 0 0 30px rgba(255, 0, 0, 0.5), inset 0 0 20px rgba(255, 0, 0, 0.2);
             text-align: center; animation: glowBox 2s infinite alternate;
+            display: flex; flex-direction: column; gap: 15px;
         }
         @keyframes glowBox {
             from { box-shadow: 0 0 20px rgba(255, 0, 0, 0.4); }
             to { box-shadow: 0 0 40px rgba(255, 0, 0, 0.8); }
         }
-        .header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 20px; }
-        .title h1 { font-size: 24px; font-weight: 900; color: #fff; line-height: 1.1; text-align: left; }
-        .title h1 span { color: #ff0000; font-size: 26px; }
-        .title p { font-size: 10px; color: #ff4d4d; letter-spacing: 2px; text-align: left; margin-top: 2px; }
+        
+        /* HEADER */
+        .header { display: flex; justify-content: space-between; align-items: flex-start; }
+        .title h1 { font-size: 22px; font-weight: 900; color: #fff; line-height: 1.1; text-align: left; }
+        .title h1 span { color: #ff0000; font-size: 24px; }
+        .title p { font-size: 9px; color: #ff4d4d; letter-spacing: 2px; text-align: left; margin-top: 2px; }
         .status-box {
             background: rgba(20, 0, 0, 0.8); border: 1px solid #ff3333; border-radius: 10px;
-            padding: 8px 12px; display: flex; gap: 15px; font-size: 10px; box-shadow: 0 0 10px rgba(255, 0, 0, 0.3);
+            padding: 6px 10px; display: flex; gap: 10px; font-size: 9px;
+            box-shadow: 0 0 10px rgba(255, 0, 0, 0.3);
         }
         .status-box div { display: flex; flex-direction: column; align-items: center; }
-        .status-box .label { color: #ff8080; font-size: 8px; text-transform: uppercase; }
+        .status-box .label { color: #ff8080; font-size: 7px; text-transform: uppercase; }
         .status-box .value { color: #fff; font-weight: bold; }
-        .online-dot { color: #ff0000; font-size: 10px; margin-right: 3px; }
-        .logo-area { display: flex; justify-content: center; margin-bottom: 20px; }
+        .online-dot { color: #ff0000; font-size: 9px; margin-right: 2px; }
+        
+        /* LOGO */
+        .logo-area { display: flex; justify-content: center; }
         .logo-circle {
-            width: 120px; height: 120px; border-radius: 50%; border: 2px solid #ff1a1a;
+            width: 120px; height: 120px; border-radius: 50%; border: 3px solid #ff1a1a;
             display: flex; justify-content: center; align-items: center; position: relative;
             box-shadow: 0 0 25px rgba(255, 0, 0, 0.6), inset 0 0 20px rgba(255, 0, 0, 0.4);
             background: radial-gradient(circle, #330000 0%, #0a0a0a 80%);
+            overflow: hidden; transition: 0.3s; text-decoration: none;
         }
-        .logo-circle svg { width: 70px; height: 70px; fill: #ff1a1a; filter: drop-shadow(0 0 10px #ff0000); }
+        .logo-circle:active { transform: scale(0.95); }
+        .logo-circle img { width: 100%; height: 100%; object-fit: cover; }
+        
+        /* INPUT SECTION */
         .auth-section { display: flex; flex-direction: column; gap: 15px; }
         .input-label { text-align: left; font-size: 11px; color: #ff4d4d; font-weight: bold; text-transform: uppercase; letter-spacing: 1px; display: flex; align-items: center; gap: 5px; }
         .input-label svg { width: 14px; height: 14px; fill: #ff1a1a; }
         
         .input-row { display: flex; gap: 8px; }
         .custom-input {
-            flex: 1; padding: 16px 15px; border-radius: 12px; border: 1px solid #ff3333;
+            flex: 1; padding: 15px 10px; border-radius: 12px; border: 1px solid #ff3333;
             background-color: #1a0000; color: #fff; font-size: 14px; outline: none; transition: 0.3s;
             box-shadow: inset 0 0 10px rgba(255, 0, 0, 0.2); text-align: center;
         }
         .custom-input:focus { border-color: #ff0000; box-shadow: 0 0 15px #ff0000, inset 0 0 10px rgba(255, 0, 0, 0.4); }
-        .custom-input::placeholder { color: #660000; }
+        .custom-input::placeholder { color: #660000; font-size: 13px; }
         
         .btn-paste {
-            padding: 0 18px; border-radius: 12px; border: 1px solid #ff4d4d;
+            padding: 0 15px; border-radius: 12px; border: 1px solid #ff4d4d;
             background: linear-gradient(90deg, #660000, #cc0000); color: #fff;
             font-size: 11px; font-weight: bold; cursor: pointer;
             text-transform: uppercase; letter-spacing: 1px;
@@ -67,7 +77,7 @@
         .btn-paste svg { width: 14px; height: 14px; fill: #fff; }
         
         .btn-primary {
-            width: 100%; padding: 16px; border-radius: 12px; border: 1px solid #ff4d4d;
+            width: 100%; padding: 15px; border-radius: 12px; border: 1px solid #ff4d4d;
             background: linear-gradient(90deg, #990000, #ff1a1a); color: #fff; font-size: 15px;
             font-weight: bold; text-transform: uppercase; letter-spacing: 1px; cursor: pointer;
             transition: 0.3s; box-shadow: 0 4px 20px rgba(255, 0, 0, 0.5);
@@ -75,157 +85,88 @@
         }
         .btn-primary:active { transform: scale(0.97); }
         
-        /* Nút Liên hệ Admin (giữ nguyên) */
-        .btn-contact {
-            width: 100%; padding: 16px; border-radius: 12px; border: 1px solid #ff4d4d;
-            background: #1a0000; color: #ff4d4d; font-size: 14px; font-weight: bold;
-            text-transform: uppercase; letter-spacing: 1px; cursor: pointer; transition: 0.3s;
-            display: flex; justify-content: center; align-items: center; gap: 10px;
-            text-decoration: none; box-shadow: inset 0 0 10px rgba(255, 0, 0, 0.1);
+        /* 2 NÚT DƯỚI CÙNG */
+        .bottom-buttons { display: flex; gap: 10px; }
+        .btn-contact, .btn-group {
+            flex: 1; padding: 15px 5px; border-radius: 12px; font-size: 11px; font-weight: bold;
+            text-transform: uppercase; letter-spacing: 0.5px; cursor: pointer; transition: 0.3s;
+            display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 5px;
+            text-decoration: none; text-align: center; line-height: 1.3; border: 1px solid #ff3333;
+            background: #140000; color: #ffcccc;
         }
-        .btn-contact:active { background: #330000; color: #ff1a1a; }
+        .btn-contact:active, .btn-group:active { transform: scale(0.97); background: #330000; color: #fff; }
+        .bottom-buttons svg { width: 18px; height: 18px; fill: currentColor; }
         
-        /* Nút Nhóm Hack (mới thêm) */
-        .btn-group {
-            width: 100%; padding: 16px; border-radius: 12px; border: 1px solid #00cc00;
-            background: linear-gradient(90deg, #003300, #006600); color: #66ff66;
-            font-size: 14px; font-weight: bold;
-            text-transform: uppercase; letter-spacing: 1px; cursor: pointer; transition: 0.3s;
-            display: flex; justify-content: center; align-items: center; gap: 10px;
-            text-decoration: none; box-shadow: 0 0 15px rgba(0, 255, 0, 0.3);
-            animation: groupPulse 2s infinite alternate;
-        }
-        @keyframes groupPulse {
-            from { box-shadow: 0 0 10px rgba(0, 255, 0, 0.3); }
-            to { box-shadow: 0 0 25px rgba(0, 255, 0, 0.7); }
-        }
-        .btn-group:active { transform: scale(0.97); background: #006600; }
-        
+        /* TOOL SECTION */
         .tool-section { display: none; flex-direction: column; gap: 15px; animation: fadeIn 0.5s ease-in-out; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
         
-        /* Ảnh hack (mới thêm) */
         .hack-image-container {
-            text-align: center; margin-bottom: 10px; padding: 10px;
-            background: #140000; border: 2px solid #ff3333; border-radius: 12px;
-            box-shadow: 0 0 20px rgba(255, 0, 0, 0.5), inset 0 0 15px rgba(255, 0, 0, 0.2);
+            text-align: center; padding: 10px; background: #140000;
+            border: 2px solid #ff3333; border-radius: 12px; box-shadow: 0 0 20px rgba(255, 0, 0, 0.5);
         }
-        .hack-image-container img {
-            max-width: 100%; border-radius: 10px; display: block; margin: 0 auto;
-            border: 2px solid #ff6666;
-        }
-        .hack-image-container .caption {
-            font-size: 11px; color: #ff9999; margin-top: 8px;
-            font-weight: bold; letter-spacing: 1px; text-transform: uppercase;
-        }
+        .hack-image-container img { max-width: 100%; border-radius: 10px; display: block; margin: 0 auto; border: 2px solid #ff6666; }
+        .hack-image-container .caption { font-size: 11px; color: #ff9999; margin-top: 8px; font-weight: bold; text-transform: uppercase; }
         
         .info-row { display: flex; gap: 10px; }
         .info-box {
             flex: 1; background: #140000; border: 1px solid #ff3333; border-radius: 10px;
             padding: 12px; display: flex; justify-content: center; align-items: center; gap: 8px;
-            font-family: 'Courier New', monospace; font-size: 14px; color: #ffcccc;
-            box-shadow: inset 0 0 10px rgba(255, 0, 0, 0.2);
+            font-family: 'Courier New', monospace; font-size: 13px; color: #ffcccc;
         }
         .info-box svg { width: 14px; height: 14px; fill: #ff1a1a; }
+        
         .toggle-container {
             background: #140000; border: 1px solid #ff3333; border-radius: 12px;
             padding: 15px; display: flex; justify-content: space-between; align-items: center;
-            box-shadow: inset 0 0 10px rgba(255, 0, 0, 0.2);
         }
         .toggle-left { display: flex; align-items: center; gap: 12px; text-align: left; }
         .toggle-icon {
             width: 40px; height: 40px; border-radius: 50%; border: 2px solid #ff1a1a;
             display: flex; justify-content: center; align-items: center; background: #330000;
-            box-shadow: 0 0 10px rgba(255, 0, 0, 0.5);
         }
         .toggle-icon svg { width: 20px; height: 20px; fill: #ff1a1a; }
         .toggle-text .label { font-size: 10px; color: #ff8080; text-transform: uppercase; font-weight: bold; }
         .toggle-text .value { font-size: 14px; color: #fff; font-weight: bold; }
         .switch { position: relative; display: inline-block; width: 55px; height: 30px; }
         .switch input { opacity: 0; width: 0; height: 0; }
-        .slider {
-            position: absolute; cursor: not-allowed; top: 0; left: 0; right: 0; bottom: 0;
-            background-color: #660000; transition: .4s; border-radius: 34px; border: 1px solid #ff3333;
-            opacity: 0.8;
-        }
-        .slider:before {
-            position: absolute; content: ""; height: 22px; width: 22px; left: 3px; bottom: 3px;
-            background-color: #ff1a1a; transition: .4s; border-radius: 50%; box-shadow: 0 0 10px #ff0000;
-        }
-        .switch input:disabled + .slider { cursor: not-allowed; }
-        .switch input:disabled + .slider:before {
-            background-color: #fff; box-shadow: 0 0 15px #fff; transform: translateX(24px);
-        }
-        .server-info {
-            background: #140000; border: 1px solid #ff3333; border-radius: 10px;
-            padding: 15px; text-align: left; font-family: 'Courier New', monospace;
-            font-size: 12px; box-shadow: inset 0 0 10px rgba(255, 0, 0, 0.2);
-        }
+        .slider { position: absolute; cursor: not-allowed; top: 0; left: 0; right: 0; bottom: 0; background-color: #660000; transition: .4s; border-radius: 34px; border: 1px solid #ff3333; opacity: 0.8; }
+        .slider:before { position: absolute; content: ""; height: 22px; width: 22px; left: 3px; bottom: 3px; background-color: #ff1a1a; transition: .4s; border-radius: 50%; }
+        .switch input:disabled + .slider:before { background-color: #fff; transform: translateX(24px); }
+        
+        .server-info { background: #140000; border: 1px solid #ff3333; border-radius: 10px; padding: 15px; text-align: left; font-family: 'Courier New', monospace; font-size: 12px; }
         .server-info .row { display: flex; justify-content: space-between; margin-bottom: 8px; }
         .server-info .row:last-child { margin-bottom: 0; }
         .server-info .label { color: #ff4d4d; }
         .server-info .value { color: #fff; }
-        .btn-stop {
-            width: 100%; padding: 16px; border-radius: 12px; border: 1px solid #ff4d4d;
-            background: linear-gradient(90deg, #990000, #ff1a1a); color: #fff; font-size: 15px;
-            font-weight: bold; text-transform: uppercase; letter-spacing: 1px; cursor: pointer;
-            transition: 0.3s; box-shadow: 0 4px 20px rgba(255, 0, 0, 0.5);
-            display: flex; justify-content: center; align-items: center; gap: 10px; margin-top: 5px;
-        }
+        
+        .btn-stop { width: 100%; padding: 16px; border-radius: 12px; border: 1px solid #ff4d4d; background: linear-gradient(90deg, #990000, #ff1a1a); color: #fff; font-size: 15px; font-weight: bold; text-transform: uppercase; cursor: pointer; }
         .btn-stop:active { transform: scale(0.97); }
-        .footer { margin-top: 25px; font-size: 10px; color: #660000; text-align: center; letter-spacing: 1px; text-transform: uppercase; }
+        
+        .footer { margin-top: 10px; font-size: 10px; color: #660000; text-align: center; letter-spacing: 1px; text-transform: uppercase; }
         .footer span { color: #ff1a1a; }
-        .error-msg { color: #ff4d4d; font-size: 12px; text-align: center; margin-top: -5px; display: none; font-weight: bold; }
-        .success-msg { color: #00ff00; font-size: 12px; text-align: center; margin-top: -5px; display: none; font-weight: bold; }
-        .info-msg { color: #ffcc00; font-size: 12px; text-align: center; margin-top: -5px; display: none; font-weight: bold; }
-        .admin-link {
-            margin-top: 15px; color: #ff1a1a; font-size: 11px; cursor: pointer;
-            text-decoration: underline; display: inline-block; font-weight: bold;
-            letter-spacing: 1px; text-transform: uppercase;
-        }
-        .admin-link:active { color: #fff; }
-        #adminPanel {
-            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.95); z-index: 9999; justify-content: center; align-items: center; padding: 20px;
-        }
-        .admin-box {
-            background: #1a0000; border: 2px solid #ff0000; border-radius: 15px;
-            padding: 25px; width: 100%; max-width: 400px; text-align: center;
-            box-shadow: 0 0 30px #ff0000;
-        }
+        .error-msg { color: #ff4d4d; font-size: 12px; text-align: center; display: none; font-weight: bold; }
+        .success-msg { color: #00ff00; font-size: 12px; text-align: center; display: none; font-weight: bold; }
+        .info-msg { color: #ffcc00; font-size: 12px; text-align: center; display: none; font-weight: bold; }
+        .admin-link { margin-top: 15px; color: #ff1a1a; font-size: 11px; cursor: pointer; text-decoration: underline; display: inline-block; font-weight: bold; letter-spacing: 1px; text-transform: uppercase; }
+        
+        /* ADMIN PANEL */
+        #adminPanel { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); z-index: 9999; justify-content: center; align-items: center; padding: 20px; }
+        .admin-box { background: #1a0000; border: 2px solid #ff0000; border-radius: 15px; padding: 25px; width: 100%; max-width: 400px; text-align: center; box-shadow: 0 0 30px #ff0000; }
         .admin-box h2 { color: #ff3333; margin-bottom: 20px; text-transform: uppercase; font-size: 18px; }
-        .admin-box input, .admin-box select {
-            width: 100%; padding: 12px; margin-bottom: 10px; border-radius: 8px;
-            border: 1px solid #ff4d4d; background: #260000; color: #fff; text-align: center;
-        }
-        .admin-box button {
-            width: 100%; padding: 12px; margin-bottom: 10px; border-radius: 8px;
-            border: none; background: #ff1a1a; color: #fff; font-weight: bold; cursor: pointer;
-            text-transform: uppercase;
-        }
+        .admin-box input, .admin-box select { width: 100%; padding: 12px; margin-bottom: 10px; border-radius: 8px; border: 1px solid #ff4d4d; background: #260000; color: #fff; text-align: center; }
+        .admin-box button { width: 100%; padding: 12px; margin-bottom: 10px; border-radius: 8px; border: none; background: #ff1a1a; color: #fff; font-weight: bold; cursor: pointer; text-transform: uppercase; }
         .admin-box button:active { transform: scale(0.97); }
-        .key-display {
-            background: #003300; border: 1px solid #00cc00; padding: 15px; border-radius: 8px;
-            margin-top: 10px; font-family: monospace; font-size: 18px; color: #00ff00;
-            word-break: break-all; display: none; text-shadow: 0 0 10px #00ff00;
-            position: relative; cursor: pointer;
-        }
-        .key-display.copied {
-            background: #006600; border-color: #00ff00;
-            box-shadow: 0 0 20px #00ff00;
-        }
-        .key-display .hint {
-            font-size: 10px; color: #99ff99; display: block; margin-top: 5px; font-family: 'Segoe UI';
-        }
-        .key-list {
-            max-height: 150px; overflow-y: auto; text-align: left; font-size: 11px;
-            margin-top: 15px; border-top: 1px solid #ff3333; padding-top: 10px;
-        }
+        .key-display { background: #003300; border: 1px solid #00cc00; padding: 15px; border-radius: 8px; margin-top: 10px; font-family: monospace; font-size: 16px; color: #00ff00; word-break: break-all; display: none; cursor: pointer; }
+        .key-display.copied { background: #006600; border-color: #00ff00; }
+        .key-display .hint { font-size: 10px; color: #99ff99; display: block; margin-top: 5px; font-family: 'Segoe UI'; }
+        .key-list { max-height: 150px; overflow-y: auto; text-align: left; font-size: 11px; margin-top: 15px; border-top: 1px solid #ff3333; padding-top: 10px; }
         .key-list div { color: #ffcccc; margin-bottom: 5px; border-bottom: 1px dashed #330000; padding-bottom: 3px; font-family: monospace; }
     </style>
 </head>
 <body>
 
+    <!-- BẢNG ĐIỀU KHIỂN ADMIN -->
     <div id="adminPanel">
         <div class="admin-box">
             <h2>🔐 ADMIN LOGIN</h2>
@@ -239,30 +180,28 @@
             <div id="adminControlPanel" style="display: none;">
                 <h3 style="color: #fff; margin-bottom: 15px; font-size: 14px;">TẠO KEY MỚI</h3>
                 <select id="durationSelect">
-                    <option value="0.5">Key 12 Giờ (PHUC-12H-XXXXXX)</option>
-                    <option value="1">Key 1 Ngày (PHUC-01D-XXXXXX)</option>
-                    <option value="3">Key 3 Ngày (PHUC-03D-XXXXXX)</option>
-                    <option value="7">Key 7 Ngày (PHUC-07D-XXXXXX)</option>
-                    <option value="15">Key 15 Ngày (PHUC-15D-XXXXXX)</option>
-                    <option value="30">Key 30 Ngày (PHUC-30D-XXXXXX)</option>
-                    <option value="90">Key 90 Ngày (PHUC-90D-XXXXXX)</option>
-                    <option value="0">Key Vĩnh Viễn (PHUC-VVD-XXXXXX)</option>
+                    <option value="0.5">Key 12 Giờ</option>
+                    <option value="1">Key 1 Ngày</option>
+                    <option value="3">Key 3 Ngày</option>
+                    <option value="7">Key 7 Ngày</option>
+                    <option value="15">Key 15 Ngày</option>
+                    <option value="30">Key 30 Ngày</option>
+                    <option value="90">Key 90 Ngày</option>
+                    <option value="0">Key Vĩnh Viễn</option>
                 </select>
                 <button onclick="generateAdminKey()">TẠO KEY</button>
-                
                 <div id="keyDisplay" class="key-display" onclick="copyDisplayedKey()"></div>
-                
-                <h3 style="color: #fff; margin-top: 20px; margin-bottom: 10px; font-size: 14px;">DANH SÁCH KEY ĐÃ TẠO</h3>
+                <h3 style="color: #fff; margin-top: 20px; margin-bottom: 10px; font-size: 14px;">DANH SÁCH KEY</h3>
                 <div id="generatedKeyList" class="key-list"></div>
-                
                 <button onclick="logoutAdmin()" style="background: #660000; margin-top: 15px;">ĐĂNG XUẤT</button>
             </div>
-            
             <button onclick="toggleAdminPanel()" style="background: #330000; margin-top: 10px;">ĐÓNG</button>
         </div>
     </div>
 
+    <!-- GIAO DIỆN CHÍNH -->
     <div class="container">
+        <!-- HEADER -->
         <div class="header">
             <div class="title">
                 <h1>HEADLOCK <br><span>MR.PHUC</span></h1>
@@ -274,82 +213,66 @@
             </div>
         </div>
 
-        <!-- Giữ nguyên logo SVG -->
+        <!-- LOGO: BẤM VÀO SẼ MỞ LINK NHÓM ZALO -->
         <div class="logo-area">
-            <div class="logo-circle">
-                <svg viewBox="0 0 24 24">
-                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm0-13c-2.76 0-5 2.24-5 5s2.24 5 5 5 5-2.24 5-5-2.24-5-5-5zm0 8c-1.65 0-3-1.35-3-3s1.35-3 3-3 3 1.35 button3 3-1.35 3-3 3z"/>
-                    <path d="M11 2h2v4h-2zM11 18h2>
-v4h-2zM2 11h4v2H2zM18 11h4v2h-4z"/>
-                </svg>
-            </div>
+            <a href="https://zalo.me/g/z0e5pd8bdzcbqnaiyxsn" target="_blank" class="logo-circle">
+                <!-- Đã thay link ảnh của bạn vào đây -->
+                <img src="https://i.postimg.cc/KvNx6wtS/temp-image-AAD8DD6B-B6DB-4392-BF99-DD200DE57B00.webp" alt="Logo" onerror="this.style.display='none'; this.parentElement.innerHTML='<svg viewBox=\'0 0 24 24\' style=\'width:70px; height:70px; fill:#ff1a1a;\'><path d=\'M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm0-13c-2.76 0-5 2.24-5 5s2.24 5 5 5 5-2.24 5-5-2.24-5-5-5zm0 8c-1.65 0-3-1.35-3-3s1.35-3 3-3 3 1.35 3 3-1.35 3-3 3z\'/></svg>';">
+            </a>
         </div>
 
-                   
- <div id="authSection" class="auth-section">
+        <div id="authSection" class="auth-section">
             <div class="input-label">
-                <svg viewBox           ="0 0 24 24"><path d="M12.65 10C11.83 7. <!--67 9.61 6 7 6c-3.31 0-6 2.69-6 6s2.69 6 6 6c N2.61 0 4.83-1.67 5.65-4H17v4h4v-4h2v-4H12.65zM7 14c-1.1 0-2-.út9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2z"/></svg>
+                <svg viewBox="0 0 24 24"><path d="M12.65 10C11.83 7.67 9.61 6 7 6c-3.31 0-6 2.69-6 6s2.69 6 6 6c2.61 0 4.83-1.67 5.65-4H17v4h4v-4h2v-4H12.65zM7 14c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2z"/></svg>
                 LICENSE KEY
             </div>
- Li            
+            
             <div class="input-row">
-                <input type="text" id="licenseInput" class="custom-input" placeholder="VD: PHUC-01D-A1B2C3ên" autocomplete="off">
+                <input type="text" id="licenseInput" class="custom-input" placeholder="Nhập mã bản quyền..." autocomplete="off">
                 <button class="btn-paste" onclick="pasteKey()">
                     <svg viewBox="0 0 24 24"><path d="M19 2h-4.18C14.4.84 13.3 0 12 0c-1.3 0-2.4.84-2.82 2H5c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-7 0c.55 0 1 .45 1 1s-.45 1-1 1-1-.45-1-1 .45-1 1-1zm7 18H5V4h2v3h10V4h2v16z"/></svg>
                     DÁN
                 </button>
             </div>
             
-            <button class="btn-primary" onclick="activateKey()">KÍCH HOẠT KEY →</ hệ Admin (Zalo cũ) - GIỮ NGUYÊN -->
-            <a href="https://zalo.me/0865561731" target="_blank" class="btn-contact">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg>
-                LIÊN HỆ ADMIN
-            </a>
+            <button class="btn-primary" onclick="activateKey()">KÍCH HOẠT KEY →</button>
             
-            <!-- Nút Nhóm Hack (MỚI THÊM) - link nhóm Zalo -->
-            <a href="https://zalo.me/g/z0e5pd8bdzcbqnaiyxsn" target="_blank" class="btn-group">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>
-                NHÓM HACK - THAM GIA NGAY
-            </a>
+            <!-- 2 NÚT LIÊN HỆ VÀ NHÓM -->
+            <div class="bottom-buttons">
+                <a href="https://zalo.me/0865561731" target="_blank" class="btn-contact">
+                    <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg>
+                    LIÊN HỆ ADMIN
+                </a>
+                <a href="https://zalo.me/g/z0e5pd8bdzcbqnaiyxsn" target="_blank" class="btn-group">
+                    <svg viewBox="0 0 24 24"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>
+                    THAM GIA NHÓM
+                </a>
+            </div>
             
             <div id="errorMsg" class="error-msg"></div>
             <div id="successMsg" class="success-msg"></div>
             <div id="infoMsg" class="info-msg"></div>
         </div>
 
+        <!-- TOOL SECTION (Hiện ra khi nhập đúng Key) -->
         <div id="toolSection" class="tool-section">
-            <!-- Ảnh hack (MỚI THÊM) -->
             <div class="hack-image-container">
-                <!-- Upload ảnh chú khủng long lên GitHub và đặt tên là hack.jpg -->
-                <img src="hack.jpg" alt="Hack Image" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMDAiIGhlaWdodD0iMjAwIiB2aWV3Qm94PSIwIDAgMzAwIDIwMCI+PHJlY3Qgd2lkdGg9IjMwMCIgaGVpZ2h0PSIyMDAiIGZpbGw9IiMzMzAwMDAiLz48dGV4dCB4PSIxNTAiIHk9IjEwMCIgZmlsbD0iI2ZmNjY2NiIgZm9udC1zaXplPSIxNiIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1mYW1pbHk9IkFyaWFsIj7huqJuIGhhY2sgLSBVcGxvYWQgaGFjay5qcGc8L3RleHQ+PC9zdmc+'">
+                <!-- Đã thay link ảnh của bạn vào đây -->
+                <img src="https://i.postimg.cc/KvNx6wtS/temp-image-AAD8DD6B-B6DB-4392-BF99-DD200DE57B00.webp" alt="Hack Image" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMDAiIGhlaWdodD0iMjAwIiB2aWV3Qm94PSIwIDAgMzAwIDIwMCI+PHJlY3Qgd2lkdGg9IjMwMCIgaGVpZ2h0PSIyMDAiIGZpbGw9IiMzMzAwMDAiLz48dGV4dCB4PSIxNTAiIHk9IjEwMCIgZmlsbD0iI2ZmNjY2NiIgZm9udC1zaXplPSIxNiIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1mYW1pbHk9IkFyaWFsIj7huqJuIGhhY2sgLSBVcGxvYWQgaGFjay5qcGc8L3RleHQ+PC9zdmc+'">
                 <div class="caption">🔥 HACK ĐÃ ĐƯỢC KÍCH HOẠT 🔥</div>
             </div>
 
             <div class="info-row">
-                <div class="info-box" id="ipDisplay">
-                    <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
-                    <span id="ipText">115.76.48.141</span>
-                </div>
-                <div class="info-box" id="timerDisplay">
-                    <svg viewBox="0 0 24 24"><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"/></svg>
-                    <span id="countdown">00:00:00</span>
-                </div>
+                <div class="info-box"><svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg><span id="ipText">115.76.48.141</span></div>
+                <div class="info-box"><svg viewBox="0 0 24 24"><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"/></svg><span id="countdown">00:00:00</span></div>
             </div>
 
             <div class="toggle-container">
                 <div class="toggle-left">
-                    <div class="toggle-icon">
-                        <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm0-13c-2.76 0-5 2.24-5 5s2.24 5 5 5 5-2.24 5-5-2.24-5-5-5zm0 8c-1.65 0-3-1.35-3-3s1.35-3 3-3 3 1.35 3 3-1.35 3-3 3z"/></svg>
-                    </div>
-                    <div class="toggle-text">
-                        <div class="label">AIM ACTIVE</div>
-                        <div class="value" id="aimStatusText">Aim Silent</div>
-                    </div>
+                    <div class="toggle-icon"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm0-13c-2.76 0-5 2.24-5 5s2.24 5 5 5 5-2.24 5-5-2.24-5-5-5zm0 8c-1.65 0-3-1.35-3-3s1.35-3 3-3 3 1.35 3 3-1.35 3-3 3z"/></svg></div>
+                    <div class="toggle-text"><div class="label">AIM ACTIVE</div><div class="value" id="aimStatusText">Aim Silent</div></div>
                 </div>
-                <label class="switch">
-                    <input type="checkbox" id="aimToggle" checked disabled>
-                    <span class="slider"></span>
-                </label>
+                <label class="switch"><input type="checkbox" checked disabled><span class="slider"></span></label>
             </div>
 
             <div class="server-info">
@@ -357,51 +280,32 @@ v4h-2zM2 11h4v2H2zM18 11h4v2h-4z"/>
                 <div class="row"><span class="label">Host:</span><span class="value">apex.zenithsolitude.store</span></div>
                 <div class="row"><span class="label">Port:</span><span class="value">2928</span></div>
             </div>
-
             <button class="btn-stop" onclick="deactivateTool()">TẮT AIM →</button>
         </div>
 
         <div class="footer">
-            &lt;/&gt; BY <span>ZENITH SOLITUDE</span>
-            <br>
+            &lt;/&gt; BY <span>ZENITH SOLITUDE</span><br>
             <span class="admin-link" onclick="toggleAdminPanel()">⚙️ QUẢN TRỊ VIÊN</span>
         </div>
     </div>
 
     <script>
-        // ==========================================
-        // CẤU HÌNH
-        // ==========================================
-        const ADMIN_USER = "admin";
-        const ADMIN_PASS = "phc51580";
+        const ADMIN_USER = "admin"; const ADMIN_PASS = "phc51580";
         const SECRET = "PHUC_SECRET_2024_X9K2"; 
-        
         const REF_TIME = new Date('2024-01-01T00:00:00Z').getTime();
-        const HOUR_MS = 3600 * 1000;
-        const TOTAL_HOURS = 46656;
-        
+        const HOUR_MS = 3600 * 1000; const TOTAL_HOURS = 46656;
         let countdownInterval = null;
 
         function simpleHash(str) {
             let hash = 5381;
-            for (let i = 0; i < str.length; i++) {
-                hash = ((hash << 5) + hash) + str.charCodeAt(i);
-                hash = hash >>> 0;
-            }
+            for (let i = 0; i < str.length; i++) { hash = ((hash << 5) + hash) + str.charCodeAt(i); hash = hash >>> 0; }
             return hash.toString(36).toUpperCase();
         }
-
         const CHARS = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-        function randomChar() {
-            return CHARS[Math.floor(Math.random() * CHARS.length)];
-        }
+        function randomChar() { return CHARS[Math.floor(Math.random() * CHARS.length)]; }
 
         function createKey(durationDays) {
-            let durationLabel;
-            if (durationDays === 0) durationLabel = "VVD";
-            else if (durationDays === 0.5) durationLabel = "12H";
-            else durationLabel = String(durationDays).padStart(2, '0') + "D";
-
+            let durationLabel = (durationDays === 0) ? "VVD" : (durationDays === 0.5) ? "12H" : String(durationDays).padStart(2, '0') + "D";
             const hours = Math.floor((Date.now() - REF_TIME) / HOUR_MS) % TOTAL_HOURS;
             const hoursPart = hours.toString(36).toUpperCase().padStart(3, '0');
             const randomPart = randomChar() + randomChar();
@@ -410,17 +314,11 @@ v4h-2zM2 11h4v2H2zM18 11h4v2h-4z"/>
         }
 
         function parseKey(key) {
-            key = key.trim().toUpperCase();
-            key = key.replace(/[–—−]/g, '-');
-            
+            key = key.trim().toUpperCase().replace(/[–—−]/g, '-');
             const parts = key.split('-');
             if (parts.length !== 3 || parts[0] !== 'PHUC') return null;
-            
-            const durationLabel = parts[1];
-            const code = parts[2];
-            
-            if (durationLabel.length !== 3) return null;
-            if (code.length !== 6) return null;
+            const durationLabel = parts[1], code = parts[2];
+            if (durationLabel.length !== 3 || code.length !== 6) return null;
             
             let durationDays;
             if (durationLabel === "VVD") durationDays = 0;
@@ -429,116 +327,67 @@ v4h-2zM2 11h4v2H2zM18 11h4v2h-4z"/>
                 durationDays = parseInt(durationLabel.slice(0, 2));
                 if (isNaN(durationDays) || durationDays <= 0 || durationLabel[2] !== 'D') return null;
             }
-            
-            const hoursPart = code.slice(0, 3);
-            const randomPart = code.slice(3, 5);
-            const givenChecksum = code.slice(5, 6);
-            
-            const expectedChecksum = simpleHash(durationLabel + hoursPart + randomPart + SECRET).slice(-1);
-            if (givenChecksum !== expectedChecksum) return null;
+            const hoursPart = code.slice(0, 3), randomPart = code.slice(3, 5), givenChecksum = code.slice(5, 6);
+            if (givenChecksum !== simpleHash(durationLabel + hoursPart + randomPart + SECRET).slice(-1)) return null;
             
             const hours = parseInt(hoursPart, 36);
             if (isNaN(hours) || hours >= TOTAL_HOURS) return null;
-            
             const createdAt = REF_TIME + hours * HOUR_MS;
-            
-            let expiresAt;
-            if (durationDays === 0) expiresAt = 9999999999999;
-            else expiresAt = createdAt + durationDays * 24 * 60 * 60 * 1000;
-            
+            let expiresAt = (durationDays === 0) ? 9999999999999 : createdAt + durationDays * 24 * 60 * 60 * 1000;
             return { durationDays, createdAt, expiresAt };
         }
 
         function pasteKey() {
             const inputField = document.getElementById('licenseInput');
             const infoMsg = document.getElementById('infoMsg');
-            const errorMsg = document.getElementById('errorMsg');
-            const successMsg = document.getElementById('successMsg');
-            
-            errorMsg.style.display = 'none';
-            successMsg.style.display = 'none';
+            document.getElementById('errorMsg').style.display = 'none';
+            document.getElementById('successMsg').style.display = 'none';
             infoMsg.style.display = 'none';
             
             if (navigator.clipboard && navigator.clipboard.readText) {
                 navigator.clipboard.readText().then(text => {
                     if (text && text.trim() !== '') {
-                        let cleaned = text.trim().replace(/[–—−]/g, '-');
-                        inputField.value = cleaned.toUpperCase();
-                        infoMsg.textContent = "✅ Đã dán Key từ bộ nhớ tạm!";
-                        infoMsg.style.display = 'block';
-                        setTimeout(() => { infoMsg.style.display = 'none'; }, 2000);
+                        inputField.value = text.trim().replace(/[–—−]/g, '-').toUpperCase();
+                        infoMsg.textContent = "✅ Đã dán Key!"; infoMsg.style.display = 'block';
+                        setTimeout(() => infoMsg.style.display = 'none', 2000);
                     } else {
-                        infoMsg.textContent = "⚠️ Bộ nhớ tạm trống, hãy copy Key trước!";
-                        infoMsg.style.display = 'block';
-                        setTimeout(() => { infoMsg.style.display = 'none'; }, 2500);
+                        infoMsg.textContent = "⚠️ Bộ nhớ tạm trống!"; infoMsg.style.display = 'block';
+                        setTimeout(() => infoMsg.style.display = 'none', 2000);
                     }
-                }).catch(err => fallbackPaste(inputField, infoMsg));
-            } else fallbackPaste(inputField, infoMsg);
-        }
-        
-        function fallbackPaste(inputField, infoMsg) {
-            infoMsg.textContent = "👉 Hãy nhấn giữ vào ô nhập liệu và chọn 'Dán' (Paste)";
-            infoMsg.style.display = 'block';
-            setTimeout(() => { infoMsg.style.display = 'none'; }, 3000);
-            inputField.focus();
+                }).catch(() => {
+                    infoMsg.textContent = "👉 Nhấn giữ ô nhập và chọn Dán"; infoMsg.style.display = 'block';
+                    setTimeout(() => infoMsg.style.display = 'none', 3000);
+                });
+            } else {
+                infoMsg.textContent = "👉 Nhấn giữ ô nhập và chọn Dán"; infoMsg.style.display = 'block';
+                setTimeout(() => infoMsg.style.display = 'none', 3000);
+            }
         }
 
         function activateKey() {
             const input = document.getElementById('licenseInput').value.trim();
-            const errorMsg = document.getElementById('errorMsg');
-            const successMsg = document.getElementById('successMsg');
-            const infoMsg = document.getElementById('infoMsg');
-            
-            errorMsg.style.display = "none";
-            successMsg.style.display = "none";
-            infoMsg.style.display = "none";
+            const errorMsg = document.getElementById('errorMsg'), successMsg = document.getElementById('successMsg'), infoMsg = document.getElementById('infoMsg');
+            errorMsg.style.display = "none"; successMsg.style.display = "none"; infoMsg.style.display = "none";
 
-            if (input === "") {
-                errorMsg.textContent = "Vui lòng nhập Key để kích hoạt!";
-                errorMsg.style.display = "block";
-                return;
-            }
-
+            if (input === "") { errorMsg.textContent = "Vui lòng nhập Key!"; errorMsg.style.display = "block"; return; }
             const parsed = parseKey(input);
-            
-            if (!parsed) {
-                errorMsg.textContent = "Key không hợp lệ! Vui lòng kiểm tra lại.";
-                errorMsg.style.display = "block";
-                return;
-            }
+            if (!parsed) { errorMsg.textContent = "Key không hợp lệ!"; errorMsg.style.display = "block"; return; }
+            if (parsed.durationDays !== 0 && Date.now() >= parsed.expiresAt) { errorMsg.textContent = "Key đã hết hạn!"; errorMsg.style.display = "block"; return; }
 
-            if (parsed.durationDays !== 0 && Date.now() >= parsed.expiresAt) {
-                errorMsg.textContent = "Key này đã hết hạn! Vui lòng liên hệ Admin để gia hạn.";
-                errorMsg.style.display = "block";
-                return;
-            }
-
-            localStorage.setItem('ff_active_key', JSON.stringify({ 
-                key: input, expiresAt: parsed.expiresAt,
-                isLifetime: parsed.durationDays === 0
-            }));
-
-            successMsg.textContent = `Kích hoạt thành công!`;
-            successMsg.style.display = "block";
-            
+            localStorage.setItem('ff_active_key', JSON.stringify({ key: input, expiresAt: parsed.expiresAt, isLifetime: parsed.durationDays === 0 }));
+            successMsg.textContent = `Kích hoạt thành công!`; successMsg.style.display = "block";
             setTimeout(() => showToolScreen(parsed.expiresAt, parsed.durationDays === 0), 800);
         }
 
         function showToolScreen(expiresAt, isLifetime) {
             document.getElementById('authSection').style.display = 'none';
             document.getElementById('toolSection').style.display = 'flex';
-            
             const display = document.getElementById('countdown');
             if (isLifetime) {
-                display.textContent = "VĨNH VIỄN";
-                display.style.fontSize = "20px";
-                display.style.color = "#00ff00";
-                display.style.textShadow = "0 0 10px #00ff00";
+                display.textContent = "VĨNH VIỄN"; display.style.fontSize = "20px"; display.style.color = "#00ff00"; display.style.textShadow = "0 0 10px #00ff00";
                 if (countdownInterval) clearInterval(countdownInterval);
             } else {
-                display.style.fontSize = "14px";
-                display.style.color = "#ffcccc";
-                display.style.textShadow = "none";
+                display.style.fontSize = "14px"; display.style.color = "#ffcccc"; display.style.textShadow = "none";
                 startCountdown(expiresAt);
             }
         }
@@ -546,34 +395,16 @@ v4h-2zM2 11h4v2H2zM18 11h4v2h-4z"/>
         function startCountdown(expiresAt) {
             if (countdownInterval) clearInterval(countdownInterval);
             const display = document.getElementById('countdown');
-            
             function updateTimer() {
                 const remaining = expiresAt - Date.now();
-                
-                if (remaining <= 0) {
-                    clearInterval(countdownInterval);
-                    display.textContent = "00:00:00";
-                    alert("Key đã hết hạn! Vui lòng liên hệ Admin để gia hạn.");
-                    deactivateTool();
-                    return;
-                }
-                
+                if (remaining <= 0) { clearInterval(countdownInterval); display.textContent = "00:00:00"; alert("Key đã hết hạn! Vui lòng liên hệ Admin."); deactivateTool(); return; }
                 const totalSec = Math.floor(remaining / 1000);
-                const days = Math.floor(totalSec / 86400);
-                const hours = Math.floor((totalSec % 86400) / 3600);
-                const minutes = Math.floor((totalSec % 3600) / 60);
-                const seconds = totalSec % 60;
-                
-                let timeStr = "";
-                if (days > 0) timeStr += days + "n ";
-                timeStr += String(hours).padStart(2, '0') + ':' + 
-                           String(minutes).padStart(2, '0') + ':' + 
-                           String(seconds).padStart(2, '0');
+                const days = Math.floor(totalSec / 86400), hours = Math.floor((totalSec % 86400) / 3600), minutes = Math.floor((totalSec % 3600) / 60), seconds = totalSec % 60;
+                let timeStr = ""; if (days > 0) timeStr += days + "n ";
+                timeStr += String(hours).padStart(2, '0') + ':' + String(minutes).padStart(2, '0') + ':' + String(seconds).padStart(2, '0');
                 display.textContent = timeStr;
             }
-            
-            updateTimer();
-            countdownInterval = setInterval(updateTimer, 1000);
+            updateTimer(); countdownInterval = setInterval(updateTimer, 1000);
         }
 
         function deactivateTool() {
@@ -587,115 +418,53 @@ v4h-2zM2 11h4v2H2zM18 11h4v2h-4z"/>
             document.getElementById('infoMsg').style.display = 'none';
         }
 
-        document.getElementById('licenseInput').addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') activateKey();
-        });
+        document.getElementById('licenseInput').addEventListener('keypress', e => { if (e.key === 'Enter') activateKey(); });
 
-        function toggleAdminPanel() {
-            const panel = document.getElementById('adminPanel');
-            panel.style.display = (panel.style.display === 'flex') ? 'none' : 'flex';
-        }
-
+        function toggleAdminPanel() { const panel = document.getElementById('adminPanel'); panel.style.display = (panel.style.display === 'flex') ? 'none' : 'flex'; }
         function loginAdmin() {
-            const user = document.getElementById('adminUser').value;
-            const pass = document.getElementById('adminPass').value;
-            const msg = document.getElementById('adminMsg');
-            
+            const user = document.getElementById('adminUser').value, pass = document.getElementById('adminPass').value, msg = document.getElementById('adminMsg');
             if (user === ADMIN_USER && pass === ADMIN_PASS) {
-                document.getElementById('adminLoginForm').style.display = 'none';
-                document.getElementById('adminControlPanel').style.display = 'block';
-                msg.textContent = "";
-                renderAdminKeyList();
-            } else msg.textContent = "Sai tên đăng nhập hoặc mật khẩu!";
+                document.getElementById('adminLoginForm').style.display = 'none'; document.getElementById('adminControlPanel').style.display = 'block'; msg.textContent = ""; renderAdminKeyList();
+            } else msg.textContent = "Sai tài khoản hoặc mật khẩu!";
         }
-
-        function logoutAdmin() {
-            document.getElementById('adminLoginForm').style.display = 'block';
-            document.getElementById('adminControlPanel').style.display = 'none';
-            document.getElementById('adminUser').value = '';
-            document.getElementById('adminPass').value = '';
-            document.getElementById('keyDisplay').style.display = 'none';
-        }
+        function logoutAdmin() { document.getElementById('adminLoginForm').style.display = 'block'; document.getElementById('adminControlPanel').style.display = 'none'; document.getElementById('adminUser').value = ''; document.getElementById('adminPass').value = ''; document.getElementById('keyDisplay').style.display = 'none'; }
 
         function generateAdminKey() {
             const duration = parseFloat(document.getElementById('durationSelect').value);
             const newKey = createKey(duration);
-            
             let adminKeys = JSON.parse(localStorage.getItem('ff_admin_keys') || '[]');
             adminKeys.unshift({ key: newKey, duration: duration, createdAt: Date.now() });
             if (adminKeys.length > 100) adminKeys = adminKeys.slice(0, 100);
             localStorage.setItem('ff_admin_keys', JSON.stringify(adminKeys));
-            
             const display = document.getElementById('keyDisplay');
-            display.innerHTML = newKey + '<span class="hint">👆 Bấm vào đây để copy lại</span>';
-            display.style.display = 'block';
-            
-            autoCopy(newKey, display);
-            renderAdminKeyList();
+            display.innerHTML = newKey + '<span class="hint">👆 Bấm để copy lại</span>';
+            display.style.display = 'block'; autoCopy(newKey, display); renderAdminKeyList();
         }
         
         function autoCopy(text, displayEl) {
             if (navigator.clipboard && navigator.clipboard.writeText) {
-                navigator.clipboard.writeText(text).then(() => {
-                    displayEl.classList.add('copied');
-                    setTimeout(() => displayEl.classList.remove('copied'), 1500);
-                }).catch(() => {});
-            } else {
-                const ta = document.createElement('textarea');
-                ta.value = text;
-                ta.style.position = 'fixed';
-                ta.style.opacity = '0';
-                document.body.appendChild(ta);
-                ta.select();
-                try { document.execCommand('copy'); } catch(e) {}
-                document.body.removeChild(ta);
-            }
+                navigator.clipboard.writeText(text).then(() => { displayEl.classList.add('copied'); setTimeout(() => displayEl.classList.remove('copied'), 1500); }).catch(() => {});
+            } else { const ta = document.createElement('textarea'); ta.value = text; ta.style.position = 'fixed'; ta.style.opacity = '0'; document.body.appendChild(ta); ta.select(); try { document.execCommand('copy'); } catch(e) {} document.body.removeChild(ta); }
         }
-        
-        function copyDisplayedKey() {
-            const text = document.getElementById('keyDisplay').innerText;
-            if (!text) return;
-            const cleanText = text.split('\n')[0].trim();
-            autoCopy(cleanText, document.getElementById('keyDisplay'));
-        }
+        function copyDisplayedKey() { const text = document.getElementById('keyDisplay').innerText; if (!text) return; const cleanText = text.split('\n')[0].trim(); autoCopy(cleanText, document.getElementById('keyDisplay')); }
 
         function renderAdminKeyList() {
-            const list = document.getElementById('generatedKeyList');
-            let adminKeys = JSON.parse(localStorage.getItem('ff_admin_keys') || '[]');
-            
-            if (adminKeys.length === 0) {
-                list.innerHTML = '<div style="color:#ff8080; text-align:center; padding:5px;">Chưa có key nào được tạo.</div>';
-                return;
-            }
-            
+            const list = document.getElementById('generatedKeyList'); let adminKeys = JSON.parse(localStorage.getItem('ff_admin_keys') || '[]');
+            if (adminKeys.length === 0) { list.innerHTML = '<div style="color:#ff8080; text-align:center; padding:5px;">Chưa có key nào được tạo.</div>'; return; }
             list.innerHTML = '';
             adminKeys.forEach(item => {
-                const div = document.createElement('div');
-                const date = new Date(item.createdAt);
+                const div = document.createElement('div'); const date = new Date(item.createdAt);
                 const dateStr = date.toLocaleDateString('vi-VN') + ' ' + date.toLocaleTimeString('vi-VN', {hour:'2-digit', minute:'2-digit'});
-                
-                let durationText;
-                if (item.duration === 0) durationText = "Vĩnh viễn";
-                else if (item.duration === 0.5) durationText = "12 giờ";
-                else durationText = item.duration + " ngày";
-                
-                div.innerHTML = `${item.key}<br><span style="color:#ff6666; font-size:10px;">Tạo: ${dateStr} (${durationText})</span>`;
-                list.appendChild(div);
+                let durationText; if (item.duration === 0) durationText = "Vĩnh viễn"; else if (item.duration === 0.5) durationText = "12 giờ"; else durationText = item.duration + " ngày";
+                div.innerHTML = `${item.key}<br><span style="color:#ff6666; font-size:10px;">Tạo: ${dateStr} (${durationText})</span>`; list.appendChild(div);
             });
         }
 
         window.addEventListener('load', () => {
             const activeKeyData = JSON.parse(localStorage.getItem('ff_active_key'));
-            
-            if (activeKeyData && activeKeyData.expiresAt > Date.now()) {
-                showToolScreen(activeKeyData.expiresAt, activeKeyData.isLifetime);
-            } else {
-                localStorage.removeItem('ff_active_key');
-                document.getElementById('authSection').style.display = 'flex';
-                document.getElementById('toolSection').style.display = 'none';
-            }
+            if (activeKeyData && activeKeyData.expiresAt > Date.now()) { showToolScreen(activeKeyData.expiresAt, activeKeyData.isLifetime); }
+            else { localStorage.removeItem('ff_active_key'); document.getElementById('authSection').style.display = 'flex'; document.getElementById('toolSection').style.display = 'none'; }
         });
     </script>
-
 </body>
 </html>

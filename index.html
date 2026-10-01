@@ -195,6 +195,16 @@ body { background-color: #0a0a0a; color: #fff; display: flex; justify-content: c
 
     <div id="aimSelectSection" class="aim-select-section">
         <div class="input-label">CHỌN AIM</div>
+
+        <!-- ===== ĐỒNG HỒ ĐẾM NGƯỢC KEY ===== -->
+        <div class="info-row" style="margin-bottom: 5px;">
+            <div class="info-box" style="flex:1;">
+                <svg viewBox="0 0 24 24"><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"/></svg>
+                <span id="countdownAim">--:--:--</span>
+            </div>
+        </div>
+        <!-- ===== HẾT ĐỒNG HỒ ===== -->
+
         <div id="cooldownBanner" class="cooldown-banner">
             ⏳ Vui lòng đợi <span id="cooldownTimer" class="timer">5</span>s để chọn Aim khác
         </div>
@@ -268,6 +278,7 @@ const TOTAL_HOURS = 46656;
 const COOLDOWN_SECONDS = 5;
 
 let countdownInterval = null;
+let countdownAimInterval = null;
 let cooldownInterval = null;
 let isCooldown = false;
 let currentAim = null;
@@ -289,7 +300,7 @@ function simpleHash(str) {
 const CHARS = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
 function randomChar() { return CHARS[Math.floor(Math.random() * CHARS.length)]; }
 
-/* ============ KEY CHUẨN (theo mẫu) ============ */
+/* ============ KEY CHUẨN ============ */
 function createStandardKey(durationDays) {
     let label = (durationDays === 0) ? "VVD" : (durationDays === 0.5) ? "12H" : String(durationDays).padStart(2, '0') + "D";
     const hours = Math.floor((Date.now() - REF_TIME) / HOUR_MS) % TOTAL_HOURS;
@@ -322,8 +333,6 @@ function parseStandardKey(key) {
 }
 
 /* ============ KEY TÙY CHỈNH ============ */
-/* Format: PHUC-TENKEY-<expireTimestampBase36>-<checksum>
-   -> expireAt CỐ ĐỊNH, không reset khi nhập lại */
 function createCustomKey(customName, customHours) {
     const nameClean = customName.trim().toUpperCase().replace(/[^A-Z0-9]/g, '').slice(0, 12);
     if (!nameClean || nameClean.length === 0) return null;
@@ -360,7 +369,7 @@ function parseCustomKey(key) {
     return { name: name, expireAt: expireAt, hours: totalHours, isCustom: true };
 }
 
-/* ============ UI ACTIONS ============ */
+/* ============ UI ============ */
 function pasteKey() {
     const inputField = document.getElementById('licenseInput');
     if (navigator.clipboard && navigator.clipboard.readText) {
@@ -447,6 +456,23 @@ function renderAimList() {
     const activateBtn = document.getElementById('activateAimBtn');
     if (isCooldown) { activateBtn.disabled = true; activateBtn.textContent = 'ĐANG CHỜ...'; }
     else { activateBtn.disabled = false; activateBtn.textContent = 'CHỌN AIM RỒI KÍCH HOẠT →'; }
+
+    // Khởi động đồng hồ đếm ngược ở màn hình CHỌN AIM
+    try {
+        const activeKeyData = JSON.parse(localStorage.getItem('ff_active_key'));
+        const cdAim = document.getElementById('countdownAim');
+        if (activeKeyData && cdAim) {
+            if (activeKeyData.isLifetime) {
+                cdAim.textContent = "VĨNH VIỄN";
+                cdAim.style.color = "#00ff00";
+                cdAim.style.fontSize = "16px";
+            } else {
+                cdAim.style.color = "#ffcccc";
+                cdAim.style.fontSize = "13px";
+                startCountdownAim(activeKeyData.expiresAt);
+            }
+        }
+    } catch(e) {}
 }
 
 function selectAim(id) {
@@ -462,6 +488,9 @@ function selectAim(id) {
 function activateSelectedAim() {
     if (isCooldown) { showNotification("Vui lòng đợi hết thời gian chờ!"); return; }
     if (!currentAim) { showNotification("Vui lòng chọn 1 Aim trước!"); return; }
+
+    // Dừng đồng hồ ở màn hình chọn Aim
+    if (countdownAimInterval) clearInterval(countdownAimInterval);
 
     document.getElementById('aimSelectSection').style.display = 'none';
     document.getElementById('toolSection').style.display = 'flex';
@@ -493,6 +522,7 @@ function deactivateAim() {
     document.getElementById('aimSelectSection').style.display = 'flex';
     currentAim = null;
     startCooldown();
+    renderAimList();
 }
 
 function startCooldown() {
@@ -519,6 +549,38 @@ function startCooldown() {
     }, 1000);
 }
 
+/* Đồng hồ ở màn hình CHỌN AIM */
+function startCountdownAim(expiresAt) {
+    if (countdownAimInterval) clearInterval(countdownAimInterval);
+    const display = document.getElementById('countdownAim');
+    if (!display) return;
+
+    function updateTimer() {
+        const remaining = expiresAt - Date.now();
+        if (remaining <= 0) {
+            clearInterval(countdownAimInterval);
+            display.textContent = "00:00:00";
+            alert("Key đã hết hạn! Vui lòng nhập key mới.");
+            try { localStorage.removeItem('ff_active_key'); } catch(e) {}
+            document.getElementById('aimSelectSection').style.display = 'none';
+            document.getElementById('authSection').style.display = 'flex';
+            return;
+        }
+        const totalSec = Math.floor(remaining / 1000);
+        const days = Math.floor(totalSec / 86400);
+        const hours = Math.floor((totalSec % 86400) / 3600);
+        const minutes = Math.floor((totalSec % 3600) / 60);
+        const seconds = totalSec % 60;
+        let timeStr = "";
+        if (days > 0) timeStr += days + "n ";
+        timeStr += String(hours).padStart(2, '0') + ':' + String(minutes).padStart(2, '0') + ':' + String(seconds).padStart(2, '0');
+        display.textContent = timeStr;
+    }
+    updateTimer();
+    countdownAimInterval = setInterval(updateTimer, 1000);
+}
+
+/* Đồng hồ ở màn hình TOOL */
 function startCountdown(expiresAt) {
     if (countdownInterval) clearInterval(countdownInterval);
     const display = document.getElementById('countdown');

@@ -290,12 +290,11 @@
         // ==========================================
         const ADMIN_USER = "admin";
         const ADMIN_PASS = "phc51580";
-        const SECRET = "PHUC_SECRET_2024_X9K2"; // 🔴 Đổi thành chuỗi bí mật riêng của bạn
+        const SECRET = "PHUC_SECRET_2024_X9K2"; 
         
-        // Mốc tham chiếu: 01/01/2024 00:00 UTC
         const REF_TIME = new Date('2024-01-01T00:00:00Z').getTime();
         const HOUR_MS = 3600 * 1000;
-        const TOTAL_HOURS = 46656; // 36^3 = 46656 giờ = ~5.3 năm
+        const TOTAL_HOURS = 46656; // 36^3
         
         let countdownInterval = null;
 
@@ -312,34 +311,20 @@
             return hash.toString(36).toUpperCase();
         }
 
-        // Ký tự ngẫu nhiên
         const CHARS = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
         function randomChar() {
             return CHARS[Math.floor(Math.random() * CHARS.length)];
         }
 
-        // Tạo Key: PHUC-{duration}D-{HHH}{RR}{C}
-        // HHH = 3 ký tự giờ (từ REF)
-        // RR  = 2 ký tự ngẫu nhiên  
-        // C   = 1 ký tự checksum
         function createKey(durationDays) {
-            // Nhãn duration: 0 -> VVD, 1 -> 01D, ...
             const durationLabel = (durationDays === 0) ? "VVD" : String(durationDays).padStart(2, '0') + "D";
-            
-            // Giờ kể từ REF_TIME, lấy modulo để vừa 3 ký tự
             const hours = Math.floor((Date.now() - REF_TIME) / HOUR_MS) % TOTAL_HOURS;
             const hoursPart = hours.toString(36).toUpperCase().padStart(3, '0');
-            
-            // 2 ký tự random để đảm bảo không trùng khi tạo liên tục
             const randomPart = randomChar() + randomChar();
-            
-            // Checksum 1 ký tự
             const checksum = simpleHash(durationLabel + hoursPart + randomPart + SECRET).slice(-1);
-            
             return `PHUC-${durationLabel}-${hoursPart}${randomPart}${checksum}`;
         }
 
-        // Giải mã Key
         function parseKey(key) {
             key = key.trim().toUpperCase();
             const parts = key.split('-');
@@ -351,7 +336,6 @@
             if (durationLabel.length !== 3) return null;
             if (code.length !== 6) return null;
             
-            // Lấy duration
             let durationDays;
             if (durationLabel === "VVD") {
                 durationDays = 0;
@@ -360,22 +344,18 @@
                 if (isNaN(durationDays) || durationDays <= 0 || durationLabel[2] !== 'D') return null;
             }
             
-            // Tách code
             const hoursPart = code.slice(0, 3);
             const randomPart = code.slice(3, 5);
             const givenChecksum = code.slice(5, 6);
             
-            // Kiểm tra checksum
             const expectedChecksum = simpleHash(durationLabel + hoursPart + randomPart + SECRET).slice(-1);
             if (givenChecksum !== expectedChecksum) return null;
             
-            // Giải mã giờ
             const hours = parseInt(hoursPart, 36);
             if (isNaN(hours) || hours >= TOTAL_HOURS) return null;
             
             const createdAt = REF_TIME + hours * HOUR_MS;
             
-            // Tính hạn
             let expiresAt;
             if (durationDays === 0) {
                 expiresAt = 9999999999999;
@@ -402,81 +382,80 @@
                 errorMsg.textContent = "Vui lòng nhập Key để kích hoạt!";
                 errorMsg.style.display = "block";
                 return;
-Form            }
+            }
 
             const parsed = parseKey(input);
             
             if (!parsed) {
-                errorMsg.textContent = "Key không hợp'). lệ! Vui lòng kiểm tra lại.";
+                errorMsg.textContent = "Key không hợp lệ! Vui lòng kiểm tra lại.";
                 errorMsg.style.display = "block";
                 return;
             }
 
-            ifstyle (parsed.durationDays !== 0 && Date.now() >= parsed.expiresAt) {
-                errorMsg.textContent = "Key này.display đã hết hạn! Vui lòng liên hệ Admin để gia hạn.";
+            if (parsed.durationDays !== 0 && Date.now() >= parsed.expiresAt) {
+                errorMsg.textContent = "Key này đã hết hạn! Vui lòng liên hệ Admin để gia hạn.";
                 errorMsg.style.display = "block";
                 return;
- =            }
+            }
 
             localStorage.setItem('ff_active_key', JSON.stringify({ 
                 key: input, 
                 expiresAt: parsed.expiresAt,
-                is 'Lifetime: parsed.durationDays === 0
+                isLifetime: parsed.durationDays === 0
             }));
 
             successMsg.textContent = `Kích hoạt thành công!`;
-            successMsg.stylenone.display = "block";
+            successMsg.style.display = "block";
             
             setTimeout(() => {
                 showToolScreen(parsed.expiresAt, parsed.durationDays === 0);
-';
             }, 800);
         }
 
         function showToolScreen(expiresAt, isLifetime) {
             document.getElementById('authSection').style.display = 'none';
-            document.getElementById('toolSection               ').style.display = 'flex';
+            document.getElementById('toolSection').style.display = 'flex';
             
             const display = document.getElementById('countdown');
             if (isLifetime) {
-                display.textContent = "VĨ documentNH VIỄN";
+                display.textContent = "VĨNH VIỄN";
                 display.style.fontSize = "20px";
                 display.style.color = "#00ff00";
-                display.style.textShadow = "0 0 10px #00.getElementByIdff00";
+                display.style.textShadow = "0 0 10px #00ff00";
                 if (countdownInterval) clearInterval(countdownInterval);
             } else {
                 display.style.fontSize = "14px";
-               (' display.style.color = "#ffcccc";
+                display.style.color = "#ffcccc";
                 display.style.textShadow = "none";
                 startCountdown(expiresAt);
             }
         }
 
-admin        function startCountdown(expiresAt) {
+        function startCountdown(expiresAt) {
             if (countdownInterval) clearInterval(countdownInterval);
             const display = document.getElementById('countdown');
             
-Control            function updateTimer() {
+            function updateTimer() {
                 const now = Date.now();
                 let remaining = expiresAt - now;
                 
-                if (remaining <= 0Panel) {
+                if (remaining <= 0) {
                     clearInterval(countdownInterval);
                     display.textContent = "00:00:00";
-                    alert("Key đã hết hạn! V').ui lòng liên hệ Admin để gia hạn.");
+                    alert("Key đã hết hạn! Vui lòng liên hệ Admin để gia hạn.");
                     deactivateTool();
                     return;
                 }
                 
                 const totalSec = Math.floor(remaining / 1000);
                 const days = Math.floor(totalSec / 86400);
-                const hours = Math.floor((totalSec % 864style00) / 3600);
+                const hours = Math.floor((totalSec % 86400) / 3600);
                 const minutes = Math.floor((totalSec % 3600) / 60);
                 const seconds = totalSec % 60;
                 
                 let timeStr = "";
                 if (days > 0) timeStr += days + "n ";
-                timeStr += String(hours).padStart(2, '0') + ':'.display + 
+                timeStr += String(hours).padStart(2, '0') + ':' + 
                            String(minutes).padStart(2, '0') + ':' + 
                            String(seconds).padStart(2, '0');
                            
@@ -484,15 +463,15 @@ Control            function updateTimer() {
             }
             
             updateTimer();
-            countdownInterval = = setInterval(updateTimer, 1000);
+            countdownInterval = setInterval(updateTimer, 1000);
         }
 
         function deactivateTool() {
             if (countdownInterval) clearInterval(countdownInterval);
- '            localStorage.removeItem('ff_active_key');
+            localStorage.removeItem('ff_active_key');
             document.getElementById('toolSection').style.display = 'none';
             document.getElementById('authSection').style.display = 'flex';
-            document.getElementById('licenseInputblock').value = '';
+            document.getElementById('licenseInput').value = '';
             document.getElementById('errorMsg').style.display = 'none';
             document.getElementById('successMsg').style.display = 'none';
         }
@@ -507,7 +486,11 @@ Control            function updateTimer() {
         
         function toggleAdminPanel() {
             const panel = document.getElementById('adminPanel');
-            panel.style.display = (panel.style.display === 'flex') ? 'none' : 'flex';
+            if (panel.style.display === 'flex') {
+                panel.style.display = 'none';
+            } else {
+                panel.style.display = 'flex';
+            }
         }
 
         function loginAdmin() {
@@ -516,7 +499,8 @@ Control            function updateTimer() {
             const msg = document.getElementById('adminMsg');
             
             if (user === ADMIN_USER && pass === ADMIN_PASS) {
-                document.getElementById('adminLogin';
+                document.getElementById('adminLoginForm').style.display = 'none';
+                document.getElementById('adminControlPanel').style.display = 'block';
                 msg.textContent = "";
                 renderAdminKeyList();
             } else {

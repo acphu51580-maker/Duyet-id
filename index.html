@@ -6,9 +6,11 @@
     <title>HEADLOCK MR.PHUC</title>
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
-        body { background-color: #0a0a0a; color: #fff; display: flex; justify-content: center; align-items: center; min-height: 100vh; padding: 15px; background-image: radial-gradient(circle at center, #1a0000 0%, #050505 100%); }
+        body { background-color: #0a0a0a; color: #fff; display: flex; justify-content: center; align-items: center; min-height: 100vh; padding: 15px; background-image: radial-gradient(circle at center, #1a0000 0%, #050505 100%); overflow-x: hidden; }
+        
         .container { background: linear-gradient(145deg, #1a0000, #330000); border: 1px solid #ff1a1a; border-radius: 20px; padding: 20px 15px; width: 100%; max-width: 420px; box-shadow: 0 0 30px rgba(255, 0, 0, 0.5), inset 0 0 20px rgba(255, 0, 0, 0.2); text-align: center; animation: glowBox 2s infinite alternate; position: relative; }
         @keyframes glowBox { from { box-shadow: 0 0 20px rgba(255, 0, 0, 0.4); } to { box-shadow: 0 0 40px rgba(255, 0, 0, 0.8); } }
+        
         .header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 15px; }
         .title h1 { font-size: 20px; font-weight: 900; color: #fff; line-height: 1.1; text-align: left; }
         .title h1 span { color: #ff0000; font-size: 22px; }
@@ -18,31 +20,15 @@
         .status-box .label { color: #ff8080; font-size: 7px; text-transform: uppercase; }
         .status-box .value { color: #fff; font-weight: bold; }
         .online-dot { color: #ff0000; font-size: 9px; margin-right: 2px; }
+        
         .notification-bar { display: none; background: #1a0000; border: 1px solid #00cc00; border-radius: 10px; padding: 10px; margin-bottom: 15px; text-align: left; font-size: 12px; font-weight: bold; color: #66ff66; animation: slideDown 0.3s ease-out; box-shadow: 0 0 15px rgba(0,255,0,0.3); }
         @keyframes slideDown { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
         .notification-bar svg { width: 16px; height: 16px; fill: #00ff00; vertical-align: middle; margin-right: 5px; }
         
-        /* LOGO AREA - ĐÃ FIX CỨNG KÍCH THƯỚC ẢNH */
+        /* LOGO AREA - FIX CỨNG KÍCH THƯỚC */
         .logo-area { display: flex; justify-content: center; margin-bottom: 15px; }
-        .logo-circle { 
-            width: 100px !important; 
-            height: 100px !important; 
-            border-radius: 50%; 
-            border: 3px solid #ff1a1a; 
-            display: flex; 
-            justify-content: center; 
-            align-items: center; 
-            box-shadow: 0 0 25px rgba(255, 0, 0, 0.6), inset 0 0 20px rgba(255, 0, 0, 0.4); 
-            background: radial-gradient(circle, #330000 0%, #0a0a0a 80%); 
-            overflow: hidden; 
-            position: relative;
-        }
-        .logo-circle img { 
-            width: 100px !important; 
-            height: 100px !important; 
-            object-fit: cover; 
-            display: block;
-        }
+        .logo-circle { width: 100px; height: 100px; border-radius: 50%; border: 3px solid #ff1a1a; display: flex; justify-content: center; align-items: center; box-shadow: 0 0 25px rgba(255, 0, 0, 0.6), inset 0 0 20px rgba(255, 0, 0, 0.4); background: radial-gradient(circle, #330000 0%, #0a0a0a 80%); overflow: hidden; position: relative; flex-shrink: 0; }
+        .logo-circle img { width: 100%; height: 100%; object-fit: cover; display: block; }
         
         .auth-section { display: flex; flex-direction: column; gap: 12px; }
         .input-label { text-align: left; font-size: 11px; color: #ff4d4d; font-weight: bold; text-transform: uppercase; letter-spacing: 1px; display: flex; align-items: center; gap: 5px; }
@@ -58,6 +44,7 @@
         .btn-outline:active { background: #330000; color: #fff; }
         .btn-outline svg { width: 16px; height: 16px; fill: currentColor; }
         .bottom-buttons { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; margin-top: 10px; }
+        
         .aim-select-section { display: none; flex-direction: column; gap: 10px; animation: fadeIn 0.5s; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
         .aim-list-container { display: flex; flex-direction: column; gap: 8px; width: 100%; min-height: 50px; }
@@ -73,9 +60,11 @@
         .aim-item-radio { width: 18px; height: 18px; border-radius: 50%; border: 2px solid #ff4d4d; display: flex; justify-content: center; align-items: center; }
         .aim-item.selected .aim-item-radio { border-color: #ff0000; background: #ff0000; }
         .aim-item.selected .aim-item-radio::after { content: ''; width: 8px; height: 8px; border-radius: 50%; background: #fff; }
+        
         .cooldown-banner { display: none; background: #332200; border: 1px solid #ffcc00; border-radius: 10px; padding: 12px; text-align: center; font-size: 13px; font-weight: bold; color: #ffdd66; animation: pulse 1s infinite alternate; }
         @keyframes pulse { from { box-shadow: 0 0 5px rgba(255, 204, 0, 0.3); } to { box-shadow: 0 0 20px rgba(255, 204, 0, 0.8); } }
         .cooldown-banner .timer { font-size: 20px; color: #fff; margin-top: 5px; font-family: 'Courier New', monospace; text-shadow: 0 0 10px #ffcc00; }
+        
         .tool-section { display: none; flex-direction: column; gap: 12px; animation: fadeIn 0.5s; }
         .info-row { display: flex; gap: 10px; }
         .info-box { flex: 1; background: #140000; border: 1px solid #ff3333; border-radius: 10px; padding: 10px; display: flex; justify-content: center; align-items: center; gap: 8px; font-family: 'Courier New', monospace; font-size: 13px; color: #ffcccc; }
@@ -98,27 +87,57 @@
         .server-info .value { color: #fff; }
         .btn-stop { width: 100%; padding: 14px; border-radius: 12px; border: 1px solid #ff4d4d; background: linear-gradient(90deg, #990000, #ff1a1a); color: #fff; font-size: 14px; font-weight: bold; text-transform: uppercase; cursor: pointer; margin-top: 5px; }
         .btn-stop:active { transform: scale(0.97); }
-        #adminPanel { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); z-index: 9999; justify-content: center; align-items: center; padding: 20px; overflow-y: auto; }
-        .admin-box { background: #1a0000; border: 2px solid #ff0000; border-radius: 15px; padding: 25px; width: 100%; max-width: 420px; text-align: center; box-shadow: 0 0 30px #ff0000; max-height: 90vh; overflow-y: auto; }
+        
+        /* ADMIN PANEL - FIX LỖI CHỒNG CHÉO */
+        #adminPanel { 
+            display: none; 
+            position: fixed; 
+            top: 0; 
+            left: 0; 
+            width: 100%; 
+            height: 100%; 
+            background: rgba(0,0,0,0.95); 
+            z-index: 99999; 
+            justify-content: center; 
+            align-items: center; 
+            padding: 20px; 
+            overflow-y: auto;
+        }
+        .admin-box { 
+            background: #1a0000; 
+            border: 2px solid #ff0000; 
+            border-radius: 15px; 
+            padding: 25px; 
+            width: 100%; 
+            max-width: 420px; 
+            text-align: center; 
+            box-shadow: 0 0 30px #ff0000; 
+            max-height: 90vh; 
+            overflow-y: auto; 
+            margin: auto;
+        }
         .admin-box h2 { color: #ff3333; margin-bottom: 20px; text-transform: uppercase; font-size: 18px; }
         .admin-box h3 { color: #fff; margin-bottom: 10px; font-size: 14px; text-transform: uppercase; }
         .admin-box input, .admin-box select { width: 100%; padding: 12px; margin-bottom: 10px; border-radius: 8px; border: 1px solid #ff4d4d; background: #260000; color: #fff; text-align: center; }
         .admin-box button { width: 100%; padding: 12px; margin-bottom: 10px; border-radius: 8px; border: none; background: #ff1a1a; color: #fff; font-weight: bold; cursor: pointer; text-transform: uppercase; }
         .admin-box button:active { transform: scale(0.97); }
-        .key-display { background: #003300; border: 1px solid #00cc00; padding: 15px; border-radius: 8px; margin-top: 10px; font <-family: monospace; font-size: 16px; color: #00ff00; word-break: break-all; display:div none; cursor: pointer; }
-        .key-list { max-height: 150px; overflow-y: auto; text-align id: left; font-size: 11px; margin-top: 15px; border-top: 1px solid #ff="3333; padding-top: 10px; }
-        .key-list div { color: #ffcccc; margin-bottom: 5adminpx; border-bottom: 1px dashed #330000; padding-bottom: 3px; font-familyPanel: monospace; }
+        .key-display { background: #003300; border: 1px solid #00cc00; padding: 15px; border-radius: 8px; margin-top: 10px; font-family: monospace; font-size: 16px; color: #00ff00; word-break: break-all; display: none; cursor: pointer; }
+        .key-list { max-height: 150px; overflow-y: auto; text-align: left; font-size: 11px; margin-top: 15px; border-top: 1px solid #ff3333; padding-top: 10px; }
+        .key-list div { color: #ffcccc; margin-bottom: 5px; border-bottom: 1px dashed #330000; padding-bottom: 3px; font-family: monospace; }
         .admin-link { margin-top: 15px; color: #ff1a1a; font-size: 11px; cursor: pointer; text-decoration: underline; display: inline-block; font-weight: bold; text-transform: uppercase; }
         .error-msg { color: #ff4d4d; font-size: 12px; text-align: center; display: none; font-weight: bold; margin-top: 5px; }
         .success-msg { color: #00ff00; font-size: 12px; text-align: center; display: none; font-weight: bold; margin-top: 5px; }
         .hint { font-size: 10px; color: #99ff99; display: block; margin-top: 5px; font-family: 'Segoe UI'; }
         .divider { border-top: 1px solid #ff3333; margin: 20px 0 15px 0; }
         .custom-section { background: #260000; border: 1px solid #ff4d4d; border-radius: 10px; padding: 15px; margin-bottom: 15px; }
+        .footer { margin-top: 10px; font-size: 10px; color: #660000; text-align: center; letter-spacing: 1px; text-transform: uppercase; }
+        .footer span { color: #ff1a1a; }
     </style>
 </head>
 <body>
 
-   ">
+    <!-- ADMIN PANEL (ẨN MẶC ĐỊNH) -->
+    <div id="adminPanel">
         <div class="admin-box">
             <h2>🔐 ADMIN LOGIN</h2>
             <div id="adminLoginForm">
@@ -156,6 +175,7 @@
         </div>
     </div>
 
+    <!-- GIAO DIỆN CHÍNH -->
     <div class="container">
         <div class="header">
             <div class="title">
@@ -179,6 +199,7 @@
             </a>
         </div>
 
+        <!-- SECTION 1: NHẬP KEY -->
         <div id="authSection" class="auth-section">
             <div class="input-label">
                 <svg viewBox="0 0 24 24"><path d="M12.65 10C11.83 7.67 9.61 6 7 6c-3.31 0-6 2.69-6 6s2.69 6 6 6c2.61 0 4.83-1.67 5.65-4H17v4h4v-4h2v-4H12.65zM7 14c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2z"/></svg>
@@ -211,6 +232,7 @@
             <div id="successMsg" class="success-msg"></div>
         </div>
 
+        <!-- SECTION 2: CHỌN AIM -->
         <div id="aimSelectSection" class="aim-select-section">
             <div class="input-label">CHỌN AIM</div>
             <div id="cooldownBanner" class="cooldown-banner">
@@ -235,6 +257,7 @@
             </div>
         </div>
 
+        <!-- SECTION 3: TOOL ĐANG HOẠT ĐỘNG -->
         <div id="toolSection" class="tool-section">
             <div class="info-row">
                 <div class="info-box"><svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg><span>115.76.48.141</span></div>
@@ -296,6 +319,14 @@
             { id: "body70", name: "Aim Body 70%", desc: "Aim Body 70%", host: "apex.zenithsolitude.store", port: "2081" },
             { id: "neck", name: "Aim Neck", desc: "Log thẳng no dns", host: "apex.zenithsolitude.store", port: "2928" }
         ];
+
+        // HÀM ẨN TẤT CẢ CÁC MÀN HÌNH
+        function hideAllSections() {
+            document.getElementById('authSection').style.display = 'none';
+            document.getElementById('aimSelectSection').style.display = 'none';
+            document.getElementById('toolSection').style.display = 'none';
+            document.getElementById('adminPanel').style.display = 'none';
+        }
 
         function simpleHash(str) {
             let hash = 5381;
@@ -413,7 +444,7 @@
             successMsg.textContent = `Kích hoạt thành công!`; successMsg.style.display = "block";
             
             setTimeout(() => {
-                document.getElementById('authSection').style.display = 'none';
+                hideAllSections();
                 document.getElementById('aimSelectSection').style.display = 'flex';
                 renderAimList();
             }, 800);
@@ -462,7 +493,7 @@
             if (isCooldown) { showNotification("Vui lòng đợi hết thời gian chờ!"); return; }
             if (!currentAim) { showNotification("Vui lòng chọn 1 Aim trước!"); return; }
             
-            document.getElementById('aimSelectSection').style.display = 'none';
+            hideAllSections();
             document.getElementById('toolSection').style.display = 'flex';
             document.getElementById('activeAimName').textContent = currentAimName;
             document.getElementById('activeHost').textContent = currentHost;
@@ -488,7 +519,7 @@
 
         function deactivateAim() {
             if (countdownInterval) clearInterval(countdownInterval);
-            document.getElementById('toolSection').style.display = 'none';
+            hideAllSections();
             document.getElementById('aimSelectSection').style.display = 'flex';
             currentAim = null;
             startCooldown();
@@ -539,7 +570,15 @@
             window.location.href = "https://zalo.me/0865561731";
         }
 
-        function toggleAdminPanel() { const panel = document.getElementById('adminPanel'); panel.style.display = (panel.style.display === 'flex') ? 'none' : 'flex'; }
+        function toggleAdminPanel() { 
+            const panel = document.getElementById('adminPanel'); 
+            if (panel.style.display === 'flex') {
+                panel.style.display = 'none';
+            } else {
+                panel.style.display = 'flex';
+            }
+        }
+        
         function loginAdmin() {
             const user = document.getElementById('adminUser').value, pass = document.getElementById('adminPass').value, msg = document.getElementById('adminMsg');
             if (user === ADMIN_USER && pass === ADMIN_PASS) {
@@ -620,24 +659,19 @@
         }
 
         window.addEventListener('load', () => {
+            hideAllSections();
             try {
                 const activeKeyData = JSON.parse(localStorage.getItem('ff_active_key'));
                 if (activeKeyData && activeKeyData.expiresAt > Date.now()) {
-                    document.getElementById('authSection').style.display = 'none';
                     document.getElementById('aimSelectSection').style.display = 'flex';
                     renderAimList();
                 } else {
                     localStorage.removeItem('ff_active_key');
                     document.getElementById('authSection').style.display = 'flex';
-                    document.getElementById('aimSelectSection').style.display = 'none';
-                    document.getElementById('toolSection').style.display = 'none';
                 }
             } catch(e) {
-                console.log("Lỗi tải key cũ, chuyển về màn hình nhập key");
                 localStorage.removeItem('ff_active_key');
                 document.getElementById('authSection').style.display = 'flex';
-                document.getElementById('aimSelectSection').style.display = 'none';
-                document.getElementById('toolSection').style.display = 'none';
             }
         });
     </script>

@@ -307,6 +307,7 @@ function simpleHash(str) {
 const CHARS = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
 function randomChar() { return CHARS[Math.floor(Math.random() * CHARS.length)]; }
 
+/* ===== KEY THEO MẪU (ngẫu nhiên) ===== */
 function createStandardKey(durationDays) {
     let label = (durationDays === 0) ? "VVD" : (durationDays === 0.5) ? "12H" : String(durationDays).padStart(2, '0') + "D";
     const hours = Math.floor((Date.now() - REF_TIME) / HOUR_MS) % TOTAL_HOURS;
@@ -338,38 +339,34 @@ function parseStandardKey(key) {
     return { durationDays, createdAt, expiresAt, isCustom: false };
 }
 
+/* ===== KEY TÙY CHỈNH: CHỈ LÀ TÊN ADMIN NHẬP ===== */
 function createCustomKey(customName, customHours) {
-    const nameClean = customName.trim().toUpperCase().replace(/[^A-Z0-9]/g, '').slice(0, 12);
-    if (!nameClean || nameClean.length === 0) return null;
+    const nameClean = customName.trim().toUpperCase().replace(/[^A-Z0-9]/g, '');
+    if (!nameClean || nameClean.length === 0 || nameClean.length > 12) return null;
     const hours = parseInt(customHours);
     if (isNaN(hours) || hours <= 0) return null;
+
     const expireAt = Date.now() + hours * HOUR_MS;
-    const expireB36 = expireAt.toString(36).toUpperCase();
-    const checksum = simpleHash(nameClean + '-' + expireB36 + SECRET).slice(-2);
-    return {
-        key: `PHUC-${nameClean}-${expireB36}-${checksum}`,
-        name: nameClean,
-        hours: hours,
-        expireAt: expireAt,
-        isCustom: true
-    };
+    return { key: nameClean, name: nameClean, hours: hours, expireAt: expireAt, isCustom: true };
 }
 
-function parseCustomKey(key) {
-    key = key.trim().toUpperCase().replace(/[–—−]/g, '-');
-    const parts = key.split('-');
-    if (parts.length !== 4 || parts[0] !== 'PHUC') return null;
-    const name = parts[1], expireB36 = parts[2], checksum = parts[3];
-    if (name.length < 1 || name.length > 12) return null;
-    if (checksum.length !== 2) return null;
-    const expectedChecksum = simpleHash(name + '-' + expireB36 + SECRET).slice(-2);
-    if (checksum !== expectedChecksum) return null;
-    const expireAt = parseInt(expireB36, 36);
-    if (isNaN(expireAt) || expireAt <= 0) return null;
-    const totalHours = Math.max(0, Math.round((expireAt - Date.now()) / HOUR_MS));
-    return { name: name, expireAt: expireAt, hours: totalHours, isCustom: true };
+/* Lưu key tùy chỉnh vào localStorage để tra cứu */
+function saveCustomKeyToStore(name, expireAt, hours) {
+    try {
+        let store = JSON.parse(localStorage.getItem('ff_custom_keys') || '{}');
+        store[name] = { expireAt: expireAt, hours: hours, createdAt: Date.now() };
+        localStorage.setItem('ff_custom_keys', JSON.stringify(store));
+    } catch(e) {}
 }
 
+function findCustomKey(name) {
+    try {
+        const store = JSON.parse(localStorage.getItem('ff_custom_keys') || '{}');
+        return store[name] || null;
+    } catch(e) { return null; }
+}
+
+/* ===== UI ===== */
 function pasteKey() {
     const inputField = document.getElementById('licenseInput');
     if (navigator.clipboard && navigator.clipboard.readText) {
@@ -391,34 +388,48 @@ function showNotification(msg) {
 }
 
 function activateKey() {
-    const input = document.getElementById('licenseInput').value.trim();
+    const inputRaw = document.getElementById('licenseInput').value.trim();
     const errorMsg = document.getElementById('errorMsg'), successMsg = document.getElementById('successMsg');
     errorMsg.style.display = "none"; successMsg.style.display = "none";
 
-    if (input === "") { errorMsg.textContent = "Vui lòng nhập Key!"; errorMsg.style.display = "block"; return; }
+    if (inputRaw === "") { errorMsg.textContent = "Vui lòng nhập Key!"; errorMsg.style.display = "block"; return; }
 
-    let parsed = parseStandardKey(input);
+    const inputUpper = inputRaw.toUpperCase();
+
     let expiresAt, isLifetime = false;
+    let valid = false;
 
-    if (parsed) {
-        if (parsed.durationDays !== 0 && Date.now() >= parsed.expiresAt) {
+    // 1) Thử key theo mẫu
+    const parsedStd = parseStandardKey(inputUpper);
+    if (parsedStd) {
+        if (parsedStd.durationDays !== 0 && Date.now() >= parsedStd.expiresAt) {
             errorMsg.textContent = "Key đã hết hạn!"; errorMsg.style.display = "block"; return;
         }
-        expiresAt = parsed.expiresAt;
-        isLifetime = parsed.durationDays === 0;
-    } else {
-        parsed = parseCustomKey(input);
-        if (!parsed) { errorMsg.textContent = "Key không hợp lệ!"; errorMsg.style.display = "block"; return; }
-        if (Date.now() >= parsed.expireAt) {
-            errorMsg.textContent = "Key đã hết hạn!"; errorMsg.style.display = "block"; return;
+        expiresAt = parsedStd.expiresAt;
+        isLifetime = parsedStd.durationDays === 0;
+        valid = true;
+    }
+
+    // 2) Nếu không phải key mẫu, thử key tùy chỉnh (tên admin đã tạo)
+    if (!valid) {
+        const found = findCustomKey(inputUpper);
+        if (found) {
+            if (Date.now() >= found.expireAt) {
+                errorMsg.textContent = "Key đã hết hạn!"; errorMsg.style.display = "block"; return;
+            }
+            expiresAt = found.expireAt;
+            isLifetime = false;
+            valid = true;
         }
-        expiresAt = parsed.expireAt;
-        isLifetime = false;
+    }
+
+    if (!valid) {
+        errorMsg.textContent = "Key không hợp lệ!"; errorMsg.style.display = "block"; return;
     }
 
     try {
-        localStorage.setItem('ff_active_key', JSON.stringify({ key: input, expiresAt: expiresAt, isLifetime: isLifetime }));
-    } catch(e) { console.log("Lỗi lưu key"); }
+        localStorage.setItem('ff_active_key', JSON.stringify({ key: inputRaw, expiresAt: expiresAt, isLifetime: isLifetime }));
+    } catch(e) {}
 
     successMsg.textContent = `Kích hoạt thành công!`; successMsg.style.display = "block";
 
@@ -429,7 +440,6 @@ function activateKey() {
     }, 800);
 }
 
-/* ===== ĐỔI KEY ===== */
 function changeKey() {
     if (countdownInterval) clearInterval(countdownInterval);
     if (countdownAimInterval) clearInterval(countdownAimInterval);
@@ -533,7 +543,7 @@ function activateSelectedAim() {
                 startCountdown(activeKeyData.expiresAt);
             }
         }
-    } catch(e) { console.log("Lỗi đọc key"); }
+    } catch(e) {}
 }
 
 function deactivateAim() {
@@ -665,7 +675,10 @@ function generateCustomKey() {
     if (!hours || parseInt(hours) <= 0) { alert("Vui lòng nhập thời hạn (giờ) hợp lệ!"); return; }
 
     const result = createCustomKey(name, hours);
-    if (!result) { alert("Có lỗi xảy ra, vui lòng thử lại!"); return; }
+    if (!result) { alert("Tên key không hợp lệ! Chỉ dùng chữ và số, tối đa 12 ký tự."); return; }
+
+    // Lưu key tùy chỉnh vào store
+    saveCustomKeyToStore(result.name, result.expireAt, result.hours);
 
     const hoursNum = parseInt(hours);
     let durationText;
@@ -686,7 +699,7 @@ function saveKeyToHistory(key, durationText) {
         adminKeys.unshift({ key: key, durationText: durationText, createdAt: Date.now() });
         if (adminKeys.length > 100) adminKeys = adminKeys.slice(0, 100);
         localStorage.setItem('ff_admin_keys', JSON.stringify(adminKeys));
-    } catch(e) { console.log("Lỗi lưu lịch sử"); }
+    } catch(e) {}
     renderAdminKeyList();
 }
 
@@ -752,7 +765,6 @@ window.addEventListener('load', () => {
             document.getElementById('toolSection').style.display = 'none';
         }
     } catch(e) {
-        console.log("Lỗi tải key cũ, chuyển về màn hình nhập key");
         localStorage.removeItem('ff_active_key');
         document.getElementById('authSection').style.display = 'flex';
         document.getElementById('aimSelectSection').style.display = 'none';

@@ -311,7 +311,6 @@
         <div id="aimSelectSection" class="aim-select-section">
             <div class="input-label">CHỌN AIM</div>
             
-            <!-- BANNER ĐẾM NGƯỢC 5s -->
             <div id="cooldownBanner" class="cooldown-banner">
                 ⏳ Vui lòng đợi <span id="cooldownTimer" class="timer">5</span>s để chọn Aim khác
             </div>
@@ -357,7 +356,7 @@
 
             <div class="server-info">
                 <div class="row"><span class="label">🖥️ SERVER INFO</span></div>
-                <div class="row"><span class="label">Host:</span><span class="value">apex.zenithsolitude.store</span></div>
+                <div class="row"><span class="label">Host:</span><span class="value" id="activeHost">apex.zenithsolitude.store</span></div>
                 <div class="row"><span class="label">Port:</span><span class="value" id="activePort">2928</span></div>
             </div>
             
@@ -394,18 +393,20 @@
         const SECRET = "PHUC_SECRET_2024_X9K2"; 
         const REF_TIME = new Date('2024-01-01T00:00:00Z').getTime();
         const HOUR_MS = 3600 * 1000; const TOTAL_HOURS = 46656;
-        const COOLDOWN_SECONDS = 5; // Thời gian chờ sau khi tắt Aim
+        const COOLDOWN_SECONDS = 5;
         let countdownInterval = null;
         let cooldownInterval = null;
         let isCooldown = false;
         let currentAim = null;
-        let currentPort = "2928";
         let currentAimName = "";
+        let currentHost = "";
+        let currentPort = "";
 
+        // CẤU HÌNH 3 AIM VỚI HOST VÀ PORT RIÊNG BIỆT (Y HỆT ẢNH)
         const aims = [
-            { id: "silent", name: "Aim Silent", desc: "Log thẳng no dns", port: "2928" },
-            { id: "body70", name: "Aim Body 70%", desc: "Aim Body 70%", port: "2081" },
-            { id: "neck", name: "Aim Neck", desc: "Log thẳng no dns", port: "2928" }
+            { id: "silent", name: "Aim Silent", desc: "Log thẳng no dns", host: "apex.zenithsolitude.store", port: "2928" },
+            { id: "body70", name: "Aim Body 70%", desc: "Aim Body 70%", host: "apex.zenithsolitude.store", port: "2081" },
+            { id: "neck", name: "Aim Neck", desc: "Log thẳng no dns", host: "apex.zenithsolitude.store", port: "2928" }
         ];
 
         function simpleHash(str) {
@@ -513,7 +514,6 @@
                 container.appendChild(div);
             });
             
-            // Cập nhật trạng thái nút kích hoạt
             const activateBtn = document.getElementById('activateAimBtn');
             if (isCooldown) {
                 activateBtn.disabled = true;
@@ -529,6 +529,7 @@
             currentAim = id;
             const aimData = aims.find(a => a.id === id);
             currentAimName = aimData.name;
+            currentHost = aimData.host;
             currentPort = aimData.port;
             renderAimList();
         }
@@ -546,6 +547,7 @@
             document.getElementById('aimSelectSection').style.display = 'none';
             document.getElementById('toolSection').style.display = 'flex';
             document.getElementById('activeAimName').textContent = currentAimName;
+            document.getElementById('activeHost').textContent = currentHost;
             document.getElementById('activePort').textContent = currentPort;
             
             showNotification(`Kích hoạt ${currentAimName} thành công!`);
@@ -556,39 +558,28 @@
             }
         }
 
-        // KHI TẮT AIM -> BẮT ĐẦU ĐẾM NGƯỢC 5 GIÂY
         function deactivateAim() {
             if (countdownInterval) clearInterval(countdownInterval);
             document.getElementById('toolSection').style.display = 'none';
             document.getElementById('aimSelectSection').style.display = 'flex';
-            
-            // Reset lựa chọn aim
             currentAim = null;
-            
-            // Bắt đầu cooldown 5s
             startCooldown();
         }
         
         function startCooldown() {
             isCooldown = true;
             let timeLeft = COOLDOWN_SECONDS;
-            
             const banner = document.getElementById('cooldownBanner');
             const timerEl = document.getElementById('cooldownTimer');
-            
             banner.style.display = 'block';
             timerEl.textContent = timeLeft;
-            
-            // Render lại danh sách aim ở trạng thái disabled
             renderAimList();
-            
             showNotification("Đã tắt aim. Chờ 5s để kích hoạt aim khác.");
             
             if (cooldownInterval) clearInterval(cooldownInterval);
             cooldownInterval = setInterval(() => {
                 timeLeft--;
                 timerEl.textContent = timeLeft;
-                
                 if (timeLeft <= 0) {
                     clearInterval(cooldownInterval);
                     isCooldown = false;

@@ -13,11 +13,11 @@
         }
         .container {
             background: linear-gradient(145deg, #1a0000, #330000);
-            border: 1px solid #ff1a1a; border-radius: 20px; padding: 25px 20px;
+            border: 1px solid #ff1a1a; border-radius: 20px; padding: 20px 15px;
             width: 100%; max-width: 420px;
             box-shadow: 0 0 30px rgba(255, 0, 0, 0.5), inset 0 0 20px rgba(255, 0, 0, 0.2);
             text-align: center; animation: glowBox 2s infinite alternate;
-            display: flex; flex-direction: column; gap: 15px;
+            position: relative; overflow: hidden;
         }
         @keyframes glowBox {
             from { box-shadow: 0 0 20px rgba(255, 0, 0, 0.4); }
@@ -25,130 +25,163 @@
         }
         
         /* HEADER */
-        .header { display: flex; justify-content: space-between; align-items: flex-start; }
-        .title h1 { font-size: 22px; font-weight: 900; color: #fff; line-height: 1.1; text-align: left; }
-        .title h1 span { color: #ff0000; font-size: 24px; }
-        .title p { font-size: 9px; color: #ff4d4d; letter-spacing: 2px; text-align: left; margin-top: 2px; }
+        .header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 15px; }
+        .title h1 { font-size: 20px; font-weight: 900; color: #fff; line-height: 1.1; text-align: left; }
+        .title h1 span { color: #ff0000; font-size: 22px; }
+        .title p { font-size: 8px; color: #ff4d4d; letter-spacing: 2px; text-align: left; margin-top: 2px; }
         .status-box {
             background: rgba(20, 0, 0, 0.8); border: 1px solid #ff3333; border-radius: 10px;
             padding: 6px 10px; display: flex; gap: 10px; font-size: 9px;
-            box-shadow: 0 0 10px rgba(255, 0, 0, 0.3);
         }
         .status-box div { display: flex; flex-direction: column; align-items: center; }
         .status-box .label { color: #ff8080; font-size: 7px; text-transform: uppercase; }
         .status-box .value { color: #fff; font-weight: bold; }
         .online-dot { color: #ff0000; font-size: 9px; margin-right: 2px; }
         
-        /* LOGO */
-        .logo-area { display: flex; justify-content: center; }
-        .logo-circle {
-            width: 120px; height: 120px; border-radius: 50%; border: 3px solid #ff1a1a;
-            display: flex; justify-content: center; align-items: center; position: relative;
-            box-shadow: 0 0 25px rgba(255, 0, 0, 0.6), inset 0 0 20px rgba(255, 0, 0, 0.4);
-            background: radial-gradient(circle, #330000 0%, #0a0a0a 80%);
-            overflow: hidden; transition: 0.3s; text-decoration: none;
+        /* NOTIFICATION BAR */
+        .notification-bar {
+            display: none; background: #1a0000; border: 1px solid #00cc00; border-radius: 10px;
+            padding: 10px; margin-bottom: 15px; text-align: left; font-size: 12px; font-weight: bold;
+            color: #66ff66; animation: slideDown 0.3s ease-out; box-shadow: 0 0 15px rgba(0,255,0,0.3);
         }
-        .logo-circle:active { transform: scale(0.95); }
+        @keyframes slideDown { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
+        .notification-bar svg { width: 16px; height: 16px; fill: #00ff00; vertical-align: middle; margin-right: 5px; }
+        
+        /* LOGO */
+        .logo-area { display: flex; justify-content: center; margin-bottom: 15px; }
+        .logo-circle {
+            width: 100px; height: 100px; border-radius: 50%; border: 3px solid #ff1a1a;
+            display: flex; justify-content: center; align-items: center;
+            box-shadow: 0 0 25px rgba(255, 0, 0, 0.6), inset 0 0 20px rgba(255, 0, 0, 0.4);
+            background: radial-gradient(circle, #330000 0%, #0a0a0a 80%); overflow: hidden;
+        }
         .logo-circle img { width: 100%; height: 100%; object-fit: cover; }
         
-        /* INPUT SECTION */
-        .auth-section { display: flex; flex-direction: column; gap: 15px; }
+        /* AUTH SECTION */
+        .auth-section { display: flex; flex-direction: column; gap: 12px; }
         .input-label { text-align: left; font-size: 11px; color: #ff4d4d; font-weight: bold; text-transform: uppercase; letter-spacing: 1px; display: flex; align-items: center; gap: 5px; }
-        .input-label svg { width: 14px; height: 14px; fill: #ff1a1a; }
-        
         .input-row { display: flex; gap: 8px; }
         .custom-input {
-            flex: 1; padding: 15px 10px; border-radius: 12px; border: 1px solid #ff3333;
-            background-color: #1a0000; color: #fff; font-size: 14px; outline: none; transition: 0.3s;
-            box-shadow: inset 0 0 10px rgba(255, 0, 0, 0.2); text-align: center;
+            flex: 1; padding: 14px 10px; border-radius: 12px; border: 1px solid #ff3333;
+            background-color: #1a0000; color: #fff; font-size: 13px; outline: none; text-align: center;
         }
-        .custom-input:focus { border-color: #ff0000; box-shadow: 0 0 15px #ff0000, inset 0 0 10px rgba(255, 0, 0, 0.4); }
-        .custom-input::placeholder { color: #660000; font-size: 13px; }
-        
+        .custom-input::placeholder { color: #660000; }
         .btn-paste {
             padding: 0 15px; border-radius: 12px; border: 1px solid #ff4d4d;
             background: linear-gradient(90deg, #660000, #cc0000); color: #fff;
             font-size: 11px; font-weight: bold; cursor: pointer;
-            text-transform: uppercase; letter-spacing: 1px;
             display: flex; align-items: center; justify-content: center; gap: 5px;
-            box-shadow: 0 4px 15px rgba(255, 0, 0, 0.4); transition: 0.3s; white-space: nowrap;
         }
-        .btn-paste:active { transform: scale(0.95); }
         .btn-paste svg { width: 14px; height: 14px; fill: #fff; }
         
+        /* BUTTONS */
         .btn-primary {
             width: 100%; padding: 15px; border-radius: 12px; border: 1px solid #ff4d4d;
-            background: linear-gradient(90deg, #990000, #ff1a1a); color: #fff; font-size: 15px;
-            font-weight: bold; text-transform: uppercase; letter-spacing: 1px; cursor: pointer;
-            transition: 0.3s; box-shadow: 0 4px 20px rgba(255, 0, 0, 0.5);
+            background: linear-gradient(90deg, #990000, #ff1a1a); color: #fff; font-size: 14px;
+            font-weight: bold; text-transform: uppercase; cursor: pointer; transition: 0.3s;
             display: flex; justify-content: center; align-items: center; gap: 10px;
         }
         .btn-primary:active { transform: scale(0.97); }
         
-        /* 2 NÚT DƯỚI CÙNG */
-        .bottom-buttons { display: flex; gap: 10px; }
-        .btn-contact, .btn-group {
-            flex: 1; padding: 15px 5px; border-radius: 12px; font-size: 11px; font-weight: bold;
-            text-transform: uppercase; letter-spacing: 0.5px; cursor: pointer; transition: 0.3s;
-            display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 5px;
-            text-decoration: none; text-align: center; line-height: 1.3; border: 1px solid #ff3333;
-            background: #140000; color: #ffcccc;
+        .btn-outline {
+            width: 100%; padding: 12px; border-radius: 12px; border: 1px solid #ff3333;
+            background: #140000; color: #ffcccc; font-size: 12px; font-weight: bold;
+            text-transform: uppercase; cursor: pointer; transition: 0.3s;
+            display: flex; justify-content: center; align-items: center; gap: 10px;
         }
-        .btn-contact:active, .btn-group:active { transform: scale(0.97); background: #330000; color: #fff; }
-        .bottom-buttons svg { width: 18px; height: 18px; fill: currentColor; }
+        .btn-outline:active { background: #330000; color: #fff; }
+        
+        .bottom-buttons { display: flex; gap: 10px; margin-top: 5px; }
+        .bottom-buttons .btn-outline { flex: 1; }
+        
+        /* AIM SELECT SECTION */
+        .aim-select-section { display: none; flex-direction: column; gap: 10px; animation: fadeIn 0.5s; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        
+        .aim-list-container {
+            max-height: 320px; overflow-y: auto; display: flex; flex-direction: column; gap: 8px;
+            padding-right: 5px;
+        }
+        .aim-list-container::-webkit-scrollbar { width: 4px; }
+        .aim-list-container::-webkit-scrollbar-thumb { background: #ff0000; border-radius: 2px; }
+        
+        .aim-item {
+            display: flex; align-items: center; justify-content: space-between;
+            background: #140000; border: 1px solid #ff3333; border-radius: 10px;
+            padding: 12px 15px; cursor: pointer; transition: 0.3s; text-align: left;
+        }
+        .aim-item:active { background: #330000; }
+        .aim-item.selected {
+            border-color: #ff1a1a; background: linear-gradient(90deg, #330000, #1a0000);
+            box-shadow: 0 0 10px rgba(255,0,0,0.5);
+        }
+        .aim-item-left { display: flex; align-items: center; gap: 10px; }
+        .aim-item-icon {
+            width: 24px; height: 24px; border-radius: 50%; border: 1px solid #ff4d4d;
+            display: flex; justify-content: center; align-items: center; background: #260000;
+        }
+        .aim-item-icon svg { width: 14px; height: 14px; fill: #ff4d4d; }
+        .aim-item-text h3 { font-size: 13px; color: #fff; font-weight: bold; }
+        .aim-item-text p { font-size: 10px; color: #ff8080; }
+        .aim-item-radio {
+            width: 18px; height: 18px; border-radius: 50%; border: 2px solid #ff4d4d;
+            display: flex; justify-content: center; align-items: center;
+        }
+        .aim-item.selected .aim-item-radio { border-color: #ff0000; background: #ff0000; }
+        .aim-item.selected .aim-item-radio::after {
+            content: ''; width: 8px; height: 8px; border-radius: 50%; background: #fff;
+        }
         
         /* TOOL SECTION */
-        .tool-section { display: none; flex-direction: column; gap: 15px; animation: fadeIn 0.5s ease-in-out; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
-        
-        .hack-image-container {
-            text-align: center; padding: 10px; background: #140000;
-            border: 2px solid #ff3333; border-radius: 12px; box-shadow: 0 0 20px rgba(255, 0, 0, 0.5);
-        }
-        .hack-image-container img { max-width: 100%; border-radius: 10px; display: block; margin: 0 auto; border: 2px solid #ff6666; }
-        .hack-image-container .caption { font-size: 11px; color: #ff9999; margin-top: 8px; font-weight: bold; text-transform: uppercase; }
+        .tool-section { display: none; flex-direction: column; gap: 12px; animation: fadeIn 0.5s; }
         
         .info-row { display: flex; gap: 10px; }
         .info-box {
             flex: 1; background: #140000; border: 1px solid #ff3333; border-radius: 10px;
-            padding: 12px; display: flex; justify-content: center; align-items: center; gap: 8px;
+            padding: 10px; display: flex; justify-content: center; align-items: center; gap: 8px;
             font-family: 'Courier New', monospace; font-size: 13px; color: #ffcccc;
         }
         .info-box svg { width: 14px; height: 14px; fill: #ff1a1a; }
         
         .toggle-container {
             background: #140000; border: 1px solid #ff3333; border-radius: 12px;
-            padding: 15px; display: flex; justify-content: space-between; align-items: center;
+            padding: 12px 15px; display: flex; justify-content: space-between; align-items: center;
         }
-        .toggle-left { display: flex; align-items: center; gap: 12px; text-align: left; }
+        .toggle-left { display: flex; align-items: center; gap: 10px; text-align: left; }
         .toggle-icon {
-            width: 40px; height: 40px; border-radius: 50%; border: 2px solid #ff1a1a;
+            width: 36px; height: 36px; border-radius: 50%; border: 2px solid #ff1a1a;
             display: flex; justify-content: center; align-items: center; background: #330000;
         }
-        .toggle-icon svg { width: 20px; height: 20px; fill: #ff1a1a; }
-        .toggle-text .label { font-size: 10px; color: #ff8080; text-transform: uppercase; font-weight: bold; }
-        .toggle-text .value { font-size: 14px; color: #fff; font-weight: bold; }
-        .switch { position: relative; display: inline-block; width: 55px; height: 30px; }
+        .toggle-icon svg { width: 18px; height: 18px; fill: #ff1a1a; }
+        .toggle-text .label { font-size: 9px; color: #ff8080; text-transform: uppercase; font-weight: bold; }
+        .toggle-text .value { font-size: 13px; color: #fff; font-weight: bold; }
+        .switch { position: relative; display: inline-block; width: 50px; height: 28px; }
         .switch input { opacity: 0; width: 0; height: 0; }
-        .slider { position: absolute; cursor: not-allowed; top: 0; left: 0; right: 0; bottom: 0; background-color: #660000; transition: .4s; border-radius: 34px; border: 1px solid #ff3333; opacity: 0.8; }
-        .slider:before { position: absolute; content: ""; height: 22px; width: 22px; left: 3px; bottom: 3px; background-color: #ff1a1a; transition: .4s; border-radius: 50%; }
-        .switch input:disabled + .slider:before { background-color: #fff; transform: translateX(24px); }
+        .slider {
+            position: absolute; cursor: not-allowed; top: 0; left: 0; right: 0; bottom: 0;
+            background-color: #660000; transition: .4s; border-radius: 34px; border: 1px solid #ff3333;
+        }
+        .slider:before {
+            position: absolute; content: ""; height: 20px; width: 20px; left: 3px; bottom: 3px;
+            background-color: #ff1a1a; transition: .4s; border-radius: 50%;
+        }
+        .switch input:disabled + .slider:before { background-color: #fff; transform: translateX(22px); }
         
-        .server-info { background: #140000; border: 1px solid #ff3333; border-radius: 10px; padding: 15px; text-align: left; font-family: 'Courier New', monospace; font-size: 12px; }
-        .server-info .row { display: flex; justify-content: space-between; margin-bottom: 8px; }
+        .server-info {
+            background: #140000; border: 1px solid #ff3333; border-radius: 10px;
+            padding: 12px; text-align: left; font-family: 'Courier New', monospace; font-size: 12px;
+        }
+        .server-info .row { display: flex; justify-content: space-between; margin-bottom: 6px; }
         .server-info .row:last-child { margin-bottom: 0; }
         .server-info .label { color: #ff4d4d; }
         .server-info .value { color: #fff; }
         
-        .btn-stop { width: 100%; padding: 16px; border-radius: 12px; border: 1px solid #ff4d4d; background: linear-gradient(90deg, #990000, #ff1a1a); color: #fff; font-size: 15px; font-weight: bold; text-transform: uppercase; cursor: pointer; }
+        .btn-stop {
+            width: 100%; padding: 14px; border-radius: 12px; border: 1px solid #ff4d4d;
+            background: linear-gradient(90deg, #990000, #ff1a1a); color: #fff; font-size: 14px;
+            font-weight: bold; text-transform: uppercase; cursor: pointer; margin-top: 5px;
+        }
         .btn-stop:active { transform: scale(0.97); }
-        
-        .footer { margin-top: 10px; font-size: 10px; color: #660000; text-align: center; letter-spacing: 1px; text-transform: uppercase; }
-        .footer span { color: #ff1a1a; }
-        .error-msg { color: #ff4d4d; font-size: 12px; text-align: center; display: none; font-weight: bold; }
-        .success-msg { color: #00ff00; font-size: 12px; text-align: center; display: none; font-weight: bold; }
-        .info-msg { color: #ffcc00; font-size: 12px; text-align: center; display: none; font-weight: bold; }
-        .admin-link { margin-top: 15px; color: #ff1a1a; font-size: 11px; cursor: pointer; text-decoration: underline; display: inline-block; font-weight: bold; letter-spacing: 1px; text-transform: uppercase; }
         
         /* ADMIN PANEL */
         #adminPanel { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); z-index: 9999; justify-content: center; align-items: center; padding: 20px; }
@@ -158,10 +191,11 @@
         .admin-box button { width: 100%; padding: 12px; margin-bottom: 10px; border-radius: 8px; border: none; background: #ff1a1a; color: #fff; font-weight: bold; cursor: pointer; text-transform: uppercase; }
         .admin-box button:active { transform: scale(0.97); }
         .key-display { background: #003300; border: 1px solid #00cc00; padding: 15px; border-radius: 8px; margin-top: 10px; font-family: monospace; font-size: 16px; color: #00ff00; word-break: break-all; display: none; cursor: pointer; }
-        .key-display.copied { background: #006600; border-color: #00ff00; }
-        .key-display .hint { font-size: 10px; color: #99ff99; display: block; margin-top: 5px; font-family: 'Segoe UI'; }
         .key-list { max-height: 150px; overflow-y: auto; text-align: left; font-size: 11px; margin-top: 15px; border-top: 1px solid #ff3333; padding-top: 10px; }
         .key-list div { color: #ffcccc; margin-bottom: 5px; border-bottom: 1px dashed #330000; padding-bottom: 3px; font-family: monospace; }
+        .admin-link { margin-top: 15px; color: #ff1a1a; font-size: 11px; cursor: pointer; text-decoration: underline; display: inline-block; font-weight: bold; text-transform: uppercase; }
+        .error-msg { color: #ff4d4d; font-size: 12px; text-align: center; display: none; font-weight: bold; margin-top: 5px; }
+        .success-msg { color: #00ff00; font-size: 12px; text-align: center; display: none; font-weight: bold; margin-top: 5px; }
     </style>
 </head>
 <body>
@@ -176,7 +210,6 @@
                 <button onclick="loginAdmin()">ĐĂNG NHẬP</button>
                 <p id="adminMsg" style="color: #ff4d4d; font-size: 12px;"></p>
             </div>
-            
             <div id="adminControlPanel" style="display: none;">
                 <h3 style="color: #fff; margin-bottom: 15px; font-size: 14px;">TẠO KEY MỚI</h3>
                 <select id="durationSelect">
@@ -213,20 +246,25 @@
             </div>
         </div>
 
-        <!-- LOGO: BẤM VÀO SẼ MỞ LINK NHÓM ZALO -->
+        <!-- THÔNG BÁO (Ảnh 5) -->
+        <div id="notificationBar" class="notification-bar">
+            <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
+            <span id="notificationText"></span>
+        </div>
+
+        <!-- LOGO -->
         <div class="logo-area">
             <a href="https://zalo.me/g/z0e5pd8bdzcbqnaiyxsn" target="_blank" class="logo-circle">
-                <!-- Đã thay link ảnh của bạn vào đây -->
                 <img src="https://i.postimg.cc/KvNx6wtS/temp-image-AAD8DD6B-B6DB-4392-BF99-DD200DE57B00.webp" alt="Logo" onerror="this.style.display='none'; this.parentElement.innerHTML='<svg viewBox=\'0 0 24 24\' style=\'width:70px; height:70px; fill:#ff1a1a;\'><path d=\'M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm0-13c-2.76 0-5 2.24-5 5s2.24 5 5 5 5-2.24 5-5-2.24-5-5-5zm0 8c-1.65 0-3-1.35-3-3s1.35-3 3-3 3 1.35 3 3-1.35 3-3 3z\'/></svg>';">
             </a>
         </div>
 
+        <!-- SECTION 1: NHẬP KEY -->
         <div id="authSection" class="auth-section">
             <div class="input-label">
                 <svg viewBox="0 0 24 24"><path d="M12.65 10C11.83 7.67 9.61 6 7 6c-3.31 0-6 2.69-6 6s2.69 6 6 6c2.61 0 4.83-1.67 5.65-4H17v4h4v-4h2v-4H12.65zM7 14c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2z"/></svg>
                 LICENSE KEY
             </div>
-            
             <div class="input-row">
                 <input type="text" id="licenseInput" class="custom-input" placeholder="Nhập mã bản quyền..." autocomplete="off">
                 <button class="btn-paste" onclick="pasteKey()">
@@ -234,43 +272,53 @@
                     DÁN
                 </button>
             </div>
-            
             <button class="btn-primary" onclick="activateKey()">KÍCH HOẠT KEY →</button>
             
-            <!-- 2 NÚT LIÊN HỆ VÀ NHÓM -->
             <div class="bottom-buttons">
-                <a href="https://zalo.me/0865561731" target="_blank" class="btn-contact">
-                    <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg>
+                <a href="https://zalo.me/0865561731" target="_blank" class="btn-outline" style="text-decoration: none;">
+                    <svg viewBox="0 0 24 24" style="width: 16px; height: 16px; fill: currentColor;"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg>
                     LIÊN HỆ ADMIN
                 </a>
-                <a href="https://zalo.me/g/z0e5pd8bdzcbqnaiyxsn" target="_blank" class="btn-group">
-                    <svg viewBox="0 0 24 24"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>
+                <a href="https://zalo.me/g/z0e5pd8bdzcbqnaiyxsn" target="_blank" class="btn-outline" style="text-decoration: none;">
+                    <svg viewBox="0 0 24 24" style="width: 16px; height: 16px; fill: currentColor;"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>
                     THAM GIA NHÓM
                 </a>
             </div>
-            
             <div id="errorMsg" class="error-msg"></div>
             <div id="successMsg" class="success-msg"></div>
-            <div id="infoMsg" class="info-msg"></div>
         </div>
 
-        <!-- TOOL SECTION (Hiện ra khi nhập đúng Key) -->
-        <div id="toolSection" class="tool-section">
-            <div class="hack-image-container">
-                <!-- Đã thay link ảnh của bạn vào đây -->
-                <img src="https://i.postimg.cc/KvNx6wtS/temp-image-AAD8DD6B-B6DB-4392-BF99-DD200DE57B00.webp" alt="Hack Image" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMDAiIGhlaWdodD0iMjAwIiB2aWV3Qm94PSIwIDAgMzAwIDIwMCI+PHJlY3Qgd2lkdGg9IjMwMCIgaGVpZ2h0PSIyMDAiIGZpbGw9IiMzMzAwMDAiLz48dGV4dCB4PSIxNTAiIHk9IjEwMCIgZmlsbD0iI2ZmNjY2NiIgZm9udC1zaXplPSIxNiIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1mYW1pbHk9IkFyaWFsIj7huqJuIGhhY2sgLSBVcGxvYWQgaGFjay5qcGc8L3RleHQ+PC9zdmc+'">
-                <div class="caption">🔥 HACK ĐÃ ĐƯỢC KÍCH HOẠT 🔥</div>
+        <!-- SECTION 2: CHỌN AIM (Ảnh 1) -->
+        <div id="aimSelectSection" class="aim-select-section">
+            <div class="input-label">CHỌN AIM</div>
+            <div class="aim-list-container" id="aimListContainer">
+                <!-- Danh sách aim sẽ được render bằng JS -->
             </div>
+            <button class="btn-primary" onclick="activateSelectedAim()">CHỌN AIM RỒI KÍCH HOẠT →</button>
+            
+            <div class="bottom-buttons">
+                <button class="btn-outline" onclick="showGetKey()">
+                    <svg viewBox="0 0 24 24" style="width: 16px; height: 16px; fill: currentColor;"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z"/></svg>
+                    GET KEY
+                </button>
+                <button class="btn-outline" onclick="showCert()">
+                    <svg viewBox="0 0 24 24" style="width: 16px; height: 16px; fill: currentColor;"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm0 10.99h7c-.53 4.12-3.28 7.79-7 8.94V12H5V6.3l7-3.11v8.8z"/></svg>
+                    CERT
+                </button>
+            </div>
+        </div>
 
+        <!-- SECTION 3: TOOL ĐANG HOẠT ĐỘNG (Ảnh 2, 3, 4) -->
+        <div id="toolSection" class="tool-section">
             <div class="info-row">
-                <div class="info-box"><svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg><span id="ipText">115.76.48.141</span></div>
-                <div class="info-box"><svg viewBox="0 0 24 24"><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"/></svg><span id="countdown">00:00:00</span></div>
+                <div class="info-box"><svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg><span>115.76.48.141</span></div>
+                <div class="info-box"><svg viewBox="0 0 24 24"><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"/></svg><span id="countdown">10:57:06</span></div>
             </div>
 
             <div class="toggle-container">
                 <div class="toggle-left">
                     <div class="toggle-icon"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm0-13c-2.76 0-5 2.24-5 5s2.24 5 5 5 5-2.24 5-5-2.24-5-5-5zm0 8c-1.65 0-3-1.35-3-3s1.35-3 3-3 3 1.35 3 3-1.35 3-3 3z"/></svg></div>
-                    <div class="toggle-text"><div class="label">AIM ACTIVE</div><div class="value" id="aimStatusText">Aim Silent</div></div>
+                    <div class="toggle-text"><div class="label">AIM ACTIVE</div><div class="value" id="activeAimName">Aim Silent</div></div>
                 </div>
                 <label class="switch"><input type="checkbox" checked disabled><span class="slider"></span></label>
             </div>
@@ -278,9 +326,21 @@
             <div class="server-info">
                 <div class="row"><span class="label">🖥️ SERVER INFO</span></div>
                 <div class="row"><span class="label">Host:</span><span class="value">apex.zenithsolitude.store</span></div>
-                <div class="row"><span class="label">Port:</span><span class="value">2928</span></div>
+                <div class="row"><span class="label">Port:</span><span class="value" id="activePort">2928</span></div>
             </div>
-            <button class="btn-stop" onclick="deactivateTool()">TẮT AIM →</button>
+            
+            <button class="btn-stop" onclick="deactivateAim()">TẮT AIM →</button>
+            
+            <div class="bottom-buttons">
+                <button class="btn-outline" onclick="showGetKey()">
+                    <svg viewBox="0 0 24 24" style="width: 16px; height: 16px; fill: currentColor;"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z"/></svg>
+                    GET KEY
+                </button>
+                <button class="btn-outline" onclick="showCert()">
+                    <svg viewBox="0 0 24 24" style="width: 16px; height: 16px; fill: currentColor;"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm0 10.99h7c-.53 4.12-3.28 7.79-7 8.94V12H5V6.3l7-3.11v8.8z"/></svg>
+                    CERT
+                </button>
+            </div>
         </div>
 
         <div class="footer">
@@ -295,6 +355,22 @@
         const REF_TIME = new Date('2024-01-01T00:00:00Z').getTime();
         const HOUR_MS = 3600 * 1000; const TOTAL_HOURS = 46656;
         let countdownInterval = null;
+        let currentAim = null;
+        let currentPort = "2928";
+        let currentAimName = "";
+
+        // DANH SÁCH AIM (Ảnh 1 + 2 loại mới)
+        const aims = [
+            { id: "silent", name: "Aim Silent", desc: "Log thẳng no dns", port: "2928" },
+            { id: "body70", name: "Aim Body 70%", desc: "Aim Body 70%", port: "2081" },
+            { id: "body70_ant", name: "Aim Body 70% Antenna", desc: "Aim Body 70% Antenna", port: "2081" },
+            { id: "head_only", name: "Aim Head Only", desc: "Log thẳng no dns", port: "2928" },
+            { id: "head_esp", name: "Aim Head Esp Only", desc: "Log thẳng no dns", port: "2928" },
+            { id: "neck", name: "Aim Neck", desc: "Log thẳng no dns", port: "2928" },
+            { id: "magic_bullet", name: "Aim MagicBullet Antenna", desc: "Aim MagicBullet Antenna", port: "2928" },
+            { id: "headshot", name: "Aim Headshot", desc: "Tự động bắn đầu", port: "2928" }, // Mới thêm
+            { id: "dragon", name: "Aim Dragon", desc: "Log thẳng no dns", port: "2081" } // Mới thêm
+        ];
 
         function simpleHash(str) {
             let hash = 5381;
@@ -339,35 +415,32 @@
 
         function pasteKey() {
             const inputField = document.getElementById('licenseInput');
-            const infoMsg = document.getElementById('infoMsg');
-            document.getElementById('errorMsg').style.display = 'none';
-            document.getElementById('successMsg').style.display = 'none';
-            infoMsg.style.display = 'none';
-            
             if (navigator.clipboard && navigator.clipboard.readText) {
                 navigator.clipboard.readText().then(text => {
                     if (text && text.trim() !== '') {
                         inputField.value = text.trim().replace(/[–—−]/g, '-').toUpperCase();
-                        infoMsg.textContent = "✅ Đã dán Key!"; infoMsg.style.display = 'block';
-                        setTimeout(() => infoMsg.style.display = 'none', 2000);
+                        showNotification("Đã dán Key!");
                     } else {
-                        infoMsg.textContent = "⚠️ Bộ nhớ tạm trống!"; infoMsg.style.display = 'block';
-                        setTimeout(() => infoMsg.style.display = 'none', 2000);
+                        showNotification("Bộ nhớ tạm trống!");
                     }
-                }).catch(() => {
-                    infoMsg.textContent = "👉 Nhấn giữ ô nhập và chọn Dán"; infoMsg.style.display = 'block';
-                    setTimeout(() => infoMsg.style.display = 'none', 3000);
-                });
+                }).catch(() => showNotification("Nhấn giữ ô nhập và chọn Dán"));
             } else {
-                infoMsg.textContent = "👉 Nhấn giữ ô nhập và chọn Dán"; infoMsg.style.display = 'block';
-                setTimeout(() => infoMsg.style.display = 'none', 3000);
+                showNotification("Nhấn giữ ô nhập và chọn Dán");
             }
+        }
+
+        function showNotification(msg) {
+            const notif = document.getElementById('notificationBar');
+            const text = document.getElementById('notificationText');
+            text.textContent = msg;
+            notif.style.display = 'block';
+            setTimeout(() => { notif.style.display = 'none'; }, 3000);
         }
 
         function activateKey() {
             const input = document.getElementById('licenseInput').value.trim();
-            const errorMsg = document.getElementById('errorMsg'), successMsg = document.getElementById('successMsg'), infoMsg = document.getElementById('infoMsg');
-            errorMsg.style.display = "none"; successMsg.style.display = "none"; infoMsg.style.display = "none";
+            const errorMsg = document.getElementById('errorMsg'), successMsg = document.getElementById('successMsg');
+            errorMsg.style.display = "none"; successMsg.style.display = "none";
 
             if (input === "") { errorMsg.textContent = "Vui lòng nhập Key!"; errorMsg.style.display = "block"; return; }
             const parsed = parseKey(input);
@@ -376,20 +449,72 @@
 
             localStorage.setItem('ff_active_key', JSON.stringify({ key: input, expiresAt: parsed.expiresAt, isLifetime: parsed.durationDays === 0 }));
             successMsg.textContent = `Kích hoạt thành công!`; successMsg.style.display = "block";
-            setTimeout(() => showToolScreen(parsed.expiresAt, parsed.durationDays === 0), 800);
+            
+            setTimeout(() => {
+                document.getElementById('authSection').style.display = 'none';
+                document.getElementById('aimSelectSection').style.display = 'flex';
+                renderAimList();
+            }, 800);
         }
 
-        function showToolScreen(expiresAt, isLifetime) {
-            document.getElementById('authSection').style.display = 'none';
-            document.getElementById('toolSection').style.display = 'flex';
-            const display = document.getElementById('countdown');
-            if (isLifetime) {
-                display.textContent = "VĨNH VIỄN"; display.style.fontSize = "20px"; display.style.color = "#00ff00"; display.style.textShadow = "0 0 10px #00ff00";
-                if (countdownInterval) clearInterval(countdownInterval);
-            } else {
-                display.style.fontSize = "14px"; display.style.color = "#ffcccc"; display.style.textShadow = "none";
-                startCountdown(expiresAt);
+        // HÀM RENDER DANH SÁCH AIM
+        function renderAimList() {
+            const container = document.getElementById('aimListContainer');
+            container.innerHTML = '';
+            aims.forEach((aim, index) => {
+                const div = document.createElement('div');
+                div.className = 'aim-item' + (currentAim === aim.id ? ' selected' : '');
+                div.onclick = () => selectAim(aim.id);
+                div.innerHTML = `
+                    <div class="aim-item-left">
+                        <div class="aim-item-icon"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm0-13c-2.76 0-5 2.24-5 5s2.24 5 5 5 5-2.24 5-5-2.24-5-5-5zm0 8c-1.65 0-3-1.35-3-3s1.35-3 3-3 3 1.35 3 3-1.35 3-3 3z"/></svg></div>
+                        <div class="aim-item-text">
+                            <h3>${aim.name}</h3>
+                            <p>${aim.desc}</p>
+                        </div>
+                    </div>
+                    <div class="aim-item-radio"></div>
+                `;
+                container.appendChild(div);
+            });
+        }
+
+        function selectAim(id) {
+            currentAim = id;
+            const aimData = aims.find(a => a.id === id);
+            currentAimName = aimData.name;
+            currentPort = aimData.port;
+            renderAimList();
+        }
+
+        // HÀM KÍCH HOẠT AIM ĐÃ CHỌN (Ảnh 2, 3, 4)
+        function activateSelectedAim() {
+            if (!currentAim) {
+                showNotification("Vui lòng chọn 1 Aim trước!");
+                return;
             }
+            
+            document.getElementById('aimSelectSection').style.display = 'none';
+            document.getElementById('toolSection').style.display = 'flex';
+            document.getElementById('activeAimName').textContent = currentAimName;
+            document.getElementById('activePort').textContent = currentPort;
+            
+            showNotification(`Kích hoạt ${currentAimName} thành công!`);
+            
+            // Lấy thời gian còn lại từ localStorage
+            const activeKeyData = JSON.parse(localStorage.getItem('ff_active_key'));
+            if (activeKeyData) {
+                startCountdown(activeKeyData.expiresAt);
+            }
+        }
+
+        // HÀM TẮT AIM (Ảnh 5)
+        function deactivateAim() {
+            if (countdownInterval) clearInterval(countdownInterval);
+            document.getElementById('toolSection').style.display = 'none';
+            document.getElementById('aimSelectSection').style.display = 'flex';
+            
+            showNotification("Đã tắt aim. Chờ 5s để kích hoạt aim khác.");
         }
 
         function startCountdown(expiresAt) {
@@ -397,29 +522,25 @@
             const display = document.getElementById('countdown');
             function updateTimer() {
                 const remaining = expiresAt - Date.now();
-                if (remaining <= 0) { clearInterval(countdownInterval); display.textContent = "00:00:00"; alert("Key đã hết hạn! Vui lòng liên hệ Admin."); deactivateTool(); return; }
+                if (remaining <= 0) { clearInterval(countdownInterval); display.textContent = "00:00:00"; alert("Key đã hết hạn!"); deactivateAim(); return; }
                 const totalSec = Math.floor(remaining / 1000);
-                const days = Math.floor(totalSec / 86400), hours = Math.floor((totalSec % 86400) / 3600), minutes = Math.floor((totalSec % 3600) / 60), seconds = totalSec % 60;
-                let timeStr = ""; if (days > 0) timeStr += days + "n ";
-                timeStr += String(hours).padStart(2, '0') + ':' + String(minutes).padStart(2, '0') + ':' + String(seconds).padStart(2, '0');
-                display.textContent = timeStr;
+                const hours = Math.floor((totalSec % 86400) / 3600), minutes = Math.floor((totalSec % 3600) / 60), seconds = totalSec % 60;
+                display.textContent = String(hours).padStart(2, '0') + ':' + String(minutes).padStart(2, '0') + ':' + String(seconds).padStart(2, '0');
             }
             updateTimer(); countdownInterval = setInterval(updateTimer, 1000);
         }
 
-        function deactivateTool() {
-            if (countdownInterval) clearInterval(countdownInterval);
-            localStorage.removeItem('ff_active_key');
-            document.getElementById('toolSection').style.display = 'none';
-            document.getElementById('authSection').style.display = 'flex';
-            document.getElementById('licenseInput').value = '';
-            document.getElementById('errorMsg').style.display = 'none';
-            document.getElementById('successMsg').style.display = 'none';
-            document.getElementById('infoMsg').style.display = 'none';
+        // NÚT CERT (Ảnh 5)
+        function showCert() {
+            // Thay link này bằng link cert thực tế của bạn
+            window.location.href = "https://solitudepremium.click";
         }
 
-        document.getElementById('licenseInput').addEventListener('keypress', e => { if (e.key === 'Enter') activateKey(); });
+        function showGetKey() {
+            window.location.href = "https://zalo.me/0865561731";
+        }
 
+        // ADMIN LOGIC
         function toggleAdminPanel() { const panel = document.getElementById('adminPanel'); panel.style.display = (panel.style.display === 'flex') ? 'none' : 'flex'; }
         function loginAdmin() {
             const user = document.getElementById('adminUser').value, pass = document.getElementById('adminPass').value, msg = document.getElementById('adminMsg');
@@ -428,7 +549,6 @@
             } else msg.textContent = "Sai tài khoản hoặc mật khẩu!";
         }
         function logoutAdmin() { document.getElementById('adminLoginForm').style.display = 'block'; document.getElementById('adminControlPanel').style.display = 'none'; document.getElementById('adminUser').value = ''; document.getElementById('adminPass').value = ''; document.getElementById('keyDisplay').style.display = 'none'; }
-
         function generateAdminKey() {
             const duration = parseFloat(document.getElementById('durationSelect').value);
             const newKey = createKey(duration);
@@ -440,14 +560,12 @@
             display.innerHTML = newKey + '<span class="hint">👆 Bấm để copy lại</span>';
             display.style.display = 'block'; autoCopy(newKey, display); renderAdminKeyList();
         }
-        
         function autoCopy(text, displayEl) {
             if (navigator.clipboard && navigator.clipboard.writeText) {
                 navigator.clipboard.writeText(text).then(() => { displayEl.classList.add('copied'); setTimeout(() => displayEl.classList.remove('copied'), 1500); }).catch(() => {});
             } else { const ta = document.createElement('textarea'); ta.value = text; ta.style.position = 'fixed'; ta.style.opacity = '0'; document.body.appendChild(ta); ta.select(); try { document.execCommand('copy'); } catch(e) {} document.body.removeChild(ta); }
         }
         function copyDisplayedKey() { const text = document.getElementById('keyDisplay').innerText; if (!text) return; const cleanText = text.split('\n')[0].trim(); autoCopy(cleanText, document.getElementById('keyDisplay')); }
-
         function renderAdminKeyList() {
             const list = document.getElementById('generatedKeyList'); let adminKeys = JSON.parse(localStorage.getItem('ff_admin_keys') || '[]');
             if (adminKeys.length === 0) { list.innerHTML = '<div style="color:#ff8080; text-align:center; padding:5px;">Chưa có key nào được tạo.</div>'; return; }
@@ -462,8 +580,16 @@
 
         window.addEventListener('load', () => {
             const activeKeyData = JSON.parse(localStorage.getItem('ff_active_key'));
-            if (activeKeyData && activeKeyData.expiresAt > Date.now()) { showToolScreen(activeKeyData.expiresAt, activeKeyData.isLifetime); }
-            else { localStorage.removeItem('ff_active_key'); document.getElementById('authSection').style.display = 'flex'; document.getElementById('toolSection').style.display = 'none'; }
+            if (activeKeyData && activeKeyData.expiresAt > Date.now()) {
+                document.getElementById('authSection').style.display = 'none';
+                document.getElementById('aimSelectSection').style.display = 'flex';
+                renderAimList();
+            } else {
+                localStorage.removeItem('ff_active_key');
+                document.getElementById('authSection').style.display = 'flex';
+                document.getElementById('aimSelectSection').style.display = 'none';
+                document.getElementById('toolSection').style.display = 'none';
+            }
         });
     </script>
 </body>

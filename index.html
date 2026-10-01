@@ -95,7 +95,6 @@ body { background-color: #0a0a0a; color: #fff; display: flex; justify-content: c
 .success-msg { color: #00ff00; font-size: 12px; text-align: center; display: none; font-weight: bold; margin-top: 5px; }
 .hint { font-size: 10px; color: #99ff99; display: block; margin-top: 5px; font-family: 'Segoe UI'; }
 .divider { border-top: 1px solid #ff3333; margin: 20px 0 15px 0; }
-.custom-section { background: #260000; border: 1px solid #ff4d4d; border-radius: 10px; padding: 15px; margin-bottom: 15px; }
 .footer { margin-top: 20px; font-size: 10px; color: #ff4d4d; text-align: center; }
 .footer span { color: #ff1a1a; font-weight: bold; }
 </style>
@@ -124,13 +123,6 @@ body { background-color: #0a0a0a; color: #fff; display: flex; justify-content: c
                 <option value="0">Key Vĩnh Viễn</option>
             </select>
             <button onclick="generateAdminKey()">TẠO KEY</button>
-            <div class="divider"></div>
-            <h3>✏️ TẠO KEY TÙY CHỈNH</h3>
-            <div class="custom-section">
-                <input type="text" id="customKeyName" placeholder="Tên Key (VD: mn, vip, pro...)" maxlength="12">
-                <input type="number" id="customKeyHours" placeholder="Thời hạn (giờ). VD: 57182972" min="1">
-                <button onclick="generateCustomKey()" style="background: linear-gradient(90deg, #006600, #00cc00);">TẠO KEY TÙY CHỈNH</button>
-            </div>
             <div id="keyDisplay" class="key-display" onclick="copyDisplayedKey()"></div>
             <h3 style="margin-top: 20px;">📜 DANH SÁCH KEY ĐÃ TẠO</h3>
             <div id="generatedKeyList" class="key-list"></div>
@@ -307,14 +299,14 @@ function simpleHash(str) {
 const CHARS = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
 function randomChar() { return CHARS[Math.floor(Math.random() * CHARS.length)]; }
 
-/* ===== KEY THEO MẪU (ngẫu nhiên) ===== */
+/* ===== KEY THEO MẪU (máy nào cũng dùng được) ===== */
 function createStandardKey(durationDays) {
     let label = (durationDays === 0) ? "VVD" : (durationDays === 0.5) ? "12H" : String(durationDays).padStart(2, '0') + "D";
     const hours = Math.floor((Date.now() - REF_TIME) / HOUR_MS) % TOTAL_HOURS;
     const hoursPart = hours.toString(36).toUpperCase().padStart(3, '0');
     const randomPart = randomChar() + randomChar();
     const checksum = simpleHash(label + hoursPart + randomPart + SECRET).slice(-1);
-    return { key: `PHUC-${label}-${hoursPart}${randomPart}${checksum}`, label, durationDays, isCustom: false };
+    return { key: `PHUC-${label}-${hoursPart}${randomPart}${checksum}`, label, durationDays };
 }
 
 function parseStandardKey(key) {
@@ -336,34 +328,7 @@ function parseStandardKey(key) {
     if (isNaN(hours) || hours >= TOTAL_HOURS) return null;
     const createdAt = REF_TIME + hours * HOUR_MS;
     let expiresAt = (durationDays === 0) ? 9999999999999 : createdAt + durationDays * 24 * 60 * 60 * 1000;
-    return { durationDays, createdAt, expiresAt, isCustom: false };
-}
-
-/* ===== KEY TÙY CHỈNH: CHỈ LÀ TÊN ADMIN NHẬP ===== */
-function createCustomKey(customName, customHours) {
-    const nameClean = customName.trim().toUpperCase().replace(/[^A-Z0-9]/g, '');
-    if (!nameClean || nameClean.length === 0 || nameClean.length > 12) return null;
-    const hours = parseInt(customHours);
-    if (isNaN(hours) || hours <= 0) return null;
-
-    const expireAt = Date.now() + hours * HOUR_MS;
-    return { key: nameClean, name: nameClean, hours: hours, expireAt: expireAt, isCustom: true };
-}
-
-/* Lưu key tùy chỉnh vào localStorage để tra cứu */
-function saveCustomKeyToStore(name, expireAt, hours) {
-    try {
-        let store = JSON.parse(localStorage.getItem('ff_custom_keys') || '{}');
-        store[name] = { expireAt: expireAt, hours: hours, createdAt: Date.now() };
-        localStorage.setItem('ff_custom_keys', JSON.stringify(store));
-    } catch(e) {}
-}
-
-function findCustomKey(name) {
-    try {
-        const store = JSON.parse(localStorage.getItem('ff_custom_keys') || '{}');
-        return store[name] || null;
-    } catch(e) { return null; }
+    return { durationDays, createdAt, expiresAt };
 }
 
 /* ===== UI ===== */
@@ -388,47 +353,22 @@ function showNotification(msg) {
 }
 
 function activateKey() {
-    const inputRaw = document.getElementById('licenseInput').value.trim();
+    const input = document.getElementById('licenseInput').value.trim().toUpperCase();
     const errorMsg = document.getElementById('errorMsg'), successMsg = document.getElementById('successMsg');
     errorMsg.style.display = "none"; successMsg.style.display = "none";
 
-    if (inputRaw === "") { errorMsg.textContent = "Vui lòng nhập Key!"; errorMsg.style.display = "block"; return; }
+    if (input === "") { errorMsg.textContent = "Vui lòng nhập Key!"; errorMsg.style.display = "block"; return; }
 
-    const inputUpper = inputRaw.toUpperCase();
+    const parsed = parseStandardKey(input);
+    if (!parsed) { errorMsg.textContent = "Key không hợp lệ!"; errorMsg.style.display = "block"; return; }
 
-    let expiresAt, isLifetime = false;
-    let valid = false;
-
-    // 1) Thử key theo mẫu
-    const parsedStd = parseStandardKey(inputUpper);
-    if (parsedStd) {
-        if (parsedStd.durationDays !== 0 && Date.now() >= parsedStd.expiresAt) {
-            errorMsg.textContent = "Key đã hết hạn!"; errorMsg.style.display = "block"; return;
-        }
-        expiresAt = parsedStd.expiresAt;
-        isLifetime = parsedStd.durationDays === 0;
-        valid = true;
+    if (parsed.durationDays !== 0 && Date.now() >= parsed.expiresAt) {
+        errorMsg.textContent = "Key đã hết hạn!"; errorMsg.style.display = "block"; return;
     }
 
-    // 2) Nếu không phải key mẫu, thử key tùy chỉnh (tên admin đã tạo)
-    if (!valid) {
-        const found = findCustomKey(inputUpper);
-        if (found) {
-            if (Date.now() >= found.expireAt) {
-                errorMsg.textContent = "Key đã hết hạn!"; errorMsg.style.display = "block"; return;
-            }
-            expiresAt = found.expireAt;
-            isLifetime = false;
-            valid = true;
-        }
-    }
-
-    if (!valid) {
-        errorMsg.textContent = "Key không hợp lệ!"; errorMsg.style.display = "block"; return;
-    }
-
+    const isLifetime = parsed.durationDays === 0;
     try {
-        localStorage.setItem('ff_active_key', JSON.stringify({ key: inputRaw, expiresAt: expiresAt, isLifetime: isLifetime }));
+        localStorage.setItem('ff_active_key', JSON.stringify({ key: input, expiresAt: parsed.expiresAt, isLifetime: isLifetime }));
     } catch(e) {}
 
     successMsg.textContent = `Kích hoạt thành công!`; successMsg.style.display = "block";
@@ -665,32 +605,6 @@ function generateAdminKey() {
     const result = createStandardKey(duration);
     saveKeyToHistory(result.key, duration === 0 ? "Vĩnh viễn" : (duration === 0.5 ? "12 giờ" : duration + " ngày"));
     showGeneratedKey(result.key);
-}
-
-function generateCustomKey() {
-    const name = document.getElementById('customKeyName').value.trim();
-    const hours = document.getElementById('customKeyHours').value.trim();
-
-    if (!name) { alert("Vui lòng nhập tên Key!"); return; }
-    if (!hours || parseInt(hours) <= 0) { alert("Vui lòng nhập thời hạn (giờ) hợp lệ!"); return; }
-
-    const result = createCustomKey(name, hours);
-    if (!result) { alert("Tên key không hợp lệ! Chỉ dùng chữ và số, tối đa 12 ký tự."); return; }
-
-    // Lưu key tùy chỉnh vào store
-    saveCustomKeyToStore(result.name, result.expireAt, result.hours);
-
-    const hoursNum = parseInt(hours);
-    let durationText;
-    if (hoursNum >= 8760) durationText = `${hoursNum} giờ (~${Math.round(hoursNum/8760)} năm)`;
-    else if (hoursNum >= 24) durationText = `${hoursNum} giờ (~${Math.round(hoursNum/24)} ngày)`;
-    else durationText = `${hoursNum} giờ`;
-
-    saveKeyToHistory(result.key, `Tên: ${result.name} - ${durationText}`);
-    showGeneratedKey(result.key);
-
-    document.getElementById('customKeyName').value = '';
-    document.getElementById('customKeyHours').value = '';
 }
 
 function saveKeyToHistory(key, durationText) {

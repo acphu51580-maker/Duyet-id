@@ -78,6 +78,8 @@ body { background-color: #0a0a0a; color: #fff; display: flex; justify-content: c
 .server-info .value { color: #fff; }
 .btn-stop { width: 100%; padding: 14px; border-radius: 12px; border: 1px solid #ff4d4d; background: linear-gradient(90deg, #990000, #ff1a1a); color: #fff; font-size: 14px; font-weight: bold; text-transform: uppercase; cursor: pointer; margin-top: 5px; }
 .btn-stop:active { transform: scale(0.97); }
+.btn-change-key { width: 100%; padding: 12px; border-radius: 12px; border: 1px solid #ffcc00; background: linear-gradient(90deg, #664400, #cc8800); color: #fff; font-size: 13px; font-weight: bold; text-transform: uppercase; cursor: pointer; margin-top: 8px; }
+.btn-change-key:active { transform: scale(0.97); }
 #adminPanel { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); z-index: 9999; justify-content: center; align-items: center; padding: 20px; overflow-y: auto; }
 .admin-box { background: #1a0000; border: 2px solid #ff0000; border-radius: 15px; padding: 25px; width: 100%; max-width: 420px; text-align: center; box-shadow: 0 0 30px #ff0000; max-height: 90vh; overflow-y: auto; }
 .admin-box h2 { color: #ff3333; margin-bottom: 20px; text-transform: uppercase; font-size: 18px; }
@@ -132,9 +134,12 @@ body { background-color: #0a0a0a; color: #fff; display: flex; justify-content: c
             <div id="keyDisplay" class="key-display" onclick="copyDisplayedKey()"></div>
             <h3 style="margin-top: 20px;">📜 DANH SÁCH KEY ĐÃ TẠO</h3>
             <div id="generatedKeyList" class="key-list"></div>
-            <button onclick="logoutAdmin()" style="background: #660000; margin-top: 15px;">ĐĂNG XUẤT</button>
         </div>
-        <button onclick="toggleAdminPanel()" style="background: #330000; margin-top: 10px;">ĐÓNG</button>
+        <div style="display: flex; gap: 8px; margin-top: 15px;">
+            <button onclick="changeKeyFromAdmin()" style="background: #664400; flex: 1; margin: 0;">ĐỔI KEY</button>
+            <button onclick="logoutAdmin()" style="background: #660000; flex: 1; margin: 0;">ĐĂNG XUẤT</button>
+            <button onclick="toggleAdminPanel()" style="background: #330000; flex: 1; margin: 0;">ĐÓNG</button>
+        </div>
     </div>
 </div>
 
@@ -196,14 +201,12 @@ body { background-color: #0a0a0a; color: #fff; display: flex; justify-content: c
     <div id="aimSelectSection" class="aim-select-section">
         <div class="input-label">CHỌN AIM</div>
 
-        <!-- ===== ĐỒNG HỒ ĐẾM NGƯỢC KEY ===== -->
         <div class="info-row" style="margin-bottom: 5px;">
             <div class="info-box" style="flex:1;">
                 <svg viewBox="0 0 24 24"><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"/></svg>
                 <span id="countdownAim">--:--:--</span>
             </div>
         </div>
-        <!-- ===== HẾT ĐỒNG HỒ ===== -->
 
         <div id="cooldownBanner" class="cooldown-banner">
             ⏳ Vui lòng đợi <span id="cooldownTimer" class="timer">5</span>s để chọn Aim khác
@@ -211,6 +214,8 @@ body { background-color: #0a0a0a; color: #fff; display: flex; justify-content: c
         <div class="aim-list-container" id="aimListContainer"></div>
         <button id="activateAimBtn" class="btn-primary" onclick="activateSelectedAim()">CHỌN AIM RỒI KÍCH HOẠT →</button>
         
+        <button class="btn-change-key" onclick="changeKey()">🔄 ĐỔI KEY</button>
+
         <div class="bottom-buttons">
             <a href="https://zalo.me/0865561731" target="_blank" class="btn-outline">
                 <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg>
@@ -246,6 +251,8 @@ body { background-color: #0a0a0a; color: #fff; display: flex; justify-content: c
         </div>
         <button class="btn-stop" onclick="deactivateAim()">TẮT AIM →</button>
         
+        <button class="btn-change-key" onclick="changeKey()">🔄 ĐỔI KEY</button>
+
         <div class="bottom-buttons">
             <a href="https://zalo.me/0865561731" target="_blank" class="btn-outline">
                 <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg>
@@ -300,7 +307,6 @@ function simpleHash(str) {
 const CHARS = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
 function randomChar() { return CHARS[Math.floor(Math.random() * CHARS.length)]; }
 
-/* ============ KEY CHUẨN ============ */
 function createStandardKey(durationDays) {
     let label = (durationDays === 0) ? "VVD" : (durationDays === 0.5) ? "12H" : String(durationDays).padStart(2, '0') + "D";
     const hours = Math.floor((Date.now() - REF_TIME) / HOUR_MS) % TOTAL_HOURS;
@@ -332,13 +338,11 @@ function parseStandardKey(key) {
     return { durationDays, createdAt, expiresAt, isCustom: false };
 }
 
-/* ============ KEY TÙY CHỈNH ============ */
 function createCustomKey(customName, customHours) {
     const nameClean = customName.trim().toUpperCase().replace(/[^A-Z0-9]/g, '').slice(0, 12);
     if (!nameClean || nameClean.length === 0) return null;
     const hours = parseInt(customHours);
     if (isNaN(hours) || hours <= 0) return null;
-
     const expireAt = Date.now() + hours * HOUR_MS;
     const expireB36 = expireAt.toString(36).toUpperCase();
     const checksum = simpleHash(nameClean + '-' + expireB36 + SECRET).slice(-2);
@@ -358,18 +362,14 @@ function parseCustomKey(key) {
     const name = parts[1], expireB36 = parts[2], checksum = parts[3];
     if (name.length < 1 || name.length > 12) return null;
     if (checksum.length !== 2) return null;
-
     const expectedChecksum = simpleHash(name + '-' + expireB36 + SECRET).slice(-2);
     if (checksum !== expectedChecksum) return null;
-
     const expireAt = parseInt(expireB36, 36);
     if (isNaN(expireAt) || expireAt <= 0) return null;
-
     const totalHours = Math.max(0, Math.round((expireAt - Date.now()) / HOUR_MS));
     return { name: name, expireAt: expireAt, hours: totalHours, isCustom: true };
 }
 
-/* ============ UI ============ */
 function pasteKey() {
     const inputField = document.getElementById('licenseInput');
     if (navigator.clipboard && navigator.clipboard.readText) {
@@ -429,6 +429,28 @@ function activateKey() {
     }, 800);
 }
 
+/* ===== ĐỔI KEY ===== */
+function changeKey() {
+    if (countdownInterval) clearInterval(countdownInterval);
+    if (countdownAimInterval) clearInterval(countdownAimInterval);
+    try { localStorage.removeItem('ff_active_key'); } catch(e) {}
+    currentAim = null;
+    currentAimName = "";
+    document.getElementById('licenseInput').value = '';
+    document.getElementById('errorMsg').style.display = 'none';
+    document.getElementById('successMsg').style.display = 'none';
+    document.getElementById('aimSelectSection').style.display = 'none';
+    document.getElementById('toolSection').style.display = 'none';
+    document.getElementById('authSection').style.display = 'flex';
+    showNotification("Đã đổi key. Vui lòng nhập key mới!");
+}
+
+function changeKeyFromAdmin() {
+    changeKey();
+    toggleAdminPanel();
+    showNotification("Đã đổi key từ Admin!");
+}
+
 function renderAimList() {
     const container = document.getElementById('aimListContainer');
     if (!container) return;
@@ -457,7 +479,6 @@ function renderAimList() {
     if (isCooldown) { activateBtn.disabled = true; activateBtn.textContent = 'ĐANG CHỜ...'; }
     else { activateBtn.disabled = false; activateBtn.textContent = 'CHỌN AIM RỒI KÍCH HOẠT →'; }
 
-    // Khởi động đồng hồ đếm ngược ở màn hình CHỌN AIM
     try {
         const activeKeyData = JSON.parse(localStorage.getItem('ff_active_key'));
         const cdAim = document.getElementById('countdownAim');
@@ -489,7 +510,6 @@ function activateSelectedAim() {
     if (isCooldown) { showNotification("Vui lòng đợi hết thời gian chờ!"); return; }
     if (!currentAim) { showNotification("Vui lòng chọn 1 Aim trước!"); return; }
 
-    // Dừng đồng hồ ở màn hình chọn Aim
     if (countdownAimInterval) clearInterval(countdownAimInterval);
 
     document.getElementById('aimSelectSection').style.display = 'none';
@@ -549,7 +569,6 @@ function startCooldown() {
     }, 1000);
 }
 
-/* Đồng hồ ở màn hình CHỌN AIM */
 function startCountdownAim(expiresAt) {
     if (countdownAimInterval) clearInterval(countdownAimInterval);
     const display = document.getElementById('countdownAim');
@@ -580,7 +599,6 @@ function startCountdownAim(expiresAt) {
     countdownAimInterval = setInterval(updateTimer, 1000);
 }
 
-/* Đồng hồ ở màn hình TOOL */
 function startCountdown(expiresAt) {
     if (countdownInterval) clearInterval(countdownInterval);
     const display = document.getElementById('countdown');

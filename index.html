@@ -7,10 +7,8 @@
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
         body { background-color: #0a0a0a; color: #fff; display: flex; justify-content: center; align-items: center; min-height: 100vh; padding: 15px; background-image: radial-gradient(circle at center, #1a0000 0%, #050505 100%); overflow-x: hidden; }
-        
         .container { background: linear-gradient(145deg, #1a0000, #330000); border: 1px solid #ff1a1a; border-radius: 20px; padding: 20px 15px; width: 100%; max-width: 420px; box-shadow: 0 0 30px rgba(255, 0, 0, 0.5), inset 0 0 20px rgba(255, 0, 0, 0.2); text-align: center; animation: glowBox 2s infinite alternate; position: relative; }
         @keyframes glowBox { from { box-shadow: 0 0 20px rgba(255, 0, 0, 0.4); } to { box-shadow: 0 0 40px rgba(255, 0, 0, 0.8); } }
-        
         .header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 15px; }
         .title h1 { font-size: 20px; font-weight: 900; color: #fff; line-height: 1.1; text-align: left; }
         .title h1 span { color: #ff0000; font-size: 22px; }
@@ -20,16 +18,12 @@
         .status-box .label { color: #ff8080; font-size: 7px; text-transform: uppercase; }
         .status-box .value { color: #fff; font-weight: bold; }
         .online-dot { color: #ff0000; font-size: 9px; margin-right: 2px; }
-        
         .notification-bar { display: none; background: #1a0000; border: 1px solid #00cc00; border-radius: 10px; padding: 10px; margin-bottom: 15px; text-align: left; font-size: 12px; font-weight: bold; color: #66ff66; animation: slideDown 0.3s ease-out; box-shadow: 0 0 15px rgba(0,255,0,0.3); }
         @keyframes slideDown { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
         .notification-bar svg { width: 16px; height: 16px; fill: #00ff00; vertical-align: middle; margin-right: 5px; }
-        
-        /* LOGO AREA - FIX CỨNG KÍCH THƯỚC */
         .logo-area { display: flex; justify-content: center; margin-bottom: 15px; }
         .logo-circle { width: 100px; height: 100px; border-radius: 50%; border: 3px solid #ff1a1a; display: flex; justify-content: center; align-items: center; box-shadow: 0 0 25px rgba(255, 0, 0, 0.6), inset 0 0 20px rgba(255, 0, 0, 0.4); background: radial-gradient(circle, #330000 0%, #0a0a0a 80%); overflow: hidden; position: relative; flex-shrink: 0; }
         .logo-circle img { width: 100%; height: 100%; object-fit: cover; display: block; }
-        
         .auth-section { display: flex; flex-direction: column; gap: 12px; }
         .input-label { text-align: left; font-size: 11px; color: #ff4d4d; font-weight: bold; text-transform: uppercase; letter-spacing: 1px; display: flex; align-items: center; gap: 5px; }
         .input-row { display: flex; gap: 8px; }
@@ -44,7 +38,6 @@
         .btn-outline:active { background: #330000; color: #fff; }
         .btn-outline svg { width: 16px; height: 16px; fill: currentColor; }
         .bottom-buttons { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; margin-top: 10px; }
-        
         .aim-select-section { display: none; flex-direction: column; gap: 10px; animation: fadeIn 0.5s; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
         .aim-list-container { display: flex; flex-direction: column; gap: 8px; width: 100%; min-height: 50px; }
@@ -60,15 +53,28 @@
         .aim-item-radio { width: 18px; height: 18px; border-radius: 50%; border: 2px solid #ff4d4d; display: flex; justify-content: center; align-items: center; }
         .aim-item.selected .aim-item-radio { border-color: #ff0000; background: #ff0000; }
         .aim-item.selected .aim-item-radio::after { content: ''; width: 8px; height: 8px; border-radius: 50%; background: #fff; }
-        
         .cooldown-banner { display: none; background: #332200; border: 1px solid #ffcc00; border-radius: 10px; padding: 12px; text-align: center; font-size: 13px; font-weight: bold; color: #ffdd66; animation: pulse 1s infinite alternate; }
         @keyframes pulse { from { box-shadow: 0 0 5px rgba(255, 204, 0, 0.3); } to { box-shadow: 0 0 20px rgba(255, 204, 0, 0.8); } }
         .cooldown-banner .timer { font-size: 20px; color: #fff; margin-top: 5px; font-family: 'Courier New', monospace; text-shadow: 0 0 10px #ffcc00; }
-        
         .tool-section { display: none; flex-direction: column; gap: 12px; animation: fadeIn 0.5s; }
         .info-row { display: flex; gap: 10px; }
         .info-box { flex: 1; background: #140000; border: 1px solid #ff3333; border-radius: 10px; padding: 10px; display: flex; justify-content: center; align-items: center; gap: 8px; font-family: 'Courier New', monospace; font-size: 13px; color: #ffcccc; }
         .info-box svg { width: 14px; height: 14px; fill: #ff1a1a; }
+        
+        /* HẠN KEY - HIỂN THỊ Ở MÀN HÌNH CHỌN AIM VÀ TOOL */
+        .expiry-info { 
+            background: #003300; 
+            border: 1px solid #00cc00; 
+            border-radius: 10px; 
+            padding: 10px; 
+            text-align: center; 
+            font-size: 13px; 
+            color: #66ff66; 
+            font-weight: bold;
+            box-shadow: 0 0 15px rgba(0, 255, 0, 0.3);
+        }
+        .expiry-info span { color: #00ff00; font-weight: bold; text-shadow: 0 0 10px #00ff00; }
+        
         .toggle-container { background: #140000; border: 1px solid #ff3333; border-radius: 12px; padding: 12px 15px; display: flex; justify-content: space-between; align-items: center; }
         .toggle-left { display: flex; align-items: center; gap: 10px; text-align: left; }
         .toggle-icon { width: 36px; height: 36px; border-radius: 50%; border: 2px solid #ff1a1a; display: flex; justify-content: center; align-items: center; background: #330000; }
@@ -87,35 +93,8 @@
         .server-info .value { color: #fff; }
         .btn-stop { width: 100%; padding: 14px; border-radius: 12px; border: 1px solid #ff4d4d; background: linear-gradient(90deg, #990000, #ff1a1a); color: #fff; font-size: 14px; font-weight: bold; text-transform: uppercase; cursor: pointer; margin-top: 5px; }
         .btn-stop:active { transform: scale(0.97); }
-        
-        /* ADMIN PANEL - FIX LỖI CHỒNG CHÉO */
-        #adminPanel { 
-            display: none; 
-            position: fixed; 
-            top: 0; 
-            left: 0; 
-            width: 100%; 
-            height: 100%; 
-            background: rgba(0,0,0,0.95); 
-            z-index: 99999; 
-            justify-content: center; 
-            align-items: center; 
-            padding: 20px; 
-            overflow-y: auto;
-        }
-        .admin-box { 
-            background: #1a0000; 
-            border: 2px solid #ff0000; 
-            border-radius: 15px; 
-            padding: 25px; 
-            width: 100%; 
-            max-width: 420px; 
-            text-align: center; 
-            box-shadow: 0 0 30px #ff0000; 
-            max-height: 90vh; 
-            overflow-y: auto; 
-            margin: auto;
-        }
+        #adminPanel { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); z-index: 99999; justify-content: center; align-items: center; padding: 20px; overflow-y: auto; }
+        .admin-box { background: #1a0000; border: 2px solid #ff0000; border-radius: 15px; padding: 25px; width: 100%; max-width: 420px; text-align: center; box-shadow: 0 0 30px #ff0000; max-height: 90vh; overflow-y: auto; margin: auto; }
         .admin-box h2 { color: #ff3333; margin-bottom: 20px; text-transform: uppercase; font-size: 18px; }
         .admin-box h3 { color: #fff; margin-bottom: 10px; font-size: 14px; text-transform: uppercase; }
         .admin-box input, .admin-box select { width: 100%; padding: 12px; margin-bottom: 10px; border-radius: 8px; border: 1px solid #ff4d4d; background: #260000; color: #fff; text-align: center; }
@@ -136,7 +115,6 @@
 </head>
 <body>
 
-    <!-- ADMIN PANEL (ẨN MẶC ĐỊNH) -->
     <div id="adminPanel">
         <div class="admin-box">
             <h2>🔐 ADMIN LOGIN</h2>
@@ -175,7 +153,6 @@
         </div>
     </div>
 
-    <!-- GIAO DIỆN CHÍNH -->
     <div class="container">
         <div class="header">
             <div class="title">
@@ -199,7 +176,6 @@
             </a>
         </div>
 
-        <!-- SECTION 1: NHẬP KEY -->
         <div id="authSection" class="auth-section">
             <div class="input-label">
                 <svg viewBox="0 0 24 24"><path d="M12.65 10C11.83 7.67 9.61 6 7 6c-3.31 0-6 2.69-6 6s2.69 6 6 6c2.61 0 4.83-1.67 5.65-4H17v4h4v-4h2v-4H12.65zM7 14c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2z"/></svg>
@@ -232,14 +208,20 @@
             <div id="successMsg" class="success-msg"></div>
         </div>
 
-        <!-- SECTION 2: CHỌN AIM -->
         <div id="aimSelectSection" class="aim-select-section">
             <div class="input-label">CHỌN AIM</div>
+            
+            <!-- HẠN KEY HIỂN THỊ NGAY KHI NHẬP KEY XONG -->
+            <div class="expiry-info">
+                📅 Hạn Key: <span id="expiryDateAim">--/--/---- --:--</span>
+            </div>
+            
             <div id="cooldownBanner" class="cooldown-banner">
                 ⏳ Vui lòng đợi <span id="cooldownTimer" class="timer">5</span>s để chọn Aim khác
             </div>
             <div class="aim-list-container" id="aimListContainer"></div>
             <button id="activateAimBtn" class="btn-primary" onclick="activateSelectedAim()">CHỌN AIM RỒI KÍCH HOẠT →</button>
+            <button class="btn-outline" style="margin-top: 5px; padding: 10px;" onclick="changeKey()">🔄 ĐỔI KEY / ĐĂNG XUẤT</button>
             
             <div class="bottom-buttons">
                 <a href="https://zalo.me/0865561731" target="_blank" class="btn-outline">
@@ -257,12 +239,16 @@
             </div>
         </div>
 
-        <!-- SECTION 3: TOOL ĐANG HOẠT ĐỘNG -->
         <div id="toolSection" class="tool-section">
             <div class="info-row">
                 <div class="info-box"><svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg><span>115.76.48.141</span></div>
                 <div class="info-box"><svg viewBox="0 0 24 24"><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"/></svg><span id="countdown">--:--:--</span></div>
             </div>
+            
+            <div class="expiry-info">
+                📅 Hạn Key: <span id="expiryDateDisplay">--/--/---- --:--</span>
+            </div>
+
             <div class="toggle-container">
                 <div class="toggle-left">
                     <div class="toggle-icon"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm0-13c-2.76 0-5 2.24-5 5s2.24 5 5 5 5-2.24 5-5-2.24-5-5-5zm0 8c-1.65 0-3-1.35-3-3s1.35-3 3-3 3 1.35 3 3-1.35 3-3 3z"/></svg></div>
@@ -302,8 +288,7 @@
     <script>
         const ADMIN_USER = "admin"; const ADMIN_PASS = "phc51580";
         const SECRET = "PHUC_SECRET_2024_X9K2"; 
-        const REF_TIME = new Date('2024-01-01T00:00:00Z').getTime();
-        const HOUR_MS = 3600 * 1000; const TOTAL_HOURS = 46656;
+        const HOUR_MS = 3600 * 1000;
         const COOLDOWN_SECONDS = 5;
         
         let countdownInterval = null;
@@ -320,7 +305,6 @@
             { id: "neck", name: "Aim Neck", desc: "Log thẳng no dns", host: "apex.zenithsolitude.store", port: "2928" }
         ];
 
-        // HÀM ẨN TẤT CẢ CÁC MÀN HÌNH
         function hideAllSections() {
             document.getElementById('authSection').style.display = 'none';
             document.getElementById('aimSelectSection').style.display = 'none';
@@ -337,12 +321,14 @@
         function randomChar() { return CHARS[Math.floor(Math.random() * CHARS.length)]; }
 
         function createStandardKey(durationDays) {
-            let label = (durationDays === 0) ? "VVD" : (durationDays === 0.5) ? "12H" : String(durationDays).padStart(2, '0') + "D";
-            const hours = Math.floor((Date.now() - REF_TIME) / HOUR_MS) % TOTAL_HOURS;
-            const hoursPart = hours.toString(36).toUpperCase().padStart(3, '0');
-            const randomPart = randomChar() + randomChar();
-            const checksum = simpleHash(label + hoursPart + randomPart + SECRET).slice(-1);
-            return { key: `PHUC-${label}-${hoursPart}${randomPart}${checksum}`, label, durationDays, isCustom: false };
+            let label;
+            if (durationDays === 0) label = "VVD";
+            else if (durationDays === 0.5) label = "12H";
+            else label = String(durationDays).padStart(2, '0') + "D";
+            
+            const randomPart = randomChar() + randomChar() + randomChar() + randomChar();
+            const checksum = simpleHash(label + randomPart + SECRET).slice(-1);
+            return { key: `PHUC-${label}-${randomPart}${checksum}`, label: label, durationDays: durationDays, isCustom: false };
         }
 
         function createCustomKey(customName, customHours) {
@@ -362,7 +348,7 @@
             const parts = key.split('-');
             if (parts.length !== 3 || parts[0] !== 'PHUC') return null;
             const durationLabel = parts[1], code = parts[2];
-            if (durationLabel.length !== 3 || code.length !== 6) return null;
+            if (durationLabel.length !== 3 || code.length !== 5) return null;
             
             let durationDays;
             if (durationLabel === "VVD") durationDays = 0;
@@ -371,14 +357,12 @@
                 durationDays = parseInt(durationLabel.slice(0, 2));
                 if (isNaN(durationDays) || durationDays <= 0 || durationLabel[2] !== 'D') return null;
             }
-            const hoursPart = code.slice(0, 3), randomPart = code.slice(3, 5), givenChecksum = code.slice(5, 6);
-            if (givenChecksum !== simpleHash(durationLabel + hoursPart + randomPart + SECRET).slice(-1)) return null;
             
-            const hours = parseInt(hoursPart, 36);
-            if (isNaN(hours) || hours >= TOTAL_HOURS) return null;
-            const createdAt = REF_TIME + hours * HOUR_MS;
-            let expiresAt = (durationDays === 0) ? 9999999999999 : createdAt + durationDays * 24 * 60 * 60 * 1000;
-            return { durationDays, createdAt, expiresAt, isCustom: false };
+            const randomPart = code.slice(0, 4);
+            const givenChecksum = code.slice(4, 5);
+            if (givenChecksum !== simpleHash(durationLabel + randomPart + SECRET).slice(-1)) return null;
+            
+            return { durationDays, isCustom: false };
         }
 
         function parseCustomKey(key) {
@@ -415,6 +399,12 @@
             notif.style.display = 'block';
             setTimeout(() => { notif.style.display = 'none'; }, 3000);
         }
+        
+        // HÀM ĐỊNH DẠNG NGÀY GIỜ
+        function formatDateTime(timestamp) {
+            const d = new Date(timestamp);
+            return `${String(d.getDate()).padStart(2, '0')}/${String(d.getMonth() + 1).padStart(2, '0')}/${d.getFullYear()} ${String(d.getHours()).padStart(2, '0')}:${String(d.getMinutes()).padStart(2, '0')}`;
+        }
 
         function activateKey() {
             const input = document.getElementById('licenseInput').value.trim();
@@ -427,9 +417,13 @@
             let expiresAt, isLifetime = false;
             
             if (parsed) {
-                if (parsed.durationDays !== 0 && Date.now() >= parsed.expiresAt) { errorMsg.textContent = "Key đã hết hạn!"; errorMsg.style.display = "block"; return; }
-                expiresAt = parsed.expiresAt;
-                isLifetime = parsed.durationDays === 0;
+                if (parsed.durationDays === 0) {
+                    expiresAt = 9999999999999;
+                    isLifetime = true;
+                } else {
+                    expiresAt = Date.now() + parsed.durationDays * 24 * 60 * 60 * 1000;
+                    isLifetime = false;
+                }
             } else {
                 parsed = parseCustomKey(input);
                 if (!parsed) { errorMsg.textContent = "Key không hợp lệ!"; errorMsg.style.display = "block"; return; }
@@ -446,6 +440,15 @@
             setTimeout(() => {
                 hideAllSections();
                 document.getElementById('aimSelectSection').style.display = 'flex';
+                
+                // HIỂN THỊ HẠN KEY NGAY TẠI MÀN HÌNH CHỌN AIM
+                const expiryAim = document.getElementById('expiryDateAim');
+                if (isLifetime) {
+                    expiryAim.textContent = "VĨNH VIỄN";
+                } else {
+                    expiryAim.textContent = formatDateTime(expiresAt);
+                }
+                
                 renderAimList();
             }, 800);
         }
@@ -504,6 +507,13 @@
             try {
                 const activeKeyData = JSON.parse(localStorage.getItem('ff_active_key'));
                 if (activeKeyData) {
+                    const expiryEl = document.getElementById('expiryDateDisplay');
+                    if (activeKeyData.isLifetime) {
+                        expiryEl.textContent = "VĨNH VIỄN";
+                    } else {
+                        expiryEl.textContent = formatDateTime(activeKeyData.expiresAt);
+                    }
+                    
                     if (activeKeyData.isLifetime) {
                         document.getElementById('countdown').textContent = "VĨNH VIỄN";
                         document.getElementById('countdown').style.color = "#00ff00";
@@ -523,6 +533,14 @@
             document.getElementById('aimSelectSection').style.display = 'flex';
             currentAim = null;
             startCooldown();
+        }
+        
+        function changeKey() {
+            localStorage.removeItem('ff_active_key');
+            hideAllSections();
+            document.getElementById('authSection').style.display = 'flex';
+            document.getElementById('licenseInput').value = '';
+            showNotification("Đã đăng xuất. Vui lòng nhập Key mới!");
         }
         
         function startCooldown() {
@@ -572,11 +590,8 @@
 
         function toggleAdminPanel() { 
             const panel = document.getElementById('adminPanel'); 
-            if (panel.style.display === 'flex') {
-                panel.style.display = 'none';
-            } else {
-                panel.style.display = 'flex';
-            }
+            if (panel.style.display === 'flex') { panel.style.display = 'none'; } 
+            else { panel.style.display = 'flex'; }
         }
         
         function loginAdmin() {
@@ -590,7 +605,13 @@
         function generateAdminKey() {
             const duration = parseFloat(document.getElementById('durationSelect').value);
             const result = createStandardKey(duration);
-            saveKeyToHistory(result.key, duration === 0 ? "Vĩnh viễn" : (duration === 0.5 ? "12 giờ" : duration + " ngày"));
+            
+            let durationText = "";
+            if (duration === 0) durationText = "Vĩnh viễn";
+            else if (duration === 0.5) durationText = "12 giờ";
+            else durationText = duration + " ngày";
+            
+            saveKeyToHistory(result.key, durationText);
             showGeneratedKey(result.key);
         }
         
@@ -653,7 +674,7 @@
                 const div = document.createElement('div'); 
                 const date = new Date(item.createdAt);
                 const dateStr = date.toLocaleDateString('vi-VN') + ' ' + date.toLocaleTimeString('vi-VN', {hour:'2-digit', minute:'2-digit'});
-                div.innerHTML = `${item.key}<br><span style="color:#ff6666; font-size:10px;">Tạo: ${dateStr} (${item.durationText})</span>`; 
+                div.innerHTML = `${item.key}<br><span style="color:#ff6666; font-size:10px;">Tạo: ${dateStr} (${item.durationText}) | Tính từ lúc kích hoạt</span>`; 
                 list.appendChild(div);
             });
         }
@@ -664,6 +685,15 @@
                 const activeKeyData = JSON.parse(localStorage.getItem('ff_active_key'));
                 if (activeKeyData && activeKeyData.expiresAt > Date.now()) {
                     document.getElementById('aimSelectSection').style.display = 'flex';
+                    
+                    // Hiển thị hạn key khi quay lại web
+                    const expiryAim = document.getElementById('expiryDateAim');
+                    if (activeKeyData.isLifetime) {
+                        expiryAim.textContent = "VĨNH VIỄN";
+                    } else {
+                        expiryAim.textContent = formatDateTime(activeKeyData.expiresAt);
+                    }
+                    
                     renderAimList();
                 } else {
                     localStorage.removeItem('ff_active_key');

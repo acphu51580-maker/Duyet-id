@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aimbot Simulator</title>
+    <style>
+        * { box-sizing: border-box; font-family: Arial, sans-serif; margin: 0; padding: 0; }
+        body {
+            background: #111;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+            min-height: 100vh;
+        }
+        h1 { color: #00FFFF; margin-bottom: 15px; font-size: 20px; }
+
+        /* Khung mô phỏng game */
+        #gameArea {
+            position: relative;
+            width: 100%;
+            max-width: 500px;
+            height: 400px;
+            background: radial-gradient(circle, #2a2a2a 0%, #0a0a0a 100%);
+            border: 2px solid #00FFFF;
+            border-radius: 10px;
+            overflow: hidden;
+            cursor: crosshair;
+        }
+
+        /* Mục tiêu giả lập (đầu địch) */
+        .target-head {
+            position: absolute;
+            width: 30px;
+            height: 30px;
+            background: rgba(255, 0, 0, 0.3);
+            border: 2px solid red;
+            border-radius: 50%;
+            transition: 0.3s;
+            pointer-events: none;
+        }
+        /* Thân địch */
+        .target-body {
+            position: absolute;
+            width: 40px;
+            height: 60px;
+            background: rgba(255, 100, 100, 0.15);
+            border: 1px dashed #ff6666;
+            border-radius: 10px 10px 5px 5px;
+            pointer-events: none;
+        }
+
+        /* Vòng tròn vùng đầu (Aimbot FOV) */
+        #headCircle {
+            position: absolute;
+            width: 40px;
+            height: 40px;
+            border: 2px solid #00FF00;
+            border-radius: 50%;
+            box-shadow: 0 0 15px #00FF00;
+            transform: translate(-50%, -50%);
+            transition: 0.15s linear;
+            pointer-events: none;
+            display: none;
+        }
+
+        /* Tâm súng (Crosshair) */
+        #crosshair {
+            position: absolute;
+            width: 30px;
+            height: 30px;
+            transform: translate(-50%, -50%);
+            pointer-events: none;
+            transition: 0.1s linear;
+        }
+        #crosshair::before, #crosshair::after {
+            content: '';
+            position: absolute;
+            background: #00FFFF;
+            box-shadow: 0 0 5px #00FFFF;
+        }
+        #crosshair::before {
+            width: 2px; height: 100%; left: 50%; top: 0; transform: translateX(-50%);
+        }
+        #crosshair::after {
+            width: 100%; height: 2px; left: 0; top: 50%; transform: translateY(-50%);
+        }
+
+        /* Điều khiển */
+        .controls {
+            margin-top: 15px;
+            width: 100%;
+            max-width: 500px;
+            display: flex;
+            gap: 10px;
+        }
+        .btn {
+            flex: 1;
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            text-transform: uppercase;
+            font-size: 14px;
+        }
+        .btn-start { background: #00FF00; color: #000; }
+        .btn-stop { background: #dc2626; color: white; }
+        .btn-reset { background: #1E3A8A; color: white; border: 1px solid #00FFFF; }
+
+        .status {
+            margin-top: 10px;
+            font-size: 13px;
+            color: #94a3b8;
+            text-align: center;
+        }
+        .status span { color: #00FF00; font-weight: bold; }
+    </style>
+</head>
+<body>
+
+<h1>🎯 AIMBOT SIMULATOR (DEMO)</h1>
+
+<div id="gameArea">
+    <!-- Mục tiêu địch -->
+    <div class="target-body" id="targetBody"></div>
+    <div class="target-head" id="targetHead"></div>
+    
+    <!-- Vòng tròn vùng đầu -->
+    <div id="headCircle"></div>
+    
+    <!-- Tâm súng -->
+    <div id="crosshair" style="left: 250px; top: 200px;"></div>
+</div>
+
+<div class="controls">
+    <button class="btn btn-start" onclick="startAimbot()">▶ START</button>
+    <button class="btn btn-stop" onclick="stopAimbot()">⏹ STOP</button>
+    <button class="btn btn-reset" onclick="resetGame()">🔄 RESET</button>
+</div>
+
+<div class="status">
+    Trạng thái: <span id="statusText">Đang tắt</span> | 
+    Tọa độ tâm súng: <span id="coordText">X: 250, Y: 200</span>
+</div>
+
+<script>
+    // ==========================================
+    // 1. KHỞI TẠO VỊ TRÍ
+    // ==========================================
+    const gameArea = document.getElementById('gameArea');
+    const targetHead = document.getElementById('targetHead');
+    const targetBody = document.getElementById('targetBody');
+    const headCircle = document.getElementById('headCircle');
+    const crosshair = document.getElementById('crosshair');
+    const statusText = document.getElementById('statusText');
+    const coordText = document.getElementById('coordText');
+
+    let aimbotInterval = null;
+    let isAimbotOn = false;
+
+    // Kích thước vùng game
+    const AREA_W = 500;
+    const AREA_H = 400;
+
+    // Vị trí địch (sẽ random)
+    let enemyX = 250;
+    let enemyY = 200;
+
+    // Vị trí tâm súng hiện tại
+    let crosshairX = 250;
+    let crosshairY = 200;
+
+    // ==========================================
+    // 2. TẠO MỤC TIÊU NGẪU NHIÊN
+    // ==========================================
+    function spawnEnemy() {
+        // Random trong khoảng an toàn
+        enemyX = Math.floor(Math.random() * (AREA_W - 100)) + 50;
+        enemyY = Math.floor(Math.random() * (AREA_H - 120)) + 40;
+
+        // Đặt đầu địch (head)
+        targetHead.style.left = enemyX + 'px';
+        targetHead.style.top = enemyY + 'px';
+
+        // Đặt thân địch (body) ngay dưới đầu
+        targetBody.style.left = (enemyX - 5) + 'px';
+        targetBody.style.top = (enemyY + 25) + 'px';
+
+        // Đặt vòng tròn vùng đầu (bao quanh đầu)
+        headCircle.style.left = (enemyX + 15) + 'px'; // Tâm của head (30px/2 = 15)
+        headCircle.style.top = (enemyY + 15) + 'px';
+    }
+
+    // ==========================================
+    // 3. CẬP NHẬT VỊ TRÍ TÂM SÚNG
+    // ==========================================
+    function updateCrosshair(x, y) {
+        // Giới hạn trong vùng game
+        crosshairX = Math.max(0, Math.min(AREA_W, x));
+        crosshairY = Math.max(0, Math.min(AREA_H, y));
+        crosshair.style.left = crosshairX + 'px';
+        crosshair.style.top = crosshairY + 'px';
+        coordText.innerText = `X: ${Math.round(crosshairX)}, Y: ${Math.round(crosshairY)}`;
+    }
+
+    // ==========================================
+    // 4. LOGIC AIMBOT (GHÌM TÂM SÚNG LÊN ĐẦU)
+    // ==========================================
+    function aimbotTick() {
+        if (!isAimbotOn) return;
+
+        // Tọa độ tâm đầu địch (head center)
+        const headCenterX = enemyX + 15;
+        const headCenterY = enemyY + 15;
+
+        // Khoảng cách từ tâm súng đến đầu địch
+        const dx = headCenterX - crosshairX;
+        const dy = headCenterY - crosshairY;
+        const distance = Math.sqrt(dx * dx + dy * dy);
+
+        // Nếu tâm súng nằm trong vùng tròn (bán kính 20px quanh đầu)
+        // thì tự động kéo tâm súng về tâm đầu
+        const FOV_RADIUS = 25; // Bán kính vùng aimbot (vùng tròn xanh)
+
+        if (distance <= FOV_RADIUS) {
+            // Kéo tâm súng về tâm đầu (giả lập "ghìm")
+            const speed = 0.3; // Tốc độ kéo (0-1)
+            const newX = crosshairX + dx * speed;
+            const newY = crosshairY + dy * speed;
+            updateCrosshair(newX, newY);
+
+            // Nếu đã gần khớp hoàn toàn
+            if (distance < 1) {
+                updateCrosshair(headCenterX, headCenterY);
+                statusText.innerText = "ĐÃ GHÌM VÀO ĐẦU!";
+                statusText.style.color = "#00FF00";
+            } else {
+                statusText.innerText = "Đang ghìm...";
+                statusText.style.color = "#FFFF00";
+            }
+        } else {
+            // Nếu ngoài vùng FOV, không làm gì (hoặc di chuyển random)
+            statusText.innerText = "Mục tiêu ngoài vùng ngắm";
+            statusText.style.color = "#94a3b8";
+        }
+    }
+
+    // ==========================================
+    // 5. BẬT / TẮT AIMBOT
+    // ==========================================
+    function startAimbot() {
+        if (isAimbotOn) return;
+        isAimbotOn = true;
+        headCircle.style.display = 'block';
+        statusText.innerText = "Đang bật";
+        statusText.style.color = "#00FF00";
+
+        // Chạy vòng lặp aimbot mỗi 50ms
+        aimbotInterval = setInterval(aimbotTick, 50);
+    }
+
+    function stopAimbot() {
+        isAimbotOn = false;
+        headCircle.style.display = 'none';
+        statusText.innerText = "Đang tắt";
+        statusText.style.color = "#94a3b8";
+        if (aimbotInterval) clearInterval(aimbotInterval);
+    }
+
+    function resetGame() {
+        stopAimbot();
+        crosshairX = 250;
+        crosshairY = 200;
+        updateCrosshair(crosshairX, crosshairY);
+        spawnEnemy();
+    }
+
+    // ==========================================
+    // 6. CLICK CHUỘT ĐỂ DI CHUYỂN TÂM SÚNG
+    // ==========================================
+    gameArea.addEventListener('click', (e) => {
+        const rect = gameArea.getBoundingClientRect();
+        const clickX = e.clientX - rect.left;
+        const clickY = e.clientY - rect.top;
+        updateCrosshair(clickX, clickY);
+    });
+
+    // ==========================================
+    // 7. KHỞI TẠO
+    // ==========================================
+    spawnEnemy();
+    updateCrosshair(250, 200);
+
+    // Tự động đổi vị trí địch mỗi 3 giây (giả lập địch di chuyển)
+    setInterval(() => {
+        if (!isAimbotOn) spawnEnemy();
+    }, 3000);
+
+</script>
+
+</body>
+</html>
